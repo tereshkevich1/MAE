@@ -35,13 +35,6 @@ class MainActivity : AppCompatActivity() {
         setupButtonListeners()
         setupNumberClickListener(numericButtons, editText)
     }
-    private fun onNumericButtonClickListener(
-        numButton: NumberButton,
-        editText: EditText
-    ): View.OnClickListener =
-        View.OnClickListener {
-            editText.setText(numButton.numericValue)
-        }
 
     private val onButtonTouchListener: View.OnTouchListener =
         View.OnTouchListener { view, motionEvent ->
@@ -63,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         editText: EditText
     ){
         numberButtons.forEach {
-            it.setOnClickListener(onNumericButtonClickListener(it, editText))
+            it.setOnClickListener(editText)
         }
     }
 
