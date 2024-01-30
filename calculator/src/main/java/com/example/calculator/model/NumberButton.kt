@@ -5,8 +5,8 @@ import android.content.Context
 import android.text.InputFilter
 import android.text.Spanned
 import android.view.View
-import android.widget.EditText
 import com.example.calculator.R
+import com.example.calculator.vm.CalculatorViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 
@@ -15,17 +15,16 @@ class NumberButton(id: Int, activity: Activity){
     private val buttonView = activity.findViewById<MaterialButton>(id)
     private val numericValue: String = buttonView.text.toString()
 
-    fun setOnClickListener(editText: EditText) {
-        buttonView.setOnClickListener(onNumericButtonClickListener(editText))
+    fun setOnClickListener(vm: CalculatorViewModel) {
+        buttonView.setOnClickListener(onNumericButtonClickListener(vm))
     }
     private fun onNumericButtonClickListener(
-        editText: EditText
+        vm: CalculatorViewModel
     ): View.OnClickListener =
         View.OnClickListener {
             val inputFilter = NumberInputFilter(buttonView.context)
             val filters = arrayOf(inputFilter)
-            editText.filters = filters
-            editText.text.append(numericValue)
+            vm.appendDigit(numericValue)
         }
 }
 

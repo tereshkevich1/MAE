@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         editText.showSoftInputOnFocus = false
         editText.requestFocus()
         viewModel.currentOperationString.observe(this, Observer { result->
+            editText.text.clear()
             editText.text.append(result)
         })
 
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         setupButtonListeners()
-        setupNumberClickListener(numericButtons, editText)
+        setupNumberClickListener(numericButtons, viewModel)
     }
 
     private val onButtonTouchListener: View.OnTouchListener =
@@ -60,10 +61,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNumberClickListener(
         numberButtons: Array<NumberButton>,
-        editText: EditText
+        vm: CalculatorViewModel
     ){
         numberButtons.forEach {
-            it.setOnClickListener(editText)
+            it.setOnClickListener(vm)
         }
     }
 
