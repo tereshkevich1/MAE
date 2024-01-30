@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import com.example.calculator.model.NumberButton
 import com.google.android.material.button.MaterialButton
 
 class MainActivity : AppCompatActivity() {
@@ -18,9 +19,29 @@ class MainActivity : AppCompatActivity() {
         val editText: EditText = findViewById(R.id.inputEditText)
         editText.showSoftInputOnFocus = false
         editText.requestFocus()
+        val numericButtons = arrayOf(
+            NumberButton(R.id.button_one, this),
+            NumberButton(R.id.button_two, this),
+            NumberButton(R.id.button_three, this),
+            NumberButton(R.id.button_four, this),
+            NumberButton(R.id.button_five, this),
+            NumberButton(R.id.button_six, this),
+            NumberButton(R.id.button_seven, this),
+            NumberButton(R.id.button_eight, this),
+            NumberButton(R.id.button_nine, this),
+            NumberButton(R.id.button_zero, this)
+        )
 
         setupButtonListeners()
+        setupNumberClickListener(numericButtons, editText)
     }
+    private fun onNumericButtonClickListener(
+        numButton: NumberButton,
+        editText: EditText
+    ): View.OnClickListener =
+        View.OnClickListener {
+            editText.setText(numButton.numericValue)
+        }
 
     private val onButtonTouchListener: View.OnTouchListener =
         View.OnTouchListener { view, motionEvent ->
@@ -35,6 +56,15 @@ class MainActivity : AppCompatActivity() {
     private fun setupButtonListeners() {
         val rootView = findViewById<ViewGroup>(android.R.id.content)
         setTouchListenerRecursively(rootView)
+    }
+
+    private fun setupNumberClickListener(
+        numberButtons: Array<NumberButton>,
+        editText: EditText
+    ){
+        numberButtons.forEach {
+            it.setOnClickListener(onNumericButtonClickListener(it, editText))
+        }
     }
 
     private fun setTouchListenerRecursively(view: View) {
