@@ -31,9 +31,11 @@ android {
         jvmTarget = "1.8"
     }
 }
+val activity_version = "1.8.2"
 
 dependencies {
-
+    implementation("androidx.activity:activity-ktx:$activity_version")
+    implementation("org.mariuszgromada.math:MathParser.org-mXparser:5.2.1")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")

@@ -6,19 +6,26 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.example.calculator.model.NumberButton
+import com.example.calculator.vm.CalculatorViewModel
 import com.google.android.material.button.MaterialButton
 
 class MainActivity : AppCompatActivity() {
+    private val viewModel: CalculatorViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         val editText: EditText = findViewById(R.id.inputEditText)
         editText.showSoftInputOnFocus = false
         editText.requestFocus()
+        viewModel.currentOperationString.observe(this, Observer { result->
+            editText.text.append(result)
+        })
+
         val numericButtons = arrayOf(
             NumberButton(R.id.button_one, this),
             NumberButton(R.id.button_two, this),
@@ -41,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             val button = view as MaterialButton
             when (motionEvent?.action) {
                 MotionEvent.ACTION_DOWN -> radiusAnimation(button)
-                MotionEvent.ACTION_UP -> view.performClick()
+                MotionEvent.ACTION_BUTTON_RELEASE -> view.performClick()
             }
             return@OnTouchListener view.onTouchEvent(motionEvent)
         }
@@ -82,6 +89,4 @@ class MainActivity : AppCompatActivity() {
         animator.start()
     }
 }
-
-
 
