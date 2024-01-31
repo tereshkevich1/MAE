@@ -22,16 +22,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b1d7c62-8207-426a-8467-fd30ea0a4109" name="Changes" comment="Updated gitignore">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calculator/src/main/java/com/example/calculator/vm/CalculatorViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/calculator/src/main/java/com/example/calculator/vm/CalculatorViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calculator/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/calculator/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\user\.android\avd\Pixel_7_API_32.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Babananick\.android\avd\Medium_Phone_API_34.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -305,23 +305,7 @@
       <option name="project" value="LOCAL" />
       <updated>1706603378235</updated>
     </task>
-    <task id="LOCAL-00006" summary="Changed logic of user input. Added binding to project">
-      <option name="closed" value="true" />
-      <created>1706711932475</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1706711932475</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Updated gitignore">
-      <option name="closed" value="true" />
-      <created>1706712007089</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1706712007089</updated>
-    </task>
-    <option name="localTasksCounter" value="8" />
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -340,9 +324,6 @@
     <MESSAGE value="Added basic logic to numeric buttons" />
     <MESSAGE value="Moved onNumericButtonClickListener to NumberButton.kt" />
     <MESSAGE value="Added README.md" />
-    <MESSAGE value="Changed logic of user input" />
-    <MESSAGE value="Changed logic of user input. Added binding to project" />
-    <MESSAGE value="Updated gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added README.md" />
   </component>
 </project>
