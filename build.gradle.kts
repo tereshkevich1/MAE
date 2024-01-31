@@ -4,6 +4,7 @@ plugins {
     // in each subproject's classloader
     id("com.android.application").apply(false)
     id("com.android.library").apply(false)
+    kotlin("kapt").apply(false) version "1.9.22"
 }
 
 allprojects {

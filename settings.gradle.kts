@@ -9,7 +9,7 @@ pluginManagement {
     plugins {
         val kotlinVersion = extra["kotlin.version"] as String
         val agpVersion = extra["agp.version"] as String
-
+        
         kotlin("android").version(kotlinVersion)
         id("com.android.application").version(agpVersion)
         id("com.android.library").version(agpVersion)

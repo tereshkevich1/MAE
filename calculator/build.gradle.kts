@@ -1,11 +1,16 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt") version "1.9.22"
 }
 
 android {
     namespace = "com.example.calculator"
     compileSdk = 34
+
+    dataBinding{
+        enable = true
+    }
 
     defaultConfig {
         applicationId = "com.example.calculator"
@@ -17,6 +22,9 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -42,6 +50,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("androidx.databinding:databinding-runtime:8.2.2")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

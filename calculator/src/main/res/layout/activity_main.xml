@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+
+<layout xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+                name="viewModel"
+                type="com.example.calculator.vm.CalculatorViewModel"/>
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="?attr/colorSurface"
     tools:context=".MainActivity">
@@ -34,8 +41,8 @@
                 android:padding="0dp"
                 android:minHeight="20dp"
                 android:maxHeight="100dp"
-                android:text=""
-                android:textSize="48sp" />
+                android:text="@{viewModel.currentOperationString}"
+                android:textSize="48sp"/>
 
         </TableRow>
 
@@ -102,7 +109,9 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_seven"
                 style="@style/NumberButtonStyle"
-                android:text="@string/seven" />
+                android:text="@string/seven"
+                android:tag="@string/seven"
+                android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -112,7 +121,9 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_eight"
                 style="@style/NumberButtonStyle"
-                android:text="@string/eight" />
+                android:text="@string/eight"
+                android:tag="@string/eight"
+                android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -122,7 +133,9 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_nine"
                 style="@style/NumberButtonStyle"
-                android:text="@string/nine" />
+                android:text="@string/nine"
+                android:tag="@string/nine"
+                android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -144,7 +157,9 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_four"
                 style="@style/NumberButtonStyle"
-                android:text="@string/four" />
+                android:text="@string/four"
+                android:tag="@string/four"
+                android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -154,7 +169,9 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_five"
                 style="@style/NumberButtonStyle"
-                android:text="@string/five" />
+                android:text="@string/five"
+                android:tag="@string/five"
+                android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -165,7 +182,9 @@
                 android:id="@+id/button_six"
                 style="@style/NumberButtonStyle"
                 android:gravity="center"
-                android:text="@string/six" />
+                android:text="@string/six"
+                android:tag="@string/six"
+                android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -188,7 +207,9 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_one"
                 style="@style/NumberButtonStyle"
-                android:text="@string/one" />
+                android:text="@string/one"
+                android:tag="@string/one"
+                android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -196,9 +217,11 @@
                 android:layout_weight="1" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_two"
-                style="@style/NumberButtonStyle"
-                android:text="@string/two" />
+                    android:id="@+id/button_two"
+                    style="@style/NumberButtonStyle"
+                    android:text="@string/two"
+                    android:tag="@string/two"
+                    android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -208,7 +231,9 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_three"
                 style="@style/NumberButtonStyle"
-                android:text="@string/three" />
+                android:text="@string/three"
+                android:tag="@string/three"
+                android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -230,7 +255,9 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_zero"
                 style="@style/NumberButtonStyle"
-                android:text="@string/zero" />
+                android:text="@string/zero"
+                android:tag="@string/zero"
+                android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -273,3 +300,4 @@
     </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

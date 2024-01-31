@@ -6,19 +6,25 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.example.calculator.model.NumberButton
+import androidx.lifecycle.ViewModelProvider
+import com.example.calculator.databinding.ActivityMainBinding
 import com.example.calculator.vm.CalculatorViewModel
 import com.google.android.material.button.MaterialButton
 
 class MainActivity : AppCompatActivity() {
-    private val viewModel: CalculatorViewModel by viewModels()
-
+    private lateinit var viewModel: CalculatorViewModel
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        viewModel = ViewModelProvider(this)[CalculatorViewModel::class.java]
+        val view = binding.root
+        binding.viewModel = viewModel
+        setContentView(view)
+
+
         val editText: EditText = findViewById(R.id.inputEditText)
         editText.showSoftInputOnFocus = false
         editText.requestFocus()
@@ -27,21 +33,7 @@ class MainActivity : AppCompatActivity() {
             editText.text.append(result)
         })
 
-        val numericButtons = arrayOf(
-            NumberButton(R.id.button_one, this),
-            NumberButton(R.id.button_two, this),
-            NumberButton(R.id.button_three, this),
-            NumberButton(R.id.button_four, this),
-            NumberButton(R.id.button_five, this),
-            NumberButton(R.id.button_six, this),
-            NumberButton(R.id.button_seven, this),
-            NumberButton(R.id.button_eight, this),
-            NumberButton(R.id.button_nine, this),
-            NumberButton(R.id.button_zero, this)
-        )
-
         setupButtonListeners()
-        setupNumberClickListener(numericButtons, viewModel)
     }
 
     private val onButtonTouchListener: View.OnTouchListener =
@@ -59,14 +51,6 @@ class MainActivity : AppCompatActivity() {
         setTouchListenerRecursively(rootView)
     }
 
-    private fun setupNumberClickListener(
-        numberButtons: Array<NumberButton>,
-        vm: CalculatorViewModel
-    ){
-        numberButtons.forEach {
-            it.setOnClickListener(vm)
-        }
-    }
 
     private fun setTouchListenerRecursively(view: View) {
         if (view is MaterialButton) {
@@ -89,5 +73,6 @@ class MainActivity : AppCompatActivity() {
         }
         animator.start()
     }
+
 }
 
