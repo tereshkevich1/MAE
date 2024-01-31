@@ -111,7 +111,7 @@
                 style="@style/NumberButtonStyle"
                 android:text="@string/seven"
                 android:tag="@string/seven"
-                android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
+                android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -123,7 +123,7 @@
                 style="@style/NumberButtonStyle"
                 android:text="@string/eight"
                 android:tag="@string/eight"
-                android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
+                android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -135,7 +135,7 @@
                 style="@style/NumberButtonStyle"
                 android:text="@string/nine"
                 android:tag="@string/nine"
-                android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
+                android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -159,7 +159,7 @@
                 style="@style/NumberButtonStyle"
                 android:text="@string/four"
                 android:tag="@string/four"
-                android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
+                android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -171,7 +171,7 @@
                 style="@style/NumberButtonStyle"
                 android:text="@string/five"
                 android:tag="@string/five"
-                android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
+                android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -184,7 +184,7 @@
                 android:gravity="center"
                 android:text="@string/six"
                 android:tag="@string/six"
-                android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
+                android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -209,7 +209,7 @@
                 style="@style/NumberButtonStyle"
                 android:text="@string/one"
                 android:tag="@string/one"
-                android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
+                android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -221,7 +221,7 @@
                     style="@style/NumberButtonStyle"
                     android:text="@string/two"
                     android:tag="@string/two"
-                    android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
+                    android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -233,7 +233,7 @@
                 style="@style/NumberButtonStyle"
                 android:text="@string/three"
                 android:tag="@string/three"
-                android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
+                android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"
@@ -257,7 +257,7 @@
                 style="@style/NumberButtonStyle"
                 android:text="@string/zero"
                 android:tag="@string/zero"
-                android:onClick="@{(view) -> viewModel.appendDigit((String)view.getTag())}"/>
+                android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"/>
 
             <Space
                 android:layout_width="0dp"

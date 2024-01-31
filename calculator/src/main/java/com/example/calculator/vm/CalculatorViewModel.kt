@@ -1,5 +1,6 @@
 package com.example.calculator.vm
 
+import android.widget.EditText
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,13 +12,11 @@ class CalculatorViewModel: ViewModel() {
     private val _currentResult = MutableLiveData<String>()
     val currentResult: LiveData<String> get() = _currentResult
 
-    fun doSmt(num: String){
-
+    fun insertDigit(editText: EditText, digit: String) {
+        val position = getCursorPosition(editText)
+        editText.text.insert(position, digit)
     }
-    fun appendDigit(
-        digit: String
-    ){
-        _currentOperationString.value += digit
+    fun getCursorPosition(editText: EditText): Int {
+        return editText.selectionStart
     }
-
 }
