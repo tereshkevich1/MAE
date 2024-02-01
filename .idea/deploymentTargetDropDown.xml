@@ -6,20 +6,7 @@
         <State />
       </entry>
       <entry key="calculator">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Sergey\.android\avd\Pixel_2_API_30.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-02-01T01:49:51.837493100Z" />
-        </State>
+        <State />
       </entry>
       <entry key="minishop">
         <State />
