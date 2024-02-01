@@ -82,7 +82,8 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_clear"
                     style="@style/OperationButtonStyle"
-                    android:text="@string/clear" />
+                    android:text="@string/clear"
+                    android:onClick="@{(view)->viewModel.clearScreen()}" />
 
                 <Space
                     android:layout_width="0dp"
