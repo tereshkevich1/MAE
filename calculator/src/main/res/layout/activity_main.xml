@@ -56,7 +56,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="30"
                 android:gravity="end"
-                android:text="9346837693"
+                android:text="@{viewModel.currentResult}"
                 android:textIsSelectable="true"
                 android:textSize="48sp" />
         </LinearLayout>

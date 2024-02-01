@@ -9,7 +9,7 @@ class CalculatorViewModel: ViewModel() {
     private val _currentOperationString = MutableLiveData("")
     val currentOperationString: LiveData<String> get() = _currentOperationString
 
-    private val _currentResult = MutableLiveData<String>()
+    private val _currentResult = MutableLiveData("")
     val currentResult: LiveData<String> get() = _currentResult
 
     fun insertDigit(editText: EditText, digit: String) {
@@ -19,4 +19,5 @@ class CalculatorViewModel: ViewModel() {
     fun getCursorPosition(editText: EditText): Int {
         return editText.selectionStart
     }
+
 }
