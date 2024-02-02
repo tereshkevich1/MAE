@@ -13,24 +13,27 @@ class CalculatorViewModel: ViewModel() {
     val currentResult: LiveData<String> get() = _currentResult
 
     fun insertDigit(editText: EditText, digit: String) {
-        val position = getCursorPosition(editText)
-        editText.text.insert(position, digit)
+        editText.text.replace(getSelectionStart(editText), getSelectionEnd(editText), digit)
     }
 
     fun insertOperation(editText: EditText, operation: String){
-        val position = getCursorPosition(editText)
+        val position = getSelectionStart(editText)
 
     }
 
     fun evaluate(){
-
+        _currentOperationString.value = _currentResult.value
+        _currentResult.value = ""
     }
 
-    fun clearScreen(){
+    fun clear(){
         _currentResult.value = ""
         _currentOperationString.value = ""
     }
-    fun getCursorPosition(editText: EditText): Int {
+    private fun getSelectionEnd(editText: EditText): Int{
+        return editText.selectionEnd
+    }
+    private fun getSelectionStart(editText: EditText): Int {
         return editText.selectionStart
     }
 
