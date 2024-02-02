@@ -105,7 +105,10 @@
                     android:id="@+id/button_pow"
                     style="@style/OperationButtonStyle"
                     app:icon="@drawable/caret_up"
-                    app:iconSize="45dp" />
+                    app:iconSize="45dp"
+                    android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"
+                    android:tag="@string/pow_string"
+                />
 
                 <Space
                     android:layout_width="0dp"

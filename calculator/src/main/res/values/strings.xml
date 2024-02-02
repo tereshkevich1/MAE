@@ -20,5 +20,5 @@
     <string name="minus">minus</string>
     <string name="equals">equals</string>
     <string name="remove">remove</string>
-
+    <string name="pow_string">^</string>
 </resources>

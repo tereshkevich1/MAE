@@ -17,6 +17,15 @@ class CalculatorViewModel: ViewModel() {
         editText.text.insert(position, digit)
     }
 
+    fun insertOperation(editText: EditText, operation: String){
+        val position = getCursorPosition(editText)
+
+    }
+
+    fun evaluate(){
+
+    }
+
     fun clearScreen(){
         _currentResult.value = ""
         _currentOperationString.value = ""

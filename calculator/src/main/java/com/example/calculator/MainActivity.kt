@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.calculator.databinding.ActivityMainBinding
 import com.example.calculator.vm.CalculatorViewModel
@@ -22,18 +21,15 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[CalculatorViewModel::class.java]
         val view = binding.root
         binding.viewModel = viewModel
+        binding.lifecycleOwner = this
         setContentView(view)
-
 
         val editText: EditText = findViewById(R.id.inputEditText)
         editText.showSoftInputOnFocus = false
         editText.requestFocus()
-        viewModel.currentOperationString.observe(this, Observer { result->
-            editText.text.clear()
-            editText.text.append(result)
-        })
 
         setupButtonListeners()
+
     }
 
     private val onButtonTouchListener: View.OnTouchListener =
