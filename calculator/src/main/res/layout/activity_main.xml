@@ -106,7 +106,7 @@
                     style="@style/OperationButtonStyle"
                     app:icon="@drawable/caret_up"
                     app:iconSize="45dp"
-                    android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"
+                    android:onClick="@{(view) -> viewModel.insertOperation(inputEditText, (String)view.getTag())}"
                     android:tag="@string/pow_string"
                 />
 
@@ -119,6 +119,8 @@
                     android:id="@+id/button_divide"
                     style="@style/OperationButtonStyle"
                     app:icon="@drawable/divide"
+                    android:onClick="@{(view) -> viewModel.insertOperation(inputEditText, (String)view.getTag())}"
+                    android:tag="@string/divide_string"
                     app:iconSize="40dp" />
 
             </TableRow>
@@ -167,6 +169,8 @@
                     android:id="@+id/button_multiply"
                     style="@style/OperationButtonStyle"
                     android:contentDescription="@string/multiply"
+                    android:onClick="@{(view) -> viewModel.insertOperation(inputEditText, (String)view.getTag())}"
+                    android:tag="@string/multiply_string"
                     app:icon="@drawable/baseline_close_24"
                     app:iconSize="35dp" />
             </TableRow>
@@ -265,6 +269,8 @@
                     android:id="@+id/button_plus"
                     style="@style/OperationButtonStyle"
                     android:contentDescription="@string/plus"
+                    android:onClick="@{(view) -> viewModel.insertOperation(inputEditText, (String)view.getTag())}"
+                    android:tag="@string/plus_string"
                     app:icon="@drawable/baseline_add_24"
                     app:iconSize="35dp" />
             </TableRow>
@@ -316,6 +322,7 @@
                     android:contentDescription="@string/equals"
                     app:icon="@drawable/baseline_drag_handle_24"
                     app:iconGravity="end"
+                    android:onClick="@{() -> viewModel.evaluate()}"
                     app:iconSize="30dp" />
             </TableRow>
 

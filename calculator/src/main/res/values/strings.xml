@@ -13,12 +13,17 @@
     <string name="comma">,</string>
     <string name="clear">С</string>
     <string name="pow">pow</string>
+    <string name="pow_string">^</string>
     <string name="sqr">sqr</string>
     <string name="multiply">multiply</string>
+    <string name="multiply_string">×</string>
     <string name="divide">divide</string>
+    <string name="divide_string">/</string>
     <string name="plus">plus</string>
+    <string name="plus_string">+</string>
     <string name="minus">minus</string>
+    <string name="minus_string">-</string>
     <string name="equals">equals</string>
     <string name="remove">remove</string>
-    <string name="pow_string">^</string>
+
 </resources>

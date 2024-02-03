@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.calculator.databinding.ActivityMainBinding
 import com.example.calculator.vm.CalculatorViewModel
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: CalculatorViewModel
@@ -22,6 +24,9 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        viewModel.snackbarMessage.observe(this){ message ->
+            Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
+        }
         setContentView(view)
 
         val editText: EditText = findViewById(R.id.inputEditText)
