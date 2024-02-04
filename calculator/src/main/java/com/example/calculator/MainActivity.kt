@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.calculator.databinding.ActivityMainBinding
 import com.example.calculator.vm.CalculatorViewModel
@@ -24,17 +22,16 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
         viewModel.snackbarMessage.observe(this){ message ->
             Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
         }
-        setContentView(view)
 
-        val editText: EditText = findViewById(R.id.inputEditText)
-        editText.showSoftInputOnFocus = false
-        editText.requestFocus()
+        binding.inputEditText.showSoftInputOnFocus = false
+        binding.inputEditText.requestFocus()
 
         setupButtonListeners()
-
+        setContentView(view)
     }
 
     private val onButtonTouchListener: View.OnTouchListener =
@@ -48,8 +45,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     private fun setupButtonListeners() {
-        val rootView = findViewById<ViewGroup>(android.R.id.content)
-        setTouchListenerRecursively(rootView)
+        setTouchListenerRecursively(binding.root)
     }
 
 
