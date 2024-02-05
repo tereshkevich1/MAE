@@ -29,7 +29,17 @@ class MainActivity : AppCompatActivity() {
 
         binding.inputEditText.showSoftInputOnFocus = false
         binding.inputEditText.requestFocus()
+        viewModel.currentOperationString.observe(this) { newValue ->
+            binding.inputEditText.setText(newValue)
+        }
 
+        viewModel.selectionStart.observe(this) { newStart ->
+            binding.inputEditText.setSelection(newStart, binding.inputEditText.selectionEnd)
+        }
+
+        viewModel.selectionEnd.observe(this){ newEnd ->
+            binding.inputEditText.setSelection(binding.inputEditText.selectionStart, newEnd)
+        }
         setupButtonListeners()
         setContentView(view)
     }

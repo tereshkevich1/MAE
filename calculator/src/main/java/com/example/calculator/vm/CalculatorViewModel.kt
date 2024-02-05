@@ -10,34 +10,52 @@ class CalculatorViewModel : ViewModel() {
     private val expression = Expression()
 
     private val _currentOperationString = MutableLiveData("")
-    val currentOperationString: LiveData<String> get() {
-        expression.expressionString = _currentOperationString.value
-        return _currentOperationString
-    }
+    val currentOperationString: LiveData<String> get() = _currentOperationString
+
+    private val _selectionStart = MutableLiveData<Int>(0)
+    val selectionStart: LiveData<Int> get() = _selectionStart
+
+    private val _selectionEnd = MutableLiveData<Int>(0)
+    val selectionEnd: LiveData<Int> get() = _selectionEnd
 
     private val _currentResult = MutableLiveData("")
     val currentResult: LiveData<String> get() = _currentResult
 
     val snackbarMessage = MutableLiveData<String>()
 
-    fun insertDigit(editText: EditText, digit: String) {
-        editText.text.replace(getSelectionStart(editText), getSelectionEnd(editText), digit)
-        _currentOperationString.value = editText.text.toString()
+    private val pattern = Regex("[+\\-×/^]")
+    fun insertDigit(digit: String, selectionStart: Int, selectionEnd: Int) {
+        val newValue = StringBuilder(_currentOperationString.value ?: "")
+            .replace(selectionStart, selectionEnd, digit)
+            .toString()
+        _currentOperationString.value = newValue
+        setNewSelection(selectionStart, digit)
+        expression.expressionString = _currentOperationString.value
         _currentResult.value = expression.calculate().toString()
     }
-    //TODO("Fix result output")
-    fun insertOperation(editText: EditText, operation: String) {
-        val startPosition = getSelectionStart(editText)
-        val endPosition = getSelectionEnd(editText)
-        if (startPosition == 0
-            || _currentOperationString.value!!.isEmpty()
-            || isPlacedNearOperation(startPosition, endPosition)
-        ) {
-            snackbarMessage.value = "Your message here"
-        } else {
-            insertDigit(editText, operation)
-        }
 
+    //TODO Fix this method
+    fun insertOperation(operation: String, selectionStart: Int, selectionEnd: Int) {
+        when {
+            selectionStart == 0 -> {
+                snackbarMessage.value = "Invalid operation placement!"
+            }
+
+            isSelectionNearOperation(selectionStart, selectionEnd) -> {
+                if (
+                    pattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString())
+                    && pattern.containsMatchIn(_currentOperationString.value!![selectionEnd].toString())
+                ) {
+                    snackbarMessage.value = "Invalid operation placement!"
+                } else {
+                    replaceNearOperation(operation, selectionStart, selectionEnd)
+                }
+            }
+
+            else -> {
+                insertDigit(operation, selectionStart, selectionEnd)
+            }
+        }
     }
 
     fun insertMinus(editText: EditText) {
@@ -54,21 +72,26 @@ class CalculatorViewModel : ViewModel() {
         _currentOperationString.value = ""
     }
 
-    private fun getSelectionEnd(editText: EditText): Int {
-        return editText.selectionEnd
+    private fun replaceNearOperation(digit: String, selectionStart: Int, selectionEnd: Int) {
+        if (pattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString())) {
+            insertDigit(digit, selectionStart - 1, selectionStart - 1)
+        }
+        if (pattern.containsMatchIn(_currentOperationString.value!![selectionEnd].toString())) {
+            insertDigit(digit, selectionEnd, selectionEnd)
+        }
     }
 
-    private fun getSelectionStart(editText: EditText): Int {
-        return editText.selectionStart
-    }
-
-    private fun isPlacedNearOperation(startPosition: Int, endPosition: Int): Boolean {
-        val pattern = Regex("[+\\-×/^]")
+    private fun isSelectionNearOperation(startPosition: Int, endPosition: Int): Boolean {
         val leftChar = _currentOperationString.value!![startPosition - 1]
-        if (_currentOperationString.value!!.length == endPosition){
+        if (_currentOperationString.value!!.length == endPosition) {
             return pattern.containsMatchIn(leftChar.toString())
         }
         val rightChar = _currentOperationString.value!![endPosition]
         return pattern.containsMatchIn(leftChar.toString()) || pattern.containsMatchIn(rightChar.toString())
+    }
+
+    private fun setNewSelection(selectionStart: Int, digit: String) {
+        _selectionStart.value = selectionStart + digit.length
+        _selectionEnd.value = selectionStart + digit.length
     }
 }
