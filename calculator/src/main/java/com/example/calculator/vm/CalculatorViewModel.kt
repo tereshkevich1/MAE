@@ -34,7 +34,6 @@ class CalculatorViewModel : ViewModel() {
         _currentResult.value = expression.calculate().toString()
     }
 
-    //TODO Fix this method
     fun insertOperation(operation: String, selectionStart: Int, selectionEnd: Int) {
         when {
             selectionStart == 0 -> {
@@ -42,7 +41,9 @@ class CalculatorViewModel : ViewModel() {
             }
 
             isSelectionNearOperation(selectionStart, selectionEnd) -> {
-                if (
+                if(_currentOperationString.value!!.length == selectionEnd){
+                    replaceNearOperation(operation, selectionStart, selectionEnd)
+                } else if (
                     pattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString())
                     && pattern.containsMatchIn(_currentOperationString.value!![selectionEnd].toString())
                 ) {
@@ -73,11 +74,15 @@ class CalculatorViewModel : ViewModel() {
     }
 
     private fun replaceNearOperation(digit: String, selectionStart: Int, selectionEnd: Int) {
-        if (pattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString())) {
-            insertDigit(digit, selectionStart - 1, selectionStart - 1)
-        }
-        if (pattern.containsMatchIn(_currentOperationString.value!![selectionEnd].toString())) {
-            insertDigit(digit, selectionEnd, selectionEnd)
+        when{
+            pattern.containsMatchIn(_currentOperationString.value!![selectionStart-1].toString()) ->{
+                insertDigit(digit, selectionStart-1, selectionStart)
+
+            }
+            pattern.containsMatchIn(_currentOperationString.value!![selectionEnd].toString()) ->{
+                insertDigit(digit, selectionEnd, selectionEnd+1)
+
+            }
         }
     }
 
