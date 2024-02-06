@@ -220,6 +220,7 @@
                     android:id="@+id/button_minus"
                     style="@style/OperationButtonStyle"
                     android:contentDescription="@string/minus"
+                    android:onClick="@{(view) -> viewModel.insertMinus(inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     app:icon="@drawable/baseline_remove_24"
                     app:iconGravity="start"
                     app:iconSize="35dp" />
@@ -294,6 +295,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_comma"
                     style="@style/NumberButtonStyle"
+                    android:onClick="@{(view) -> viewModel.insertComma(inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:text="@string/comma" />
 
                 <Space

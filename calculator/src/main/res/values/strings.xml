@@ -10,7 +10,7 @@
     <string name="eight">8</string>
     <string name="nine">9</string>
     <string name="zero">0</string>
-    <string name="comma">,</string>
+    <string name="comma">.</string>
     <string name="clear">С</string>
     <string name="pow">pow</string>
     <string name="pow_string">^</string>
