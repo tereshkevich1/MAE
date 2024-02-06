@@ -1,6 +1,5 @@
 package com.example.calculator.vm
 
-import android.widget.EditText
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,15 +22,49 @@ class CalculatorViewModel : ViewModel() {
 
     val snackbarMessage = MutableLiveData<String>()
 
-    private val pattern = Regex("[+\\-×/^]")
-    fun insertDigit(digit: String, selectionStart: Int, selectionEnd: Int) {
-        val newValue = StringBuilder(_currentOperationString.value ?: "")
+    private val pattern = Regex("[+×/^\\-]")
+    private val minusPattern = Regex("[/×^]")
+
+    fun insert(digit: String, selectionStart: Int, selectionEnd: Int) {
+        if (_currentOperationString.value!!.length + digit.length > 50) {
+            snackbarMessage.value = "Expression cannot be longer than 50 characters!"
+            return
+        }
+        if (digit == "0" && (selectionStart == 0 || _currentOperationString.value!![selectionStart - 1] == '0')) {
+            snackbarMessage.value = "Cannot enter multiple zeros at the beginning of a number!"
+            return
+        }
+        _currentOperationString.value = StringBuilder(_currentOperationString.value ?: "")
             .replace(selectionStart, selectionEnd, digit)
             .toString()
-        _currentOperationString.value = newValue
         setNewSelection(selectionStart, digit)
-        expression.expressionString = _currentOperationString.value
-        _currentResult.value = expression.calculate().toString()
+        expression.setExpressionString(_currentOperationString.value)
+        if (hasLargePower()) {
+            snackbarMessage.value = "Calculation error: power too large!"
+            _currentResult.value = ""
+        } else {
+            val result = expression.calculate()
+            if(result.isNaN()){
+                _currentResult.value = ""
+            }
+            if (result.isInfinite()) {
+                snackbarMessage.value = "Calculation error: power too large!"
+                _currentResult.value = ""
+            } else {
+                _currentResult.value = result.toString()
+            }
+        }
+    }
+
+    fun insertComma(selectionStart: Int, selectionEnd: Int) {
+        if (_currentOperationString.value!!.length + 1 > 50) {
+            snackbarMessage.value = "Expression cannot be longer than 50 characters!"
+            return
+        }
+        _currentOperationString.value = StringBuilder(_currentOperationString.value ?: "")
+            .replace(selectionStart, selectionEnd, ",")
+            .toString()
+        setNewSelection(selectionStart, ",")
     }
 
     fun insertOperation(operation: String, selectionStart: Int, selectionEnd: Int) {
@@ -39,7 +72,6 @@ class CalculatorViewModel : ViewModel() {
             selectionStart == 0 -> {
                 snackbarMessage.value = "Invalid operation placement!"
             }
-
             isSelectionNearOperation(selectionStart, selectionEnd) -> {
                 if(_currentOperationString.value!!.length == selectionEnd){
                     replaceNearOperation(operation, selectionStart, selectionEnd)
@@ -54,18 +86,30 @@ class CalculatorViewModel : ViewModel() {
             }
 
             else -> {
-                insertDigit(operation, selectionStart, selectionEnd)
+                insert(operation, selectionStart, selectionEnd)
             }
         }
     }
 
-    fun insertMinus(editText: EditText) {
-
+    fun insertMinus(selectionStart: Int, selectionEnd: Int) {
+        if (selectionStart == 0 || !minusPattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString())) {
+            snackbarMessage.value = "Minus can only be placed after /, *, ^"
+            return
+        }
+        if (_currentOperationString.value!![selectionStart - 1] == '-') {
+            _currentOperationString.value = _currentOperationString.value!!.replaceRange(selectionStart - 1, selectionEnd, "")
+        } else {
+            insert("-", selectionStart, selectionEnd)
+        }
     }
 
     fun evaluate() {
-        _currentOperationString.value = _currentResult.value
-        _currentResult.value = ""
+        if(_currentResult.value == ""){
+            snackbarMessage.value = "Invalid expression!"
+        } else{
+            _currentOperationString.value = _currentResult.value
+            _currentResult.value = ""
+        }
     }
 
     fun clear() {
@@ -76,23 +120,27 @@ class CalculatorViewModel : ViewModel() {
     private fun replaceNearOperation(digit: String, selectionStart: Int, selectionEnd: Int) {
         when{
             pattern.containsMatchIn(_currentOperationString.value!![selectionStart-1].toString()) ->{
-                insertDigit(digit, selectionStart-1, selectionStart)
-
+                insert(digit, selectionStart-1, selectionStart)
             }
             pattern.containsMatchIn(_currentOperationString.value!![selectionEnd].toString()) ->{
-                insertDigit(digit, selectionEnd, selectionEnd+1)
-
+                insert(digit, selectionEnd, selectionEnd+1)
             }
         }
     }
 
-    private fun isSelectionNearOperation(startPosition: Int, endPosition: Int): Boolean {
-        val leftChar = _currentOperationString.value!![startPosition - 1]
-        if (_currentOperationString.value!!.length == endPosition) {
-            return pattern.containsMatchIn(leftChar.toString())
+    private fun hasLargePower(): Boolean {
+        val parts = _currentOperationString.value!!.split("^")
+        for (i in 1 until parts.size) {
+            if (parts[i].toDoubleOrNull() ?: 0.0 > 1000) { // replace 1000 with your threshold
+                return true
+            }
         }
-        val rightChar = _currentOperationString.value!![endPosition]
-        return pattern.containsMatchIn(leftChar.toString()) || pattern.containsMatchIn(rightChar.toString())
+        return false
+    }
+    private fun isSelectionNearOperation(startPosition: Int, endPosition: Int): Boolean {
+        val leftChar = if (startPosition > 0) _currentOperationString.value!![startPosition - 1] else null
+        val rightChar = if (endPosition < _currentOperationString.value!!.length) _currentOperationString.value!![endPosition] else null
+        return (leftChar != null && pattern.containsMatchIn(leftChar.toString())) || (rightChar != null && pattern.containsMatchIn(rightChar.toString()))
     }
 
     private fun setNewSelection(selectionStart: Int, digit: String) {

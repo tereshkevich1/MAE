@@ -132,7 +132,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_seven"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertDigit((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/seven"
                     android:text="@string/seven" />
 
@@ -144,7 +144,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_eight"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertDigit((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/eight"
                     android:text="@string/eight" />
 
@@ -156,7 +156,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_nine"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertDigit((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/nine"
                     android:text="@string/nine" />
 
@@ -182,7 +182,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_four"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertDigit((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/four"
                     android:text="@string/four" />
 
@@ -194,7 +194,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_five"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertDigit((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/five"
                     android:text="@string/five" />
 
@@ -207,7 +207,7 @@
                     android:id="@+id/button_six"
                     style="@style/NumberButtonStyle"
                     android:gravity="center"
-                    android:onClick="@{(view) -> viewModel.insertDigit((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/six"
                     android:text="@string/six" />
 
@@ -232,7 +232,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_one"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertDigit((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/one"
                     android:text="@string/one" />
 
@@ -244,7 +244,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_two"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertDigit((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/two"
                     android:text="@string/two" />
 
@@ -256,7 +256,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_three"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertDigit((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/three"
                     android:text="@string/three" />
 
@@ -282,7 +282,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_zero"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertDigit((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/zero"
                     android:text="@string/zero" />
 
