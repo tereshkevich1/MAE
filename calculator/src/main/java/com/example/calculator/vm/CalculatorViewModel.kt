@@ -3,7 +3,18 @@ package com.example.calculator.vm
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.calculator.Constants.INVALID_EXPRESSION_WARNING
+import com.example.calculator.Constants.LARGE_POWER_THRESHOLD
+import com.example.calculator.Constants.LARGE_POWER_WARNING
+import com.example.calculator.Constants.LONG_EXPRESSION_WARNING
+import com.example.calculator.Constants.MAX_EXPRESSION_LENGTH
+import com.example.calculator.Constants.MULTIPLE_POINTS_WARNING
+import com.example.calculator.Constants.MULTIPLE_ZEROS_WARNING
+import com.example.calculator.Constants.OPERATION_PLACEMENT_WARNING
+import com.example.calculator.Constants.minusPattern
+import com.example.calculator.Constants.pattern
 import org.mariuszgromada.math.mxparser.Expression
+
 
 class CalculatorViewModel : ViewModel() {
     private val expression = Expression()
@@ -22,20 +33,15 @@ class CalculatorViewModel : ViewModel() {
 
     val snackbarMessage = MutableLiveData<String>()
 
-    private val MAX_EXPRESSION_LENGTH = 50
-    private val LARGE_POWER_THRESHOLD = 1000
-    private val pattern = Regex("[+×/^\\-]")
-    private val minusPattern = Regex("[/×^]")
-
     fun insert(digit: String, selectionStart: Int, selectionEnd: Int) {
         if (_currentOperationString.value!!.length + digit.length > MAX_EXPRESSION_LENGTH) {
-            snackbarMessage.value = "Expression cannot be longer than $MAX_EXPRESSION_LENGTH characters!"
+            snackbarMessage.value = LONG_EXPRESSION_WARNING
             return
         }
         if (digit == "0") {
             if (_currentOperationString.value!! != "" && selectionStart != 0) {
                 if (_currentOperationString.value!![selectionStart - 1] == '0') {
-                    snackbarMessage.value = "Cannot enter multiple zeros at the beginning of a number!"
+                    snackbarMessage.value = MULTIPLE_ZEROS_WARNING
                     return
                 }
             }
@@ -57,12 +63,12 @@ class CalculatorViewModel : ViewModel() {
         setNewSelection(selectionStart, digit)
         expression.expressionString = _currentOperationString.value
         if (hasLargePower()) {
-            snackbarMessage.value = "Calculation error: power too large!"
+            snackbarMessage.value = LARGE_POWER_WARNING
             _currentResult.value = ""
         } else {
             val result = expression.calculate()
             if (result.isNaN() || result.isInfinite()) {
-                snackbarMessage.value = "Invalid expression!"
+                snackbarMessage.value = INVALID_EXPRESSION_WARNING
                 _currentResult.value = ""
             } else {
                 _currentResult.value = result.toString()
@@ -73,7 +79,7 @@ class CalculatorViewModel : ViewModel() {
 
     fun insertComma(selectionStart: Int, selectionEnd: Int) {
         if (_currentOperationString.value!!.length + 1 > MAX_EXPRESSION_LENGTH) {
-            snackbarMessage.value = "Expression cannot be longer than $MAX_EXPRESSION_LENGTH characters!"
+            snackbarMessage.value = LONG_EXPRESSION_WARNING
             return
         }
         if (_currentOperationString.value!! != "") {
@@ -81,13 +87,7 @@ class CalculatorViewModel : ViewModel() {
                 if (_currentOperationString.value!!.substring(_currentOperationString.value!!.indexOf('.') + 1)
                         .contains('.')
                 ) {
-                    snackbarMessage.value = "Cannot enter multiple decimal points in one number!"
-                    return
-                }
-            }
-            if (_currentOperationString.value!!.substring(0, selectionStart).contains('.')) {
-                if (_currentOperationString.value!!.substring(_currentOperationString.value!!.lastIndexOf('.') + 1).length >= 3) {
-                    snackbarMessage.value = "Cannot enter more than two digits after a decimal point!"
+                    snackbarMessage.value = MULTIPLE_POINTS_WARNING
                     return
                 }
             }
@@ -104,7 +104,7 @@ class CalculatorViewModel : ViewModel() {
     fun insertOperation(operation: String, selectionStart: Int, selectionEnd: Int) {
         when {
             selectionStart == 0 -> {
-                snackbarMessage.value = "Invalid operation placement!"
+                snackbarMessage.value = OPERATION_PLACEMENT_WARNING
             }
 
             isSelectionNearOperation(selectionStart, selectionEnd) -> {
@@ -114,7 +114,7 @@ class CalculatorViewModel : ViewModel() {
                     pattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString())
                     && pattern.containsMatchIn(_currentOperationString.value!![selectionEnd].toString())
                 ) {
-                    snackbarMessage.value = "Invalid operation placement!"
+                    snackbarMessage.value = OPERATION_PLACEMENT_WARNING
                 } else {
                     replaceNearOperation(operation, selectionStart, selectionEnd)
                 }
@@ -129,7 +129,7 @@ class CalculatorViewModel : ViewModel() {
     fun insertMinus(selectionStart: Int, selectionEnd: Int) {
         when {
             selectionStart == 0 -> {
-                snackbarMessage.value = "Invalid operation placement!"
+                snackbarMessage.value = OPERATION_PLACEMENT_WARNING
             }
 
             _currentOperationString.value!![selectionStart - 1] == '+' -> {
@@ -150,7 +150,7 @@ class CalculatorViewModel : ViewModel() {
 
     fun evaluate() {
         if (_currentResult.value.isNullOrEmpty()) {
-            snackbarMessage.value = "Invalid expression!"
+            snackbarMessage.value = INVALID_EXPRESSION_WARNING
         } else {
             _currentOperationString.value = _currentResult.value
             _currentResult.value = ""
