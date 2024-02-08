@@ -76,6 +76,22 @@ class CalculatorViewModel : ViewModel() {
         }
     }
 
+    fun removeSymbol(selectionStart: Int, selectionEnd: Int){
+        if (selectionStart == 0){
+            return
+        }
+        if (selectionStart == selectionEnd){
+            insert("",selectionStart-1,selectionEnd)
+        }
+        if (isSelectionNearOperation(selectionStart,selectionEnd)){
+            if (
+                pattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString())
+                && pattern.containsMatchIn(_currentOperationString.value!![selectionEnd].toString())
+            ){
+                replaceNearOperation("",selectionStart,selectionEnd)
+            }
+        }
+    }
 
     fun insertComma(selectionStart: Int, selectionEnd: Int) {
         if (_currentOperationString.value!!.length + 1 > MAX_EXPRESSION_LENGTH) {
@@ -165,11 +181,11 @@ class CalculatorViewModel : ViewModel() {
     private fun replaceNearOperation(digit: String, selectionStart: Int, selectionEnd: Int) {
         when {
             pattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString()) -> {
-                insert(digit, selectionStart - 1, selectionStart)
+                insert(digit, selectionStart - 1, selectionEnd)
             }
 
             pattern.containsMatchIn(_currentOperationString.value!![selectionEnd].toString()) -> {
-                insert(digit, selectionEnd, selectionEnd + 1)
+                insert(digit, selectionStart, selectionEnd + 1)
             }
         }
     }

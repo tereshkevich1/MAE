@@ -11,12 +11,16 @@ import com.example.calculator.databinding.ActivityMainBinding
 import com.example.calculator.vm.CalculatorViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import org.mariuszgromada.math.mxparser.License
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: CalculatorViewModel
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        License.iConfirmNonCommercialUse("Nikita Kurganovich")
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this)[CalculatorViewModel::class.java]
         val view = binding.root
