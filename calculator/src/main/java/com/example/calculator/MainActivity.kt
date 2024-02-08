@@ -5,13 +5,12 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.calculator.databinding.ActivityMainBinding
 import com.example.calculator.vm.CalculatorViewModel
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: CalculatorViewModel
@@ -22,18 +21,17 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[CalculatorViewModel::class.java]
         val view = binding.root
         binding.viewModel = viewModel
-        setContentView(view)
+        binding.lifecycleOwner = this
 
+        viewModel.snackbarMessage.observe(this){ message ->
+            Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
+        }
 
-        val editText: EditText = findViewById(R.id.inputEditText)
-        editText.showSoftInputOnFocus = false
-        editText.requestFocus()
-        viewModel.currentOperationString.observe(this, Observer { result->
-            editText.text.clear()
-            editText.text.append(result)
-        })
+        binding.inputEditText.showSoftInputOnFocus = false
+        binding.inputEditText.requestFocus()
 
         setupButtonListeners()
+        setContentView(view)
     }
 
     private val onButtonTouchListener: View.OnTouchListener =
@@ -47,8 +45,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     private fun setupButtonListeners() {
-        val rootView = findViewById<ViewGroup>(android.R.id.content)
-        setTouchListenerRecursively(rootView)
+        setTouchListenerRecursively(binding.root)
     }
 
 
