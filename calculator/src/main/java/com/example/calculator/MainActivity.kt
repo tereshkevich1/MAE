@@ -13,12 +13,16 @@ import com.example.calculator.databinding.ActivityMainBinding
 import com.example.calculator.vm.CalculatorViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import org.mariuszgromada.math.mxparser.License
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: CalculatorViewModel
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        License.iConfirmNonCommercialUse("Nikita Kurganovich")
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this)[CalculatorViewModel::class.java]
         val view = binding.root
@@ -31,7 +35,17 @@ class MainActivity : AppCompatActivity() {
 
         binding.inputEditText.showSoftInputOnFocus = false
         binding.inputEditText.requestFocus()
+        viewModel.currentOperationString.observe(this) { newValue ->
+            binding.inputEditText.setText(newValue)
+        }
 
+        viewModel.selectionStart.observe(this) { newStart ->
+            binding.inputEditText.setSelection(newStart, binding.inputEditText.selectionEnd)
+        }
+
+        viewModel.selectionEnd.observe(this){ newEnd ->
+            binding.inputEditText.setSelection(binding.inputEditText.selectionStart, newEnd)
+        }
         setupButtonListeners()
         setContentView(view)
     }

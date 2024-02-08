@@ -14,7 +14,6 @@ pluginManagement {
         id("com.android.application").version(agpVersion)
         id("com.android.library").version(agpVersion)
         kotlin("jvm") version "1.9.22"
-        id("com.android.application") version "8.1.0"
         id("org.jetbrains.kotlin.android") version "1.9.21"
     }
 }
