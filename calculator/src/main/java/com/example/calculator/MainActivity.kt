@@ -1,10 +1,12 @@
 package com.example.calculator
 
 import android.animation.ValueAnimator
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.calculator.databinding.ActivityMainBinding
@@ -33,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         setupButtonListeners()
         setContentView(view)
     }
+
+
 
     private val onButtonTouchListener: View.OnTouchListener =
         View.OnTouchListener { view, motionEvent ->
@@ -66,9 +70,17 @@ class MainActivity : AppCompatActivity() {
         animator.duration = 1000
         animator.addUpdateListener { animation ->
             val value = animation.animatedValue as Float
-            button.cornerRadius = (value * 150).toInt()
+            button.cornerRadius = if (isHorizontalLayout()) {
+                (value * 150).toInt()
+            } else {
+                (value * 70).toInt()
+            }
         }
         animator.start()
+    }
+
+    private fun isHorizontalLayout(): Boolean {
+        return resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
     }
 
 }

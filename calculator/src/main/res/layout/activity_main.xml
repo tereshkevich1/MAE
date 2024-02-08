@@ -32,14 +32,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_weight="3">
 
-
             <EditText
                 android:id="@+id/inputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_gravity="bottom"
-                android:layout_weight="70"
+                android:layout_weight="75"
                 android:background="@null"
+                android:contentDescription="@string/equals"
                 android:gravity="bottom|end"
                 android:labelFor="@id/resultTextView"
                 android:maxHeight="100dp"
@@ -48,17 +48,28 @@
                 android:padding="0dp"
                 android:scrollbars="vertical"
                 android:text="@{viewModel.currentOperationString}"
-                android:textSize="48sp" />
+                android:textSize="48sp"
+                android:autofillHints=""
+                tools:ignore="LabelFor" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/resultTextView"
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="30"
-                android:gravity="end"
-                android:text="@{viewModel.currentResult}"
-                android:textIsSelectable="true"
-                android:textSize="48sp" />
+                android:layout_weight="25">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/resultTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:gravity="end"
+                    android:scrollbars="horizontal"
+                    android:scrollHorizontally="true"
+                    android:text="@{viewModel.currentResult}"
+                    android:textIsSelectable="true"
+                    android:textSize="32sp" />
+            </HorizontalScrollView>
+
         </LinearLayout>
 
         <TableLayout
@@ -72,8 +83,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linerLayout"
-            app:layout_constraintVertical_weight="5">
-
+            app:layout_constraintVertical_weight="5.5">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -82,8 +92,8 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_clear"
                     style="@style/OperationButtonStyle"
-                    android:text="@string/clear"
-                    android:onClick="@{(view)->viewModel.clear()}" />
+                    android:onClick="@{(view)->viewModel.clear()}"
+                    android:text="@string/clear" />
 
                 <Space
                     android:layout_width="0dp"
@@ -93,8 +103,9 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_sqr"
                     style="@style/OperationButtonStyle"
-                    app:icon="@drawable/square_root"
-                    app:iconSize="40dp" />
+                    android:contentDescription="@string/sqr"
+                    app:icon="@drawable/inverse"
+                    app:iconSize="56dp" />
 
                 <Space
                     android:layout_width="0dp"
@@ -104,11 +115,11 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_pow"
                     style="@style/OperationButtonStyle"
-                    app:icon="@drawable/caret_up"
-                    app:iconSize="45dp"
+                    android:contentDescription="@string/pow"
                     android:onClick="@{(view) -> viewModel.insertOperation(inputEditText, (String)view.getTag())}"
                     android:tag="@string/pow_string"
-                />
+                    app:icon="@drawable/caret_up"
+                    app:iconSize="45dp" />
 
                 <Space
                     android:layout_width="0dp"
@@ -118,9 +129,10 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_divide"
                     style="@style/OperationButtonStyle"
-                    app:icon="@drawable/divide"
+                    android:contentDescription="@string/divide"
                     android:onClick="@{(view) -> viewModel.insertOperation(inputEditText, (String)view.getTag())}"
                     android:tag="@string/divide_string"
+                    app:icon="@drawable/divide"
                     app:iconSize="40dp" />
 
             </TableRow>
@@ -320,9 +332,9 @@
                     android:id="@+id/equalsButton"
                     style="@style/EqualsButtonStyle"
                     android:contentDescription="@string/equals"
+                    android:onClick="@{() -> viewModel.evaluate()}"
                     app:icon="@drawable/baseline_drag_handle_24"
                     app:iconGravity="end"
-                    android:onClick="@{() -> viewModel.evaluate()}"
                     app:iconSize="30dp" />
             </TableRow>
 

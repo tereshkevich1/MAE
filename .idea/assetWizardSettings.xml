@@ -90,7 +90,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\Sergey\icon1.svg" />
+                                                <entry key="imagePath" value="C:\Users\Sergey\iconMMPE.svg" />
                                                 <entry key="scalingPercent" value="48" />
                                               </map>
                                             </option>
@@ -119,6 +119,12 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="backgroundAssetType" value="COLOR" />
+                                      <entry key="backgroundColor" value="000000" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -323,8 +329,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="caret_up" />
-                            <entry key="sourceFile" value="C:\Users\Sergey\Downloads\caret-up-svgrepo-com.svg" />
+                            <entry key="outputName" value="inverse" />
+                            <entry key="sourceFile" value="C:\Users\Sergey\inverse.svg" />
                           </map>
                         </option>
                       </PersistentState>
