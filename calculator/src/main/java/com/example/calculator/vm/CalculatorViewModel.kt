@@ -10,6 +10,7 @@ import com.example.calculator.Constants.LONG_EXPRESSION_WARNING
 import com.example.calculator.Constants.MAX_EXPRESSION_LENGTH
 import com.example.calculator.Constants.MULTIPLE_ZEROS_WARNING
 import com.example.calculator.Constants.OPERATION_PLACEMENT_WARNING
+import com.example.calculator.Constants.UNABLE_TO_PERFORM_WARNING
 import com.example.calculator.Constants.minusPattern
 import com.example.calculator.Constants.pattern
 import org.mariuszgromada.math.mxparser.Expression
@@ -32,8 +33,21 @@ class CalculatorViewModel : ViewModel() {
 
     val snackbarMessage = MutableLiveData<String>()
 
-    private val isMaxSize: Boolean get() = _currentOperationString.value!!.length == MAX_EXPRESSION_LENGTH
+    private val isMaxSize: Boolean get() = _currentOperationString.value!!.length >= MAX_EXPRESSION_LENGTH
 
+    fun reverseFraction() {
+        when {
+            _currentResult.value!! == "" -> {
+                snackbarMessage.value = UNABLE_TO_PERFORM_WARNING
+            }
+
+            else -> {
+                expression.expressionString = "1/(${_currentResult.value})"
+                _currentOperationString.value = expression.calculate().toString()
+                _currentResult.value = ""
+            }
+        }
+    }
 
     fun insert(digit: String, selectionStart: Int, selectionEnd: Int) {
         when {
@@ -73,35 +87,37 @@ class CalculatorViewModel : ViewModel() {
         if (selectionStart == 0) {
             return
         }
-        if (selectionStart == selectionEnd) {
-            insert("", selectionStart - 1, selectionEnd)
-        }
-        if (isSelectionNearOperation(selectionStart, selectionEnd)) {
-            if (
-                pattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString())
-                && pattern.containsMatchIn(_currentOperationString.value!![selectionEnd].toString())
-            ) {
-                replaceNearOperation("", selectionStart, selectionEnd)
-            }
-        }
+        insert("", selectionStart - 1, selectionEnd)
     }
 
 
     fun insertComma(selectionStart: Int, selectionEnd: Int) {
-        if (isMaxSize) {
-            snackbarMessage.value = LONG_EXPRESSION_WARNING
-            return
-        }
-        if (_currentOperationString.value!!.isNotEmpty()) {
-            if (canInsertComma(selectionStart,selectionEnd)){
-                _currentOperationString.value = StringBuilder(_currentOperationString.value ?: "")
-                    .replace(selectionStart, selectionEnd, ".")
-                    .toString()
-                setNewSelection(selectionStart, ".")
+        when {
+            isMaxSize -> {
+                snackbarMessage.value = LONG_EXPRESSION_WARNING
+
             }
-        } else {
-            _currentOperationString.value = "0."
-            setNewSelection(selectionStart, _currentOperationString.value!!)
+
+            _currentOperationString.value!!.isNotEmpty() -> {
+                if (canInsertComma(selectionStart, selectionEnd)) {
+                    when {
+                        selectionStart == 0
+                                || pattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString()) -> {
+                            insert("0.", selectionStart, selectionEnd)
+
+                        }
+
+                        else -> {
+                            insert(".", selectionStart, selectionEnd)
+
+                        }
+                    }
+                }
+            }
+
+            else -> {
+                insert("0.", selectionStart, selectionEnd)
+            }
         }
     }
 
@@ -136,6 +152,11 @@ class CalculatorViewModel : ViewModel() {
                 snackbarMessage.value = OPERATION_PLACEMENT_WARNING
             }
 
+            selectionEnd != _currentOperationString.value!!.length
+                    && minusPattern.containsMatchIn(_currentOperationString.value!![selectionEnd].toString()) -> {
+                insert("-", selectionStart, selectionEnd + 1)
+            }
+
             _currentOperationString.value!![selectionStart - 1] == '+' -> {
                 insert("-", selectionStart - 1, selectionStart)
             }
@@ -144,6 +165,11 @@ class CalculatorViewModel : ViewModel() {
                 if (minusPattern.containsMatchIn(_currentOperationString.value!![selectionStart - 2].toString())) {
                     insert("-", selectionStart - 2, selectionEnd)
                 }
+            }
+
+            minusPattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString())
+                    && _currentOperationString.value!![selectionEnd] == '-' -> {
+                insert("-", selectionStart - 1, selectionEnd + 1)
             }
 
             else -> {
@@ -168,13 +194,19 @@ class CalculatorViewModel : ViewModel() {
 
     private fun canInsertComma(selectionStart: Int, selectionEnd: Int): Boolean {
         if (selectionStart > 0 && _currentOperationString.value!![selectionStart - 1].isDigit()) {
-            val partsBefore = _currentOperationString.value!!.substring(0,selectionStart + 1).split(pattern)
-            val partsAfter = _currentOperationString.value!!.substring(selectionEnd - 1).split(pattern)
+            if (selectionEnd == _currentOperationString.value!!.length) {
+                return !_currentOperationString.value!!.substring(0, selectionEnd)
+                    .split(pattern).last().contains('.')
+            }
 
-            return !partsAfter[0].contains('.') && !partsBefore.last().contains('.')
+            return !_currentOperationString.value!!.substring(selectionEnd - 1)
+                .split(pattern)[0].contains('.')
+                    && !_currentOperationString.value!!.substring(0, selectionStart + 1)
+                .split(pattern).last().contains('.')
         }
-        if (selectionStart==0) return false
-        return _currentOperationString.value!![selectionStart-1] != '.'
+        if (selectionStart == 0) return !_currentOperationString.value!!
+            .split(pattern)[0].contains('.')
+        return _currentOperationString.value!![selectionStart - 1] != '.'
     }
 
     private fun replaceNearOperation(digit: String, selectionStart: Int, selectionEnd: Int) {
@@ -216,13 +248,16 @@ class CalculatorViewModel : ViewModel() {
         } else {
             val result = expression.calculate()
             if (result.isNaN() || result.isInfinite()) {
-                snackbarMessage.value = INVALID_EXPRESSION_WARNING
+                if (snackbarMessage.value != INVALID_EXPRESSION_WARNING){
+                    snackbarMessage.value = INVALID_EXPRESSION_WARNING
+                }
                 _currentResult.value = ""
             } else {
                 _currentResult.value = result.toString()
             }
         }
     }
+
     private fun setNewSelection(selectionStart: Int, digit: String) {
         _selectionStart.value = selectionStart + digit.length
         _selectionEnd.value = selectionStart + digit.length
