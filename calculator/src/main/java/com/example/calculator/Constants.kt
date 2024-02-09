@@ -5,6 +5,7 @@ object Constants {
     const val LARGE_POWER_THRESHOLD = 1000
 
     val pattern = Regex("[+×/^\\-]")
+    val zeroPatter = Regex("[.+×/^\\-]")
     val minusPattern = Regex("[/×^]")
 
     const val MULTIPLE_POINTS_WARNING = "Cannot enter multiple decimal points in one number!"

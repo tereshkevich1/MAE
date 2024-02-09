@@ -28,6 +28,30 @@ class CalculatorViewModelTest {
     fun onCleared() {
     }
 
+    //TODO need to rewrite this test
+    @Test
+    fun canInsertComma(){
+        viewModel.insert("545×5435^1+5",0,0)
+
+        viewModel.insertComma(1, 1)
+        assertEquals("5.45×5435^1+5", viewModel.currentOperationString.value)
+        viewModel.insertComma(0, 0)
+        assertEquals("5.45×5435^1+5", viewModel.currentOperationString.value)
+
+        viewModel.clear()
+        viewModel.insert("545×54.35^1+5878",0,0)
+
+        viewModel.insertComma(1, 1)
+        assertEquals("5.45×54.35^1+5878", viewModel.currentOperationString.value)
+        viewModel.insertComma(0, 0)
+        assertEquals("5.45×54.35^1+5878", viewModel.currentOperationString.value)
+        viewModel.insertComma(15, 17)
+        assertEquals("5.45×54.35^1+58.", viewModel.currentOperationString.value)
+        viewModel.insertComma(13, 15)
+        assertEquals("5.45×54.35^1+58.", viewModel.currentOperationString.value)
+        viewModel.insertComma(13, 16)
+        assertEquals("5.45×54.35^1+.", viewModel.currentOperationString.value)
+    }
 
     @Test
     fun clear() {

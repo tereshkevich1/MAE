@@ -116,7 +116,6 @@
                     android:id="@+id/button_pow"
                     style="@style/OperationButtonStyle"
                     android:contentDescription="@string/pow"
-                    android:onClick="@{(view) -> viewModel.insertOperation(inputEditText, (String)view.getTag())}"
                     android:tag="@string/pow_string"
                     app:icon="@drawable/caret_up"
                     app:iconSize="45dp" />
@@ -130,7 +129,6 @@
                     android:id="@+id/button_divide"
                     style="@style/OperationButtonStyle"
                     android:contentDescription="@string/divide"
-                    android:onClick="@{(view) -> viewModel.insertOperation(inputEditText, (String)view.getTag())}"
                     android:tag="@string/divide_string"
                     app:icon="@drawable/divide"
                     app:iconSize="40dp" />
@@ -144,7 +142,6 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_seven"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"
                     android:tag="@string/seven"
                     android:text="@string/seven" />
 
@@ -156,7 +153,6 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_eight"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"
                     android:tag="@string/eight"
                     android:text="@string/eight" />
 
@@ -168,7 +164,6 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_nine"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"
                     android:tag="@string/nine"
                     android:text="@string/nine" />
 
@@ -181,7 +176,6 @@
                     android:id="@+id/button_multiply"
                     style="@style/OperationButtonStyle"
                     android:contentDescription="@string/multiply"
-                    android:onClick="@{(view) -> viewModel.insertOperation(inputEditText, (String)view.getTag())}"
                     android:tag="@string/multiply_string"
                     app:icon="@drawable/baseline_close_24"
                     app:iconSize="35dp" />
@@ -194,7 +188,6 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_four"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"
                     android:tag="@string/four"
                     android:text="@string/four" />
 
@@ -206,7 +199,6 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_five"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"
                     android:tag="@string/five"
                     android:text="@string/five" />
 
@@ -219,7 +211,6 @@
                     android:id="@+id/button_six"
                     style="@style/NumberButtonStyle"
                     android:gravity="center"
-                    android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"
                     android:tag="@string/six"
                     android:text="@string/six" />
 
@@ -244,7 +235,6 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_one"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"
                     android:tag="@string/one"
                     android:text="@string/one" />
 
@@ -256,7 +246,6 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_two"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"
                     android:tag="@string/two"
                     android:text="@string/two" />
 
@@ -268,7 +257,6 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_three"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"
                     android:tag="@string/three"
                     android:text="@string/three" />
 
@@ -281,7 +269,6 @@
                     android:id="@+id/button_plus"
                     style="@style/OperationButtonStyle"
                     android:contentDescription="@string/plus"
-                    android:onClick="@{(view) -> viewModel.insertOperation(inputEditText, (String)view.getTag())}"
                     android:tag="@string/plus_string"
                     app:icon="@drawable/baseline_add_24"
                     app:iconSize="35dp" />
@@ -294,7 +281,6 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_zero"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertDigit(inputEditText, (String)view.getTag())}"
                     android:tag="@string/zero"
                     android:text="@string/zero" />
 
