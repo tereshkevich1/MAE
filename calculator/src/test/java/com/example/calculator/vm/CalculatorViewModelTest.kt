@@ -91,6 +91,7 @@ class CalculatorViewModelTest {
         // Ask questions in TG, if there are any. Good luck, V
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringOperationAfterPlus_plusIsReplacedByEnteredSymbol()
     {
         viewModel.insert("545+",0,0)
@@ -99,6 +100,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringOperationAfterMultiply_multiplyIsReplacedByEnteredSymbol()
     {
         viewModel.insert("545×",0,0)
@@ -107,6 +109,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringOperationAfterDivision_divisionIsReplacedByEnteredSymbol()
     {
         viewModel.insert("545/",0,0)
@@ -115,6 +118,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringOperationAfterPower_powerIsReplacedByEnteredSymbol()
     {
         viewModel.insert("545^",0,0)
@@ -123,6 +127,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringOperationAfterMinus_minusIsReplacedByEnteredSymbol()
     {
         viewModel.insert("545-",0,0)
@@ -131,6 +136,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringOperationBeforePlus_plusIsReplacedByEnteredSymbol()
     {
         viewModel.insert("545+",0,0)
@@ -139,6 +145,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringOperationBeforeMultiply_multiplyIsReplacedByEnteredSymbol()
     {
         viewModel.insert("545×",0,0)
@@ -147,6 +154,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringOperationBeforeDivision_divisionIsReplacedByEnteredSymbol()
     {
         viewModel.insert("545/",0,0)
@@ -155,6 +163,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringOperationBeforePower_powerIsReplacedByEnteredSymbol()
     {
         viewModel.insert("545^",0,0)
@@ -163,6 +172,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringOperationBeforeMinus_minusIsReplacedByEnteredSymbol()
     {
         viewModel.insert("545-",0,0)
@@ -171,6 +181,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringMinusBeforePlus_plusIsReplacedByMinus()
     {
         viewModel.insert("545+792",0,0)
@@ -179,6 +190,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringMinusBeforeMultiply_multiplyIsReplacedByMinus()
     {
         viewModel.insert("545×792",0,0)
@@ -187,6 +199,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringMinusBeforeDivision_divisionIsReplacedByMinus()
     {
         viewModel.insert("545/792",0,0)
@@ -195,6 +208,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringMinusBeforePower_powerIsReplacedByMinus()
     {
         viewModel.insert("545^792",0,0)
@@ -203,6 +217,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringMinusAfterPlus_plusIsReplacedByMinus()
     {
         viewModel.insert("545+792",0,0)
@@ -211,6 +226,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringMinusAfterMultiply_minusIsJustEntered()
     {
         viewModel.insert("545×792",0,0)
@@ -219,6 +235,7 @@ class CalculatorViewModelTest {
         assertEquals(5,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringMinusAfterDivision_minusIsJustEntered()
     {
         viewModel.insert("545/792",0,0)
@@ -227,6 +244,7 @@ class CalculatorViewModelTest {
         assertEquals(5,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringMinusAfterPower_minusIsJustEntered()
     {
         viewModel.insert("545^792",0,0)
@@ -235,6 +253,7 @@ class CalculatorViewModelTest {
         assertEquals(5,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringMinusBetweenMultiplyAndMinus_oneMinusIsLeft()
     {
         viewModel.insert("545^-792",0,0)
@@ -243,6 +262,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringMinusBetweenDivisionAndMinus_oneMinusIsLeft()
     {
         viewModel.insert("545/-792",0,0)
@@ -251,6 +271,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringMinusBetweenPowerAndMinus_oneMinusIsLeft()
     {
         viewModel.insert("545^-792",0,0)
@@ -259,6 +280,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringMinusAfterMultiplyAndMinus_oneMinusIsLeft()
     {
         viewModel.insert("545^-792",0,0)
@@ -267,6 +289,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringMinusAfterDivisionAndMinus_oneMinusIsLeft()
     {
         viewModel.insert("545/-792",0,0)
@@ -275,6 +298,7 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringMinusAfterPowerAndMinus_oneMinusIsLeft()
     {
         viewModel.insert("545^-792",0,0)
@@ -283,12 +307,14 @@ class CalculatorViewModelTest {
         assertEquals(4,viewModel.selectionStart.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringTooPowerValue_largePowerWarning()
     {
         viewModel.insert("4^1000",0,0)
         assertEquals(LARGE_POWER_WARNING,viewModel.snackbarMessage.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_enteringPowerInsideValue_largePowerWarning()
     {
         viewModel.insert("12451000",0,0)
@@ -296,6 +322,7 @@ class CalculatorViewModelTest {
         assertEquals(LARGE_POWER_WARNING,viewModel.snackbarMessage.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_zeroDivision_invalidExpressionWarning()
     {
         viewModel.insert("489/0",0,0)
@@ -303,6 +330,7 @@ class CalculatorViewModelTest {
         assertEquals("",viewModel.currentResult .value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_commaDivision_invalidExpressionWarning()
     {
         viewModel.insert("489/.",0,0)
@@ -310,18 +338,21 @@ class CalculatorViewModelTest {
         assertEquals("",viewModel.currentResult .value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_tooLongExpression_longExpressionWarning()
     {
         viewModel.insert("1234567890+1234567890-123456789/123456789^123-13",0,0)
         assertEquals(LONG_EXPRESSION_WARNING,viewModel.snackbarMessage.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_severalZeros_multipleZerosWarning()
     {
         viewModel.insert("00",0,0)
         assertEquals(MULTIPLE_ZEROS_WARNING,viewModel.snackbarMessage.value)
     }
 
+    @Test
     // need a check
     fun viewModelGetSelectionStart_severalСommas_invalidExpressionWarning()
     {
@@ -330,6 +361,7 @@ class CalculatorViewModelTest {
         assertEquals("49.",viewModel.selectionStart.value)
     }
 
+    @Test
     // need a check
     fun viewModelGetSelectionStart_singleComma_invalidExpressionWarning()
     {
@@ -337,6 +369,7 @@ class CalculatorViewModelTest {
         assertEquals("17",viewModel.currentResult.value)
     }
 
+    @Test
     // some positive and obvious tests
     fun viewModelGetSelectionStart_sumOfPosAndNeg()
     {
@@ -344,18 +377,21 @@ class CalculatorViewModelTest {
         assertEquals("439",viewModel.currentResult.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_zeroPower()
     {
         viewModel.insert("489^0",0,0)
         assertEquals("1",viewModel.currentResult.value)
     }
 
+    @Test
     fun viewModelGetSelectionStart_sumOfNegAndNeg()
     {
         viewModel.insert("-489+-50",0,0)
         assertEquals("-539",viewModel.currentResult.value)
     }
 
+    @Test
     // need a check
     fun viewModelGetSelectionStart_division_fractionalNumber()
     {
