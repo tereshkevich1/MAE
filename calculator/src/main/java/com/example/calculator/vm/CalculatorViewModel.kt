@@ -3,7 +3,6 @@ package com.example.calculator.vm
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.calculator.Constants
 import com.example.calculator.Constants.INVALID_EXPRESSION_WARNING
 import com.example.calculator.Constants.LARGE_POWER_THRESHOLD
 import com.example.calculator.Constants.LARGE_POWER_WARNING
@@ -38,7 +37,7 @@ class CalculatorViewModel : ViewModel() {
 
     private val isResultEmpty: Boolean get() = _currentResult.value!! == ""
 
-    private val isSelectionOnStringEnd: Boolean get() = _selectionEnd.value != _currentOperationString.value!!.length
+    private val isSelectionOnStringEnd: Boolean get() = _selectionEnd.value == _currentOperationString.value!!.length
 
     fun reverseFraction() {
         if (isResultEmpty) {
@@ -124,7 +123,7 @@ class CalculatorViewModel : ViewModel() {
                 snackbarMessage.value = OPERATION_PLACEMENT_WARNING
             }
 
-            !isSelectionOnStringEnd
+            isSelectionOnStringEnd
                     && minusPattern.containsMatchIn(_currentOperationString.value!![selectionEnd].toString()) -> {
                 insert("-", selectionStart, selectionEnd + 1)
             }
@@ -140,10 +139,12 @@ class CalculatorViewModel : ViewModel() {
             }
 
             minusPattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString()) -> {
-                if (isSelectionOnStringEnd) {
+                if (!isSelectionOnStringEnd) {
                     insert("-", selectionStart, selectionEnd)
                 } else if (_currentOperationString.value!![selectionEnd] == '-') {
                     insert("-", selectionStart - 1, selectionEnd + 1)
+                } else {
+                    insert("-", selectionStart, selectionEnd)
                 }
             }
 
@@ -239,16 +240,13 @@ class CalculatorViewModel : ViewModel() {
     }
 
     private fun tryReplaceNearOperation(operation: String, selectionStart: Int, selectionEnd: Int) {
-        if (isSelectionOnStringEnd) {
+        if(isSelectionOnStringEnd){
             replaceNearOperation(operation, selectionStart, selectionEnd)
         } else if (
-            Constants.isContainInPattern(
-                _currentOperationString.value!!,
-                selectionStart - 1,
-                selectionEnd
-            )
+            pattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString())
+            && pattern.containsMatchIn(_currentOperationString.value!![selectionEnd].toString())
         ) {
-            snackbarMessage.value = OPERATION_PLACEMENT_WARNING
+            snackbarMessage.value = "Invalid operation placement!"
         } else {
             replaceNearOperation(operation, selectionStart, selectionEnd)
         }
