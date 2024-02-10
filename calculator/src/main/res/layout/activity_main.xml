@@ -37,8 +37,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_gravity="bottom"
+                android:digits="0123456789.+-×÷^"
+                android:inputType="textVisiblePassword"
                 android:layout_weight="75"
-                android:autofillHints=""
                 android:background="@null"
                 android:contentDescription="@string/equals"
                 android:gravity="bottom|end"
@@ -50,6 +51,7 @@
                 android:scrollbars="vertical"
                 android:text="@{viewModel.currentOperationString}"
                 android:textSize="48sp"
+                android:autofillHints=""
                 tools:ignore="LabelFor" />
 
             <HorizontalScrollView
@@ -103,7 +105,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_sqr"
                     style="@style/OperationButtonStyle"
-                    android:contentDescription="@string/sqr"
+                    android:onClick="@{(view)->viewModel.reverseFraction()}"
                     app:icon="@drawable/inverse"
                     app:iconSize="56dp" />
 
@@ -116,7 +118,7 @@
                     android:id="@+id/button_pow"
                     style="@style/OperationButtonStyle"
                     android:contentDescription="@string/pow"
-                    android:onClick="@{(view) -> viewModel.insertOperation((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view)->viewModel.insertOperation((String)view.getTag(), inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/pow_string"
                     app:icon="@drawable/caret_up"
                     app:iconSize="45dp" />
@@ -130,7 +132,7 @@
                     android:id="@+id/button_divide"
                     style="@style/OperationButtonStyle"
                     android:contentDescription="@string/divide"
-                    android:onClick="@{(view) -> viewModel.insertOperation((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view)->viewModel.insertOperation((String)view.getTag(), inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/divide_string"
                     app:icon="@drawable/divide"
                     app:iconSize="40dp" />
@@ -144,7 +146,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_seven"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view)->viewModel.insert((String)view.getTag(), inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/seven"
                     android:text="@string/seven" />
 
@@ -156,7 +158,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_eight"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view)->viewModel.insert((String)view.getTag(), inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/eight"
                     android:text="@string/eight" />
 
@@ -168,7 +170,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_nine"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view)->viewModel.insert((String)view.getTag(), inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/nine"
                     android:text="@string/nine" />
 
@@ -181,7 +183,7 @@
                     android:id="@+id/button_multiply"
                     style="@style/OperationButtonStyle"
                     android:contentDescription="@string/multiply"
-                    android:onClick="@{(view) -> viewModel.insertOperation((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view)->viewModel.insertOperation((String)view.getTag(), inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/multiply_string"
                     app:icon="@drawable/baseline_close_24"
                     app:iconSize="35dp" />
@@ -194,7 +196,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_four"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view)->viewModel.insert((String)view.getTag(), inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/four"
                     android:text="@string/four" />
 
@@ -206,7 +208,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_five"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view)->viewModel.insert((String)view.getTag(), inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/five"
                     android:text="@string/five" />
 
@@ -219,7 +221,7 @@
                     android:id="@+id/button_six"
                     style="@style/NumberButtonStyle"
                     android:gravity="center"
-                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view)->viewModel.insert((String)view.getTag(), inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/six"
                     android:text="@string/six" />
 
@@ -232,7 +234,7 @@
                     android:id="@+id/button_minus"
                     style="@style/OperationButtonStyle"
                     android:contentDescription="@string/minus"
-                    android:onClick="@{(view) -> viewModel.insertMinus(inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view)->viewModel.insertMinus(inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     app:icon="@drawable/baseline_remove_24"
                     app:iconGravity="start"
                     app:iconSize="35dp" />
@@ -245,7 +247,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_one"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view)->viewModel.insert((String)view.getTag(), inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/one"
                     android:text="@string/one" />
 
@@ -257,7 +259,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_two"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view)->viewModel.insert((String)view.getTag(), inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/two"
                     android:text="@string/two" />
 
@@ -269,7 +271,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_three"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view)->viewModel.insert((String)view.getTag(), inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/three"
                     android:text="@string/three" />
 
@@ -282,7 +284,7 @@
                     android:id="@+id/button_plus"
                     style="@style/OperationButtonStyle"
                     android:contentDescription="@string/plus"
-                    android:onClick="@{(view) -> viewModel.insertOperation((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view)->viewModel.insertOperation((String)view.getTag(), inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/plus_string"
                     app:icon="@drawable/baseline_add_24"
                     app:iconSize="35dp" />
@@ -295,7 +297,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_zero"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insert((String)view.getTag(),inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view)->viewModel.insert((String)view.getTag(), inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:tag="@string/zero"
                     android:text="@string/zero" />
 
@@ -307,7 +309,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_comma"
                     style="@style/NumberButtonStyle"
-                    android:onClick="@{(view) -> viewModel.insertComma(inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view)->viewModel.insertComma(inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     android:text="@string/comma" />
 
                 <Space
@@ -319,7 +321,7 @@
                     android:id="@+id/button_remove"
                     style="@style/NumberButtonStyle"
                     android:contentDescription="@string/remove"
-                    android:onClick="@{(view) -> viewModel.removeSymbol(inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
+                    android:onClick="@{(view)->viewModel.removeSymbol(inputEditText.getSelectionStart(), inputEditText.getSelectionEnd())}"
                     app:icon="@drawable/baseline_backspace_24"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"

@@ -8,9 +8,9 @@ import com.example.calculator.Constants.LARGE_POWER_THRESHOLD
 import com.example.calculator.Constants.LARGE_POWER_WARNING
 import com.example.calculator.Constants.LONG_EXPRESSION_WARNING
 import com.example.calculator.Constants.MAX_EXPRESSION_LENGTH
-import com.example.calculator.Constants.MULTIPLE_POINTS_WARNING
 import com.example.calculator.Constants.MULTIPLE_ZEROS_WARNING
 import com.example.calculator.Constants.OPERATION_PLACEMENT_WARNING
+import com.example.calculator.Constants.UNABLE_TO_PERFORM_WARNING
 import com.example.calculator.Constants.minusPattern
 import com.example.calculator.Constants.pattern
 import org.mariuszgromada.math.mxparser.Expression
@@ -33,20 +33,38 @@ class CalculatorViewModel : ViewModel() {
 
     val snackbarMessage = MutableLiveData<String>()
 
-    fun insert(digit: String, selectionStart: Int, selectionEnd: Int) {
-        if (_currentOperationString.value!!.length + digit.length > MAX_EXPRESSION_LENGTH) {
-            snackbarMessage.value = LONG_EXPRESSION_WARNING
-            return
+    private val isMaxSize: Boolean get() = _currentOperationString.value!!.length >= MAX_EXPRESSION_LENGTH
+
+    fun reverseFraction() {
+        when {
+            _currentResult.value!! == "" -> {
+                snackbarMessage.value = UNABLE_TO_PERFORM_WARNING
+            }
+
+            else -> {
+                expression.expressionString = "1/(${_currentResult.value})"
+                _currentOperationString.value = expression.calculate().toString()
+                _currentResult.value = ""
+            }
         }
-        if (digit == "0") {
-            if (_currentOperationString.value!! != "" && selectionStart != 0) {
-                if (_currentOperationString.value!![selectionStart - 1] == '0') {
-                    snackbarMessage.value = MULTIPLE_ZEROS_WARNING
-                    return
+    }
+
+    fun insert(digit: String, selectionStart: Int, selectionEnd: Int) {
+        when {
+            isMaxSize -> {
+                snackbarMessage.value = LONG_EXPRESSION_WARNING
+            }
+
+            digit == "0" -> {
+                if (_currentOperationString.value!!.isNotEmpty() && selectionStart != 0) {
+                    if (pattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString())) {
+                        snackbarMessage.value = MULTIPLE_ZEROS_WARNING
+                        return
+                    }
                 }
             }
-        } else {
-            if (_currentOperationString.value!! != "" && selectionStart != 0) {
+
+            _currentOperationString.value!!.isNotEmpty() && selectionStart != 0 -> {
                 if (_currentOperationString.value!![selectionStart - 1] == '0') {
                     _currentOperationString.value = StringBuilder(_currentOperationString.value ?: "")
                         .replace(selectionStart - 1, selectionEnd, digit)
@@ -54,66 +72,52 @@ class CalculatorViewModel : ViewModel() {
                     return
                 }
             }
-        }
 
+
+        }
         _currentOperationString.value = StringBuilder(_currentOperationString.value ?: "")
             .replace(selectionStart, selectionEnd, digit)
             .toString()
 
         setNewSelection(selectionStart, digit)
-        expression.expressionString = _currentOperationString.value
-        if (hasLargePower()) {
-            snackbarMessage.value = LARGE_POWER_WARNING
-            _currentResult.value = ""
-        } else {
-            val result = expression.calculate()
-            if (result.isNaN() || result.isInfinite()) {
-                snackbarMessage.value = INVALID_EXPRESSION_WARNING
-                _currentResult.value = ""
-            } else {
-                _currentResult.value = result.toString()
-            }
-        }
+        tryEvaluateFromString()
     }
 
-    fun removeSymbol(selectionStart: Int, selectionEnd: Int){
-        if (selectionStart == 0){
+    fun removeSymbol(selectionStart: Int, selectionEnd: Int) {
+        if (selectionStart == 0) {
             return
         }
-        if (selectionStart == selectionEnd){
-            insert("",selectionStart-1,selectionEnd)
-        }
-        if (isSelectionNearOperation(selectionStart,selectionEnd)){
-            if (
-                pattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString())
-                && pattern.containsMatchIn(_currentOperationString.value!![selectionEnd].toString())
-            ){
-                replaceNearOperation("",selectionStart,selectionEnd)
-            }
-        }
+        insert("", selectionStart - 1, selectionEnd)
     }
+
 
     fun insertComma(selectionStart: Int, selectionEnd: Int) {
-        if (_currentOperationString.value!!.length + 1 > MAX_EXPRESSION_LENGTH) {
-            snackbarMessage.value = LONG_EXPRESSION_WARNING
-            return
-        }
-        if (_currentOperationString.value!! != "") {
-            if (_currentOperationString.value!!.contains('.')) {
-                if (_currentOperationString.value!!.substring(_currentOperationString.value!!.indexOf('.') + 1)
-                        .contains('.')
-                ) {
-                    snackbarMessage.value = MULTIPLE_POINTS_WARNING
-                    return
+        when {
+            isMaxSize -> {
+                snackbarMessage.value = LONG_EXPRESSION_WARNING
+
+            }
+
+            _currentOperationString.value!!.isNotEmpty() -> {
+                if (canInsertComma(selectionStart, selectionEnd)) {
+                    when {
+                        selectionStart == 0
+                                || pattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString()) -> {
+                            insert("0.", selectionStart, selectionEnd)
+
+                        }
+
+                        else -> {
+                            insert(".", selectionStart, selectionEnd)
+
+                        }
+                    }
                 }
             }
-            _currentOperationString.value = StringBuilder(_currentOperationString.value ?: "")
-                .replace(selectionStart, selectionEnd, ".")
-                .toString()
-            setNewSelection(selectionStart, ".")
-        } else {
-            _currentOperationString.value = "0."
-            setNewSelection(selectionStart, _currentOperationString.value!!)
+
+            else -> {
+                insert("0.", selectionStart, selectionEnd)
+            }
         }
     }
 
@@ -148,6 +152,11 @@ class CalculatorViewModel : ViewModel() {
                 snackbarMessage.value = OPERATION_PLACEMENT_WARNING
             }
 
+            selectionEnd != _currentOperationString.value!!.length
+                    && minusPattern.containsMatchIn(_currentOperationString.value!![selectionEnd].toString()) -> {
+                insert("-", selectionStart, selectionEnd + 1)
+            }
+
             _currentOperationString.value!![selectionStart - 1] == '+' -> {
                 insert("-", selectionStart - 1, selectionStart)
             }
@@ -156,6 +165,11 @@ class CalculatorViewModel : ViewModel() {
                 if (minusPattern.containsMatchIn(_currentOperationString.value!![selectionStart - 2].toString())) {
                     insert("-", selectionStart - 2, selectionEnd)
                 }
+            }
+
+            minusPattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString())
+                    && _currentOperationString.value!![selectionEnd] == '-' -> {
+                insert("-", selectionStart - 1, selectionEnd + 1)
             }
 
             else -> {
@@ -178,6 +192,23 @@ class CalculatorViewModel : ViewModel() {
         _currentOperationString.value = ""
     }
 
+    private fun canInsertComma(selectionStart: Int, selectionEnd: Int): Boolean {
+        if (selectionStart > 0 && _currentOperationString.value!![selectionStart - 1].isDigit()) {
+            if (selectionEnd == _currentOperationString.value!!.length) {
+                return !_currentOperationString.value!!.substring(0, selectionEnd)
+                    .split(pattern).last().contains('.')
+            }
+
+            return !_currentOperationString.value!!.substring(selectionEnd - 1)
+                .split(pattern)[0].contains('.')
+                    && !_currentOperationString.value!!.substring(0, selectionStart + 1)
+                .split(pattern).last().contains('.')
+        }
+        if (selectionStart == 0) return !_currentOperationString.value!!
+            .split(pattern)[0].contains('.')
+        return _currentOperationString.value!![selectionStart - 1] != '.'
+    }
+
     private fun replaceNearOperation(digit: String, selectionStart: Int, selectionEnd: Int) {
         when {
             pattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString()) -> {
@@ -193,7 +224,7 @@ class CalculatorViewModel : ViewModel() {
     private fun hasLargePower(): Boolean {
         val parts = _currentOperationString.value!!.split("^")
         for (i in 1 until parts.size) {
-            if (parts[i].toDoubleOrNull() ?: 0.0 > LARGE_POWER_THRESHOLD) {
+            if ((parts[i].toDoubleOrNull() ?: 0.0) > LARGE_POWER_THRESHOLD) {
                 return true
             }
         }
@@ -209,8 +240,27 @@ class CalculatorViewModel : ViewModel() {
         ))
     }
 
+    private fun tryEvaluateFromString() {
+        expression.expressionString = _currentOperationString.value
+        if (hasLargePower()) {
+            snackbarMessage.value = LARGE_POWER_WARNING
+            _currentResult.value = ""
+        } else {
+            val result = expression.calculate()
+            if (result.isNaN() || result.isInfinite()) {
+                if (snackbarMessage.value != INVALID_EXPRESSION_WARNING){
+                    snackbarMessage.value = INVALID_EXPRESSION_WARNING
+                }
+                _currentResult.value = ""
+            } else {
+                _currentResult.value = result.toString()
+            }
+        }
+    }
+
     private fun setNewSelection(selectionStart: Int, digit: String) {
         _selectionStart.value = selectionStart + digit.length
         _selectionEnd.value = selectionStart + digit.length
     }
+
 }
