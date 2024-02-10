@@ -330,6 +330,7 @@
                     android:id="@+id/equalsButton"
                     style="@style/EqualsButtonStyle"
                     android:contentDescription="@string/equals"
+                    android:onClick="@{()->viewModel.evaluate()}"
                     app:icon="@drawable/baseline_drag_handle_24"
                     app:iconSize="25dp"
                     tools:ignore="DuplicateSpeakableTextCheck" />
