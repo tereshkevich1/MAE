@@ -13,4 +13,14 @@ object Constants {
     const val LARGE_POWER_WARNING = "Power too large!"
     const val MULTIPLE_ZEROS_WARNING = "Cannot enter multiple zeros at the beginning of a number!"
     const val LONG_EXPRESSION_WARNING = "Expression cannot be longer than $MAX_EXPRESSION_LENGTH characters!"
+
+    fun isContainInPattern(
+        operationString: String,
+        selectionStart: Int,
+        selectionEnd: Int
+    ): Boolean{
+      return pattern.containsMatchIn(
+          operationString.substring(selectionStart - 1, selectionEnd)
+        )
+    }
 }
