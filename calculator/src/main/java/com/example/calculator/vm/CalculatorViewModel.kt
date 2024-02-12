@@ -123,8 +123,8 @@ class CalculatorViewModel : ViewModel() {
                 snackbarMessage.value = OPERATION_PLACEMENT_WARNING
             }
 
-            isSelectionOnStringEnd
-                    && minusPattern.containsMatchIn(_currentOperationString.value!![selectionEnd].toString()) -> {
+            !isSelectionOnStringEnd
+                    && minusPattern.containsMatchIn(_currentOperationString.value!![selectionStart].toString()) -> {
                 insert("-", selectionStart, selectionEnd + 1)
             }
 
@@ -139,10 +139,10 @@ class CalculatorViewModel : ViewModel() {
             }
 
             minusPattern.containsMatchIn(_currentOperationString.value!![selectionStart - 1].toString()) -> {
-                if (!isSelectionOnStringEnd) {
+                if (isSelectionOnStringEnd) {
                     insert("-", selectionStart, selectionEnd)
                 } else if (_currentOperationString.value!![selectionEnd] == '-') {
-                    insert("-", selectionStart - 1, selectionEnd + 1)
+                    insert("-", selectionStart - 2, selectionEnd)
                 } else {
                     insert("-", selectionStart, selectionEnd)
                 }
