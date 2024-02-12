@@ -4,3 +4,15 @@
 /.idea/workspace.xml
 /.idea/discord.xml
 /.idea/deploymentTargetDropDown.xml
+*.iml
+.gradle
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/captures
+.externalNativeBuild
+.cxx
+local.properties
