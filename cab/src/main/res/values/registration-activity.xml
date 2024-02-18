@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="surname">Surname</string>
+    <string name="surname_message">Entre your surname</string>
+    <string name="name">Name</string>
+    <string name="name_message">Entre your name</string>
+    <string name="phone">Phone</string>
+    <string name="phone_message">Entre your phone</string>
+    <string name="registration">Registration</string>
+</resources>

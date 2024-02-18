@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".RegistrationActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="15dp">
+
+        <EditText
+            android:id="@+id/surnameField"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="@string/surname_message"
+            android:inputType="text"
+            android:text="@string/surname"
+            android:autofillHints="name"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <Space
+            android:id="@+id/surnameFieldSpace"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            tools:layout_editor_absoluteX="145dp"
+            tools:layout_editor_absoluteY="104dp"
+            app:layout_constraintTop_toBottomOf="@id/surnameField"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <EditText
+            android:id="@+id/nameField"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="@string/name_message"
+            android:inputType="text"
+            android:text="@string/name"
+            android:autofillHints="name"
+            app:layout_constraintTop_toBottomOf="@id/surnameFieldSpace"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <Space
+            android:id="@+id/nameFieldSpace"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            tools:layout_editor_absoluteX="151dp"
+            tools:layout_editor_absoluteY="54dp"
+            app:layout_constraintTop_toBottomOf="@id/nameField"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <EditText
+            android:id="@+id/phoneField"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="@string/phone_message"
+            android:inputType="phone"
+            android:text="@string/phone"
+            android:autofillHints="phone"
+            app:layout_constraintTop_toBottomOf="@id/nameFieldSpace"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/registration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/registration"
+            android:layout_marginBottom="20dp"
+            android:layout_marginHorizontal="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
