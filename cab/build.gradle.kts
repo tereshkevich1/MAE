@@ -7,6 +7,10 @@ android {
     namespace = "com.example.cab"
     compileSdk = 34
 
+    dataBinding{
+        enable = true
+    }
+
     defaultConfig {
         applicationId = "com.example.cab"
         minSdk = 24
