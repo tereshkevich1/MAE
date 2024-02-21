@@ -12,12 +12,6 @@ android {
         enable = true
     }
 
-    kapt{
-        dataBinding {
-            enable = true
-        }
-    }
-
     defaultConfig {
         applicationId = "com.example.cab"
         minSdk = 24
