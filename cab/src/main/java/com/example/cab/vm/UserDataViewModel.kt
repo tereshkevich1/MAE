@@ -10,7 +10,12 @@ class UserDataViewModel : ViewModel() {
     val username: LiveData<String> get() = _username
 
     private var _phone = MutableLiveData("undefined")
-    val phone: LiveData<String>  get() = _phone
+    val phone: LiveData<String> get() = _phone
+
+    private var _route: MutableLiveData<Pair<String?, String?>> =
+        MutableLiveData(Pair("", ""))
+    val route: LiveData<Pair<String?, String?>> get() = _route
+
 
     fun changeUsername(newUsername: String?) {
         if (!newUsername.isNullOrEmpty()) {
@@ -19,8 +24,15 @@ class UserDataViewModel : ViewModel() {
     }
 
     fun changePhone(newPhone: String?) {
-        if (!newPhone.isNullOrEmpty()){
+        if (!newPhone.isNullOrEmpty()) {
             _phone.value = newPhone
         }
     }
+
+    fun setRoute(route: Pair<String?, String?>) {
+        if (!route.first.isNullOrEmpty() && !route.second.isNullOrEmpty()) {
+            _route.value = route
+        }
+    }
+
 }
