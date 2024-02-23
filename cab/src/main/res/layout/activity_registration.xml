@@ -47,7 +47,7 @@
                     android:ems="10"
                     android:hint="@string/surname_message"
                     android:inputType="text"
-                    android:text="@string/surname" />
+                    android:text="@{viewModel.surname}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,7 +67,7 @@
                     android:ems="10"
                     android:hint="@string/name_message"
                     android:inputType="text"
-                    android:text="@string/name" />
+                    android:text="@{viewModel.name}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,7 +87,7 @@
                     android:ems="10"
                     android:hint="@string/phone_message"
                     android:inputType="phone"
-                    android:text="@string/phone" />
+                    android:text="@{viewModel.phone}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
