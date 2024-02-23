@@ -21,7 +21,5 @@ class RegistrationActivity : AppCompatActivity() {
         registrationBinding.lifecycleOwner = this
 
         setContentView(registrationView)
-
-
     }
 }
