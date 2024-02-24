@@ -7,4 +7,5 @@
     <string name="phone">Phone</string>
     <string name="phone_message">Entre your phone</string>
     <string name="registration">Registration</string>
+    <string name="welcome_message">Welcome to Lovely Cabs!</string>
 </resources>
