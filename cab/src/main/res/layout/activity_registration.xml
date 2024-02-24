@@ -50,7 +50,7 @@
                     android:fontFamily="@font/montserrat"
                     android:hint="@string/surname_message"
                     android:inputType="text"
-                    android:text="@{viewModel.surname}"
+                    android:text="@={viewModel._surname}"
                     android:textColorHint="#757575" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -72,7 +72,7 @@
                     android:fontFamily="@font/montserrat"
                     android:hint="@string/name_message"
                     android:inputType="text"
-                    android:text="@{viewModel.name}" />
+                    android:text="@={viewModel._name}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,7 +93,7 @@
                     android:hint="@string/phone_message"
                     android:fontFamily="@font/montserrat"
                     android:inputType="phone"
-                    android:text="@{viewModel.phone}" />
+                    android:text="@={viewModel._phone}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
