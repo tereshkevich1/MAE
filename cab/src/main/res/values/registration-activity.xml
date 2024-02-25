@@ -8,6 +8,11 @@
     <string name="phone_message">Entre your phone</string>
     <string name="registration">Registration</string>
     <string name="welcome_message">Welcome to Lovely Cabs!</string>
-    <string name="empty_warning">This field can\'t be empty</string>
+
     <string name="success_validation">String is valid</string>
+    <string name="empty_warning">This field can\'t be empty</string>
+    <string name="name_length_warning">Name is too long!</string>
+    <string name="surname_length_warning">Surname is too long!</string>
+    <string name="invalid_characters_warning">Only letters allowed!</string>
+    <string name="invalid_phone_number_warning">Incorrect phone number format!</string>
 </resources>

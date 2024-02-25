@@ -2,7 +2,6 @@ package com.example.cab
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
@@ -30,15 +29,17 @@ class RegistrationActivity : AppCompatActivity() {
 
         val nextButton: Button = findViewById(R.id.registration)
 
-
         nextButton.setOnClickListener {
-            registrationActivityViewModel.check()
-            if(!registrationActivityViewModel.nameValidator.value!!.isValid){
-                nameEditText.error = getString(registrationActivityViewModel.nameValidator.value!!.message)
+            registrationActivityViewModel.validationCheck()
+            if(!registrationActivityViewModel.nameValidator.isValid){
+                nameEditText.error = getString(registrationActivityViewModel.nameValidator.message)
             }
-            Log.d(
-                "f", registrationActivityViewModel._name.value ?: "null"
-            )
+            if (!registrationActivityViewModel.surnameValidator.isValid){
+                surnameEditText.error = getString(registrationActivityViewModel.surnameValidator.message)
+            }
+            if (!registrationActivityViewModel.phoneValidator.isValid){
+                phoneEditText.error = getString(registrationActivityViewModel.phoneValidator.message)
+            }
         }
     }
 }
