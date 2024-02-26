@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.cab.vm.RegistrationActivityViewModel" />
@@ -46,11 +47,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:autofillHints="name"
+                    android:lines="1"
                     android:ems="10"
                     android:fontFamily="@font/montserrat"
                     android:hint="@string/surname_message"
                     android:inputType="text"
-                    android:text="@={viewModel._surname}"
+                    android:text="@={viewModel.surname}"
                     android:textColorHint="#757575" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -68,11 +70,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:autofillHints="name"
+                    android:lines="1"
                     android:ems="10"
                     android:fontFamily="@font/montserrat"
                     android:hint="@string/name_message"
                     android:inputType="text"
-                    android:text="@={viewModel._name}" />
+                    android:text="@={viewModel.name}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,10 +93,11 @@
                     android:layout_height="55dp"
                     android:autofillHints="phone"
                     android:ems="10"
+                    android:lines="1"
                     android:hint="@string/phone_message"
                     android:fontFamily="@font/montserrat"
                     android:inputType="phone"
-                    android:text="@={viewModel._phone}" />
+                    android:text="@={viewModel.phone}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
