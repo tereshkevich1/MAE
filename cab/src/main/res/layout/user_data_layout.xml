@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -13,58 +14,70 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/usernameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="44dp"
-            android:text=""
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/phoneTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text=""
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@+id/usernameTextView"
-            app:layout_constraintTop_toBottomOf="@+id/usernameTextView" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/setPathButton"
-            style="@style/SecondButton"
-            android:layout_marginTop="48dp"
-            android:text="@string/set_path"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phoneTextView" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/infoTextView"
-            android:layout_width="wrap_content"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="128dp"
-            android:text="@string/call_taxi"
+            android:layout_marginTop="12dp"
+            android:alpha="0.8"
+            app:cardBackgroundColor="@color/md_theme_light_surface"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="4dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/setPathButton" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="4dp">
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/usernameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.8"
+                    android:text=""
+                    android:textColor="@color/md_theme_light_onSurface"
+                    android:textSize="20sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/phoneTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:alpha="0.8"
+                    android:text=""
+                    android:textColor="@color/md_theme_light_onSurface"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/callTaxiButton"
             style="@style/MainButton"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="16dp"
             android:enabled="false"
             android:text="@string/call_taxi"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
