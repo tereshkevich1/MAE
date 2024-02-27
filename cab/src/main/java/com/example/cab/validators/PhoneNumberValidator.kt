@@ -5,7 +5,7 @@ import com.example.cab.util.BaseValidator
 import com.example.cab.util.ValidatorResult
 
 class PhoneNumberValidator(private val input: String): BaseValidator() {
-    private val regex = Regex("^\\+[0-9]{10,13}$")
+    private val regex = Regex("^\\+\\d{3} \\d{2} \\d{3} \\d{2} \\d{2}$")
     override fun validate(): ValidatorResult {
         val isValid = input.matches(regex)
         return ValidatorResult(
