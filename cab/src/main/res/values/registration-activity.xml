@@ -15,4 +15,7 @@
     <string name="surname_length_warning">Surname is too long!</string>
     <string name="invalid_characters_warning">Only letters allowed!</string>
     <string name="invalid_phone_number_warning">Incorrect phone number format!</string>
+
+    <string name="phone_number_format_plus">+%1$s</string>
+    <string name="phone_number_format_space">%1$s %2$s</string>
 </resources>

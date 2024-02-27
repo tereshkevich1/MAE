@@ -4,7 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 
-class PhoneNumberFormattingTextWatcher(private val mEditText: EditText) : TextWatcher {
+class PhoneNumberFormattingTextWatcher(private val editText: EditText) : TextWatcher {
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
         // No action needed here
     }
@@ -15,21 +15,23 @@ class PhoneNumberFormattingTextWatcher(private val mEditText: EditText) : TextWa
 
     override fun afterTextChanged(s: Editable) {
         val text = s.toString()
+        val resources = editText.context.resources
+
         if (text.length == 1 && !text.startsWith("+")) {
-            mEditText.setText("+$text")
-            mEditText.setSelection(mEditText.text.length)
+            editText.setText(resources.getString(R.string.phone_number_format_plus, text))
+            editText.setSelection(editText.text.length)
         } else if (text.length > 4 && text[4] != ' ') {
-            mEditText.setText(text.substring(0, 4) + " " + text.substring(4))
-            mEditText.setSelection(mEditText.text.length)
+            editText.setText(resources.getString(R.string.phone_number_format_space, text.substring(0, 4), text.substring(4)))
+            editText.setSelection(editText.text.length)
         } else if (text.length > 7 && text[7] != ' ') {
-            mEditText.setText(text.substring(0, 7) + " " + text.substring(7))
-            mEditText.setSelection(mEditText.text.length)
+            editText.setText(resources.getString(R.string.phone_number_format_space, text.substring(0, 7), text.substring(7)))
+            editText.setSelection(editText.text.length)
         } else if (text.length > 11 && text[11] != ' ') {
-            mEditText.setText(text.substring(0, 11) + " " + text.substring(11))
-            mEditText.setSelection(mEditText.text.length)
+            editText.setText(resources.getString(R.string.phone_number_format_space, text.substring(0, 11), text.substring(11)))
+            editText.setSelection(editText.text.length)
         } else if (text.length > 14 && text[14] != ' ') {
-            mEditText.setText(text.substring(0, 14) + " " + text.substring(14))
-            mEditText.setSelection(mEditText.text.length)
+            editText.setText(resources.getString(R.string.phone_number_format_space, text.substring(0, 14), text.substring(14)))
+            editText.setSelection(editText.text.length)
         }
     }
 }
