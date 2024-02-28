@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="surname">Surname</string>
-    <string name="surname_message">Entre your surname</string>
+    <string name="surname_message">Your surname</string>
     <string name="name">Name</string>
-    <string name="name_message">Entre your name</string>
+    <string name="name_message">Your name</string>
     <string name="phone">Phone</string>
-    <string name="phone_message">Entre your phone</string>
+    <string name="phone_message">+XXX XX XXX XX XX</string>
     <string name="registration">Registration</string>
     <string name="welcome_message">Welcome to Lovely Cabs!</string>
 
