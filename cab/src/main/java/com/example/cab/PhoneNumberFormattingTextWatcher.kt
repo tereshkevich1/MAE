@@ -18,40 +18,47 @@ class PhoneNumberFormattingTextWatcher(private val editText: EditText) : TextWat
 
     override fun afterTextChanged(s: Editable) {
         editText.removeTextChangedListener(this)
-
-        val text = s.toString()
         val resources = editText.context.resources
 
         // Remember the original cursor position
         var originalPosition = editText.selectionStart
 
         // Remove non-numerical characters
-        val cleaned = StringBuilder()
-        for (char in text) {
-            if (char.isDigit() || char == '+' || char == ' ') {
-                cleaned.append(char)
-            }
-        }
-
-        val cleanedText = cleaned.toString()
+        val cleaned = clearInput(s.toString())
 
         if (isDeleting) {
-            editText.setText(cleanedText)
+            editText.setText(cleaned)
         } else {
-            if (cleanedText.length == 1 && !cleanedText.startsWith("+")) {
-                editText.setText(resources.getString(R.string.phone_number_format_plus, cleanedText))
+            if (cleaned.length == 1 && !cleaned.startsWith("+")) {
+                editText.setText(resources.getString(R.string.phone_number_format_plus, cleaned))
                 originalPosition++
-            } else if (cleanedText.length > 4 && cleanedText[4] != ' ') {
-                editText.setText(resources.getString(R.string.phone_number_format_space, cleanedText.substring(0, 4), cleanedText.substring(4)))
+            } else if (cleaned.length > 4 && cleaned[4] != ' ') {
+                editText.setText(resources.getString(
+                    R.string.phone_number_format_space,
+                    cleaned.substring(0, 4),
+                    cleaned.substring(4)
+                ))
                 if (originalPosition > 4) originalPosition++
-            } else if (cleanedText.length > 7 && cleanedText[7] != ' ') {
-                editText.setText(resources.getString(R.string.phone_number_format_space, cleanedText.substring(0, 7), cleanedText.substring(7)))
+            } else if (cleaned.length > 7 && cleaned[7] != ' ') {
+                editText.setText(resources.getString(
+                    R.string.phone_number_format_space,
+                    cleaned.substring(0, 7),
+                    cleaned.substring(7)
+                ))
                 if (originalPosition > 7) originalPosition++
-            } else if (cleanedText.length > 11 && cleanedText[11] != ' ') {
-                editText.setText(resources.getString(R.string.phone_number_format_space, cleanedText.substring(0, 11), cleanedText.substring(11)))
+            } else if (cleaned.length > 11 && cleaned[11] != ' ') {
+                editText.setText(resources.getString(
+                    R.string.phone_number_format_space,
+                    cleaned.substring(0, 11),
+                    cleaned.substring(11)
+                ))
                 if (originalPosition > 11) originalPosition++
-            } else if (cleanedText.length > 14 && cleanedText[14] != ' ') {
-                editText.setText(resources.getString(R.string.phone_number_format_space, cleanedText.substring(0, 14), cleanedText.substring(14)))
+            } else if (cleaned.length > 14 && cleaned[14] != ' ') {
+                editText.setText(resources.getString(
+                    R.string.phone_number_format_space,
+                    cleaned.substring(0, 14),
+                    cleaned.substring(14)
+                ))
                 if (originalPosition > 14) originalPosition++
             }
         }
@@ -64,6 +71,16 @@ class PhoneNumberFormattingTextWatcher(private val editText: EditText) : TextWat
         }
 
         editText.addTextChangedListener(this)
+    }
+
+    private fun clearInput(input: String): String{
+        val cleaned = StringBuilder()
+        for (char in input) {
+            if (char.isDigit() || char == '+' || char == ' ') {
+                cleaned.append(char)
+            }
+        }
+        return cleaned.toString()
     }
 }
 
