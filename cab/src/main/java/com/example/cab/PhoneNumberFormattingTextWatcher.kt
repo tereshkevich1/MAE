@@ -9,6 +9,7 @@ class PhoneNumberFormattingTextWatcher(private val editText: EditText) : TextWat
     private var isDeleting = false
     private var clearedText = editText.text.toString()
     private var position = editText.selectionStart
+    private val spacePositions = listOf(3,5,8,10,12)
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
         isDeleting = count > after
     }
@@ -38,7 +39,7 @@ class PhoneNumberFormattingTextWatcher(private val editText: EditText) : TextWat
     private fun formatPhone(input: String): String {
         val formattedNumber = StringBuilder("+")
         for ((index, digit) in input.withIndex()) {
-            if (index == 3 || index == 5 || index == 8 || index == 10 || index == 12) {
+            if (index in spacePositions) {
                 formattedNumber.append(" ")
             }
             formattedNumber.append(digit)
