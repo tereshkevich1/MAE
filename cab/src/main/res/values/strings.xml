@@ -2,4 +2,6 @@
     <string name="app_name">Cab</string>
     <string name="set_path">SET PATH</string>
     <string name="call_taxi">CALL TAXI</string>
+    <string name="enable_gps">enable gps for correct operation</string>
+    <string name="select_arrival_point">select your arrival point</string>
 </resources>
