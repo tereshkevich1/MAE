@@ -4,56 +4,58 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 
-class PhoneNumberFormattingTextWatcher(private val editText: EditText) : TextWatcher {
+class PhoneFormattingTextWatcher(private val editText: EditText) : TextWatcher {
 
     private var isDeleting = false
     private var clearedText = editText.text.toString()
     private var position = editText.selectionStart
-    private val spacePositions = listOf(3,5,8,10,12)
+    private val positionsForSpaces = listOf(3,5,8,10,12)
+    private val spacePositions = listOf(5,8,12,15)
+    private val stringBuilder = StringBuilder()
+
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
         isDeleting = count > after
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        clearedText = clearInput(s.toString())
+        if (s != null) {
+            clearedText = clearInput(s)
+        }
         position = editText.selectionStart
     }
 
     override fun afterTextChanged(s: Editable) {
         editText.removeTextChangedListener(this)
-        editText.setText(formatPhone(clearedText))
+        editText.setText(createFormattedNumber(clearedText))
         editText.changeSelection()
         editText.addTextChangedListener(this)
     }
 
-    private fun clearInput(input: String): String {
-        val cleaned = StringBuilder()
+    private fun clearInput(input: CharSequence): String {
+        stringBuilder.clear()
         for (char in input) {
             if (char.isDigit()) {
-                cleaned.append(char)
+                stringBuilder.append(char)
             }
         }
-        return cleaned.toString()
+        return stringBuilder.toString()
     }
 
-    private fun formatPhone(input: String): String {
-        val formattedNumber = StringBuilder("+")
+    private fun createFormattedNumber(input: String): String {
+        stringBuilder.clear().append("+")
         for ((index, digit) in input.withIndex()) {
-            if (index in spacePositions) {
-                formattedNumber.append(" ")
+            if (index in positionsForSpaces) {
+                stringBuilder.append(" ")
             }
-            formattedNumber.append(digit)
+            stringBuilder.append(digit)
         }
-        return formattedNumber.toString()
+        return stringBuilder.toString()
     }
 
     private fun Int.setAsSelection() {
-        if (this < editText.text.length) {
-            editText.setSelection(this)
-        } else {
-            editText.setSelection(editText.text.length)
-        }
+        editText.setSelection(this.coerceIn(0, editText.text.length))
     }
+
     private fun EditText.changeSelection(){
         this.adjustSelection()
         position.setAsSelection()
@@ -64,18 +66,11 @@ class PhoneNumberFormattingTextWatcher(private val editText: EditText) : TextWat
             position++
             if (position < this.text.length) {
                 position--
+                if (position in spacePositions){
+                    position++
+                }
             }
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
 

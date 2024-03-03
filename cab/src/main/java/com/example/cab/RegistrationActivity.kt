@@ -27,7 +27,7 @@ class RegistrationActivity : AppCompatActivity() {
         val surnameEditText: EditText = findViewById(R.id.surnameField)
         val phoneEditText: EditText = findViewById(R.id.phoneField)
 
-        phoneEditText.addTextChangedListener(PhoneNumberFormattingTextWatcher(phoneEditText))
+        phoneEditText.addTextChangedListener(PhoneFormattingTextWatcher(phoneEditText))
 
         val nextButton: Button = findViewById(R.id.registration)
 
