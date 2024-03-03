@@ -28,7 +28,7 @@ class PhoneFormattingTextWatcher(private val editText: EditText) : TextWatcher {
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         if (s != null) {
-            unformattedPhone = s.toUnformatted() as String
+            unformattedPhone = s.toUnformatted().toString()
         }
         position = editText.selectionStart
     }
