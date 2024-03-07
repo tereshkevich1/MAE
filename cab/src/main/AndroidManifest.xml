@@ -36,6 +36,7 @@
         <activity
             android:name=".UserDataActivity"
             android:parentActivityName=".MainActivity" />
+        <activity android:name=".TestDataActivity"/>
 
 
     </application>
