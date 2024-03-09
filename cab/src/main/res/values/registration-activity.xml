@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="surname">Surname</string>
+    <string name="surname_message">Your surname</string>
+    <string name="name">Name</string>
+    <string name="name_message">Your name</string>
+    <string name="phone">Phone</string>
+    <string name="phone_message">+XXX XX XXX XX XX</string>
+    <string name="registration">Registration</string>
+    <string name="welcome_message">Welcome to Lovely Cabs!</string>
+
+    <string name="success_validation">String is valid</string>
+    <string name="empty_warning">This field can\'t be empty</string>
+    <string name="name_length_warning">Name is too long!</string>
+    <string name="surname_length_warning">Surname is too long!</string>
+    <string name="invalid_characters_warning">Only letters allowed!</string>
+    <string name="invalid_phone_number_warning">Incorrect phone number format!</string>
+
+    <string name="phone_number_format_plus">+%1$s</string>
+    <string name="phone_number_format_space">%1$s %2$s</string>
+</resources>
