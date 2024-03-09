@@ -38,7 +38,7 @@ android {
 }
 
 dependencies {
-    kapt("androidx.databinding:databinding-runtime:8.2.2")
+    kapt("androidx.databinding:databinding-runtime:8.3.0")
 
     implementation("androidx.activity:activity-ktx:1.8.2")
     implementation("androidx.core:core-ktx:1.12.0")
@@ -47,6 +47,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     testImplementation("junit:junit:4.13.2")
 
