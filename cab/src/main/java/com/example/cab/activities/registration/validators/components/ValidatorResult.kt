@@ -1,4 +1,4 @@
-package com.example.cab.util
+package com.example.cab.activities.registration.validators.components
 
 data class ValidatorResult(
     val isValid: Boolean,

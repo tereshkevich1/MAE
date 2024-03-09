@@ -1,8 +1,8 @@
-package com.example.cab.validators
+package com.example.cab.activities.registration.validators
 
 import com.example.cab.R
-import com.example.cab.util.BaseValidator
-import com.example.cab.util.ValidatorResult
+import com.example.cab.activities.registration.validators.components.BaseValidator
+import com.example.cab.activities.registration.validators.components.ValidatorResult
 
 class EmptyValidator(private val input: String): BaseValidator() {
     override fun validate(): ValidatorResult {

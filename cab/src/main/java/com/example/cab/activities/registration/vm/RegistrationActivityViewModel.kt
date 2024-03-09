@@ -1,11 +1,11 @@
-package com.example.cab.vm
+package com.example.cab.activities.registration.vm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.cab.R
-import com.example.cab.util.BaseValidator
-import com.example.cab.util.ValidatorResult
-import com.example.cab.validators.*
+import com.example.cab.activities.registration.validators.*
+import com.example.cab.activities.registration.validators.components.BaseValidator
+import com.example.cab.activities.registration.validators.components.ValidatorResult
 
 class RegistrationActivityViewModel: ViewModel() {
     val name = MutableLiveData("")

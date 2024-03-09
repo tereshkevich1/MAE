@@ -1,4 +1,4 @@
-package com.example.cab
+package com.example.cab.activities.registration.watchers
 
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,10 +7,12 @@ import android.widget.EditText
 class PhoneFormattingTextWatcher(private val editText: EditText) : TextWatcher {
 
     companion object {
-        // Positions of digits in unformatted phone, after which space have to be placed
+        /**
+        Positions of digits in unformatted phone, after which space have to be placed
+        */
         private val POSITIONS_FOR_SPACES = listOf(3,5,8,10,12)
 
-        /*
+        /**
         Positions of digits right after spaces in formatted phone.
         Using to adjust cursor position
          */

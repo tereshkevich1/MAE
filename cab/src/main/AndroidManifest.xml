@@ -9,7 +9,7 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.MAE">
         <activity
-                android:name=".RegistrationActivity"
+                android:name=".activities.registration.RegistrationActivity"
                 android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

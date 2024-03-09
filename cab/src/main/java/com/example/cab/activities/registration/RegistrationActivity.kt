@@ -1,12 +1,15 @@
-package com.example.cab
+package com.example.cab.activities.registration
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
+import com.example.cab.R
 import com.example.cab.databinding.ActivityRegistrationBinding
-import com.example.cab.vm.RegistrationActivityViewModel
+import com.example.cab.activities.registration.vm.RegistrationActivityViewModel
+import com.example.cab.activities.registration.watchers.PhoneFormattingTextWatcher
+import com.example.cab.activities.registration.watchers.StringFormattingTextWatcher
 
 class RegistrationActivity : AppCompatActivity() {
     private lateinit var registrationActivityViewModel: RegistrationActivityViewModel
@@ -28,7 +31,8 @@ class RegistrationActivity : AppCompatActivity() {
         val phoneEditText: EditText = findViewById(R.id.phoneField)
 
         phoneEditText.addTextChangedListener(PhoneFormattingTextWatcher(phoneEditText))
-
+        surnameEditText.addTextChangedListener(StringFormattingTextWatcher(surnameEditText))
+        nameEditText.addTextChangedListener(StringFormattingTextWatcher(nameEditText))
         val nextButton: Button = findViewById(R.id.registration)
 
         nextButton.setOnClickListener {
