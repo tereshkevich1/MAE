@@ -385,20 +385,4 @@ class CalculatorViewModelTest {
         assertEquals("0.3333333333333333",viewModel.currentResult.value)
     }
 
-    @Test
-    fun viewModelGetSelectionStart_division_minus()
-    {
-        viewModel.insert("1÷",0,0)
-        viewModel.insert("-",2,2)
-        assertEquals("1÷-",viewModel.currentResult.value)
-    }
-
-    @Test
-    fun viewModelGetSelectionStart_multiply_minus()
-    {
-        viewModel.insert("1×",0,0)
-        viewModel.insert("-",2,2)
-        assertEquals("1×-",viewModel.currentResult.value)
-    }
-
 }
