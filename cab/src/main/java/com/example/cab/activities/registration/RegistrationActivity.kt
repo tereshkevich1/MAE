@@ -1,6 +1,7 @@
 package com.example.cab.activities.registration
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -17,6 +18,7 @@ import com.example.cab.activities.registration.model.UserData
 import com.example.cab.activities.registration.vm.RegistrationActivityViewModel
 import com.example.cab.activities.registration.watchers.PhoneFormattingTextWatcher
 import com.example.cab.activities.registration.watchers.StringFormattingTextWatcher
+import com.example.cab.activities.resultingInformation.ResultingInformationActivity
 import com.example.cab.databinding.ActivityRegistrationBinding
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -71,6 +73,13 @@ class RegistrationActivity : AppCompatActivity() {
                     )
                 }
             }
+            val intent = Intent(this, ResultingInformationActivity::class.java).apply {
+                putExtra("marker1Lat", 40.7128)
+                putExtra("marker1Lng", -74.0060)
+                putExtra("marker2Lat", 51.5074)
+                putExtra("marker2Lng", -0.1278)
+            }
+            startActivity(intent)
             setErrorsOnValidationFailure()
         }
     }
