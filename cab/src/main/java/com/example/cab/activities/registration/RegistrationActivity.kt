@@ -13,8 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.example.cab.R
-import com.example.cab.activities.registration.model.StoreManager
-import com.example.cab.activities.registration.model.UserData
+import com.example.cab.model.StoreManager
+import com.example.cab.model.UserData
 import com.example.cab.activities.registration.vm.RegistrationActivityViewModel
 import com.example.cab.activities.registration.watchers.PhoneFormattingTextWatcher
 import com.example.cab.activities.registration.watchers.StringFormattingTextWatcher
@@ -74,10 +74,7 @@ class RegistrationActivity : AppCompatActivity() {
                 }
             }
             val intent = Intent(this, ResultingInformationActivity::class.java).apply {
-                putExtra("marker1Lat", 40.7128)
-                putExtra("marker1Lng", -74.0060)
-                putExtra("marker2Lat", 51.5074)
-                putExtra("marker2Lng", -0.1278)
+                putExtra("distance", 554655.56f)
             }
             startActivity(intent)
             setErrorsOnValidationFailure()

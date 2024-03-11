@@ -1,4 +1,4 @@
-package com.example.cab.activities.registration.model
+package com.example.cab.model
 
 data class UserData(
     var userName: String,
