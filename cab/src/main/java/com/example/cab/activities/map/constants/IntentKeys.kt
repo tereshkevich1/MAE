@@ -1,4 +1,4 @@
-package com.example.cab.constants
+package com.example.cab.activities.map.constants
 
 object IntentKeys {
     const val PHONE = "com.example.cab.PHONE"

@@ -1,22 +1,23 @@
-package com.example.cab
+package com.example.cab.activities.map
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.location.Location
+import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.cab.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -31,12 +32,14 @@ class MapHandler(private val activity: AppCompatActivity) :
     }
 
     private var map: GoogleMap? = null
-    private var cameraPosition: CameraPosition? = null
+
+    //private var cameraPosition: CameraPosition? = null
     private var fusedLocationProviderClient: FusedLocationProviderClient
     private var locationPermissionGranted = false
     private var marker: Marker? = null
     private val defaultLocation = LatLng(53.918599, 27.593955)
     private var lastKnownLocation: Location? = null
+    private var savedMarkerPosition: LatLng? = null
 
     init {
         val mapFragment =
@@ -54,17 +57,34 @@ class MapHandler(private val activity: AppCompatActivity) :
         getLocationPermission()
         updateLocationUI()
         getDeviceLocation()
-    }
-
-    fun checkLastLocationAndMarker(messageCallBack: CheckLastLocationCallBack) {
-        if (lastKnownLocation == null) {
-            messageCallBack.enableGpsMessage()
-            getDeviceLocation()
-        } else if (marker == null) {
-            messageCallBack.setMarkerMessage()
+        savedMarkerPosition?.let {
+            marker = map?.addMarker(MarkerOptions().position(it).title(""))
         }
     }
 
+    fun checkLastLocationAndMarker(messageCallBack: CheckLastLocationCallBack): Boolean {
+        if (lastKnownLocation == null) {
+            messageCallBack.enableGpsMessage()
+            getDeviceLocation()
+            return false
+        } else if (marker == null) {
+            messageCallBack.setMarkerMessage()
+            return false
+        }
+        return true
+    }
+
+
+    fun getMarkerCoordinates(): Location? {
+        return marker?.let {
+            val location = Location("")
+            location.latitude = it.position.latitude
+            location.longitude = it.position.longitude
+            location
+        }
+    }
+
+    fun getUserCoordinates(): Location? = lastKnownLocation
 
     override fun onMyLocationButtonClick(): Boolean {
         Toast.makeText(activity, "MyLocation button clicked", Toast.LENGTH_SHORT)
@@ -80,7 +100,7 @@ class MapHandler(private val activity: AppCompatActivity) :
 
     override fun onMapClick(latLng: LatLng) {
         marker?.remove()
-        marker = map?.addMarker(MarkerOptions().position(latLng).title("Выбросить"))
+        marker = map?.addMarker(MarkerOptions().position(latLng).title(""))
     }
 
     @SuppressLint("MissingPermission")
@@ -158,6 +178,16 @@ class MapHandler(private val activity: AppCompatActivity) :
                 PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
             )
         }
+    }
+
+    fun onSaveInstanceState(outState: Bundle) {
+        //outState.putParcelable("last_known_location", lastKnownLocation)
+        outState.putParcelable("marker_position", marker?.position)
+    }
+
+    fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        //lastKnownLocation = savedInstanceState.getParcelable("last_known_location")
+        savedMarkerPosition = savedInstanceState.getParcelable("marker_position")
     }
 
     companion object {

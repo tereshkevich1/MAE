@@ -25,7 +25,7 @@
             android:value="AIzaSyB9I11dwMLfNad1RDxbgo12qfORIxZnpYo" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.map.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,8 +34,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UserDataActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".activities.map.UserDataActivity"
+            android:parentActivityName=".activities.map.MainActivity" />
         <activity android:name=".TestDataActivity"/>
 
 

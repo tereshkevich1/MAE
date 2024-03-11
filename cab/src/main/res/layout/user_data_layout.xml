@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.cab.vm.UserDataViewModel" />
+            type="com.example.cab.activities.map.vm.UserDataViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,4 +1,4 @@
-package com.example.cab
+package com.example.cab.activities.map
 
 class Permission {
     /*

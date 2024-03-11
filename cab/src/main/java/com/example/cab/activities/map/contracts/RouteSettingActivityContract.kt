@@ -1,10 +1,10 @@
-package com.example.cab.contracts
+package com.example.cab.activities.map.contracts
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
-import com.example.cab.constants.IntentKeys
+import com.example.cab.activities.map.constants.IntentKeys
 
 /*
 class RouteSettingActivityContract : ActivityResultContract<String, Int?>() {
