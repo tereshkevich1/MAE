@@ -34,6 +34,7 @@ class StringFormattingTextWatcher(private val editText: EditText) : TextWatcher 
     private fun EditText.deleteFirstSpaces(editable: Editable){
         if (editable.startsWith(" ")) {
             this.setText(fieldText.trimStart())
+            position = 0
         }
     }
 
