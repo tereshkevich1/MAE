@@ -1,6 +1,7 @@
 package com.example.cab.activities.registration
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -12,11 +13,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.example.cab.R
-import com.example.cab.activities.registration.model.StoreManager
-import com.example.cab.activities.registration.model.UserData
+import com.example.cab.model.StoreManager
+import com.example.cab.model.UserData
 import com.example.cab.activities.registration.vm.RegistrationActivityViewModel
 import com.example.cab.activities.registration.watchers.PhoneFormattingTextWatcher
 import com.example.cab.activities.registration.watchers.StringFormattingTextWatcher
+import com.example.cab.activities.resultingInformation.ResultingInformationActivity
 import com.example.cab.databinding.ActivityRegistrationBinding
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -71,6 +73,10 @@ class RegistrationActivity : AppCompatActivity() {
                     )
                 }
             }
+            val intent = Intent(this, ResultingInformationActivity::class.java).apply {
+                putExtra("distance", 554655.56f)
+            }
+            startActivity(intent)
             setErrorsOnValidationFailure()
         }
     }

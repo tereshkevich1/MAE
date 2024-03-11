@@ -1,12 +1,12 @@
-package com.example.cab.activities.registration.model
+package com.example.cab.model
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.cab.activities.registration.dataStore
-import com.example.cab.activities.registration.model.StoreManager.Companion.PreferencesKeys.USER_NAME
-import com.example.cab.activities.registration.model.StoreManager.Companion.PreferencesKeys.USER_PHONE
-import com.example.cab.activities.registration.model.StoreManager.Companion.PreferencesKeys.USER_SURNAME
+import com.example.cab.model.StoreManager.Companion.PreferencesKeys.USER_NAME
+import com.example.cab.model.StoreManager.Companion.PreferencesKeys.USER_PHONE
+import com.example.cab.model.StoreManager.Companion.PreferencesKeys.USER_SURNAME
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map

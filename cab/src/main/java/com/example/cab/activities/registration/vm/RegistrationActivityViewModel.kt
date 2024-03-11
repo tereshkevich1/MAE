@@ -3,7 +3,7 @@ package com.example.cab.activities.registration.vm
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.cab.R
-import com.example.cab.activities.registration.model.UserData
+import com.example.cab.model.UserData
 import com.example.cab.activities.registration.validators.*
 import com.example.cab.activities.registration.validators.components.BaseValidator
 import com.example.cab.activities.registration.validators.components.ValidatorResult
