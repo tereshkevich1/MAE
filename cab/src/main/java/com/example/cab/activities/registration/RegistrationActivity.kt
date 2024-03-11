@@ -71,12 +71,13 @@ class RegistrationActivity : AppCompatActivity() {
                             registrationActivityViewModel.phone.value!!
                         )
                     )
+
                 }
+                val intent = Intent(this, ResultingInformationActivity::class.java).apply {
+                    putExtra("distance", 554655.56f)
+                }
+                startActivity(intent)
             }
-            val intent = Intent(this, ResultingInformationActivity::class.java).apply {
-                putExtra("distance", 554655.56f)
-            }
-            startActivity(intent)
             setErrorsOnValidationFailure()
         }
     }

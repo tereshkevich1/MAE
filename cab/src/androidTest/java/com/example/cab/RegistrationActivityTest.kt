@@ -2,10 +2,8 @@ package com.example.cab
 
 import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.typeText
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
@@ -14,6 +12,7 @@ import com.example.cab.activities.registration.RegistrationActivity
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Rule
 
 /**
@@ -26,6 +25,12 @@ class RegistrationActivityTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(RegistrationActivity::class.java)
 
+    @Before
+    fun clear(){
+        onView(withId(R.id.phoneField)).perform(clearText())
+        onView(withId(R.id.nameField)).perform(clearText())
+        onView(withId(R.id.surnameField)).perform(clearText())
+    }
     @Test
     fun useAppContext() {
         // Context of the app under test.
@@ -89,16 +94,14 @@ class RegistrationActivityTest {
     fun checkPhoneEmpty() {
         inputPhone("")
         clickOnRegistrationButton()
-        onView(withId(R.id.phoneField)).check(matches(hasErrorText("This field can't be empty")))
+        onView(withId(R.id.phoneField)).check(matches(hasErrorText("Incorrect phone number format!")))
     }
 
     @Test
     fun checkPhoneTooLongLength() {
         inputPhone("1234567890000")
         clickOnRegistrationButton()
-       // onView(withId(R.id.phoneField)).check(matches(hasErrorText("Incorrect phone number format!")))
-
-        onView(withId(R.id.phoneField)).check(matches(withText("123456789000")))
+        onView(withId(R.id.phoneField)).check(matches(withText("+123 45 678 90 00")))
     }
 
     @Test
@@ -111,7 +114,7 @@ class RegistrationActivityTest {
     fun checkPhoneSymbols() {
         inputPhone(".")
         clickOnRegistrationButton()
-        onView(withId(R.id.phoneField)).check(matches(withText("")))
+        onView(withId(R.id.phoneField)).check(matches(withText("+")))
     }
 
     @Test
@@ -134,11 +137,11 @@ class RegistrationActivityTest {
 
     private fun inputSurname(surname: String) {
         onView(withId(R.id.surnameField)).perform(typeText(surname))
-        closeSoftKeyboard();
+        closeSoftKeyboard()
     }
 
     private fun inputPhone(phone: String) {
         onView(withId(R.id.phoneField)).perform(typeText(phone))
-        closeSoftKeyboard();
+        closeSoftKeyboard()
     }
 }
