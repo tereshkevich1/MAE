@@ -13,13 +13,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.example.cab.R
-import com.example.cab.model.StoreManager
-import com.example.cab.model.UserData
+import com.example.cab.activities.map.UserDataActivity
+import com.example.cab.activities.map.constants.IntentKeys
 import com.example.cab.activities.registration.vm.RegistrationActivityViewModel
 import com.example.cab.activities.registration.watchers.PhoneFormattingTextWatcher
 import com.example.cab.activities.registration.watchers.StringFormattingTextWatcher
-import com.example.cab.activities.resultingInformation.ResultingInformationActivity
 import com.example.cab.databinding.ActivityRegistrationBinding
+import com.example.cab.model.StoreManager
+import com.example.cab.model.UserData
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -36,7 +37,8 @@ class RegistrationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val userData = StoreManager.readUserData(this.baseContext)
-        registrationActivityViewModel = ViewModelProvider(this)[RegistrationActivityViewModel::class.java]
+        registrationActivityViewModel =
+            ViewModelProvider(this)[RegistrationActivityViewModel::class.java]
         registrationActivityViewModel.viewModelScope.launch {
             registrationActivityViewModel.setUserData(userData.first())
         }
@@ -47,19 +49,20 @@ class RegistrationActivity : AppCompatActivity() {
         setButtonOnClickListener()
     }
 
-    private fun findViewsForFields(){
+    private fun findViewsForFields() {
         nameEditText = findViewById(R.id.nameField)
         surnameEditText = findViewById(R.id.surnameField)
         phoneEditText = findViewById(R.id.phoneField)
         nextButton = findViewById(R.id.registration)
     }
 
-    private fun addListeners(){
+    private fun addListeners() {
         phoneEditText.addTextChangedListener(PhoneFormattingTextWatcher(phoneEditText))
         surnameEditText.addTextChangedListener(StringFormattingTextWatcher(surnameEditText))
         nameEditText.addTextChangedListener(StringFormattingTextWatcher(nameEditText))
     }
-    private fun setButtonOnClickListener(){
+
+    private fun setButtonOnClickListener() {
         nextButton.setOnClickListener {
             if (registrationActivityViewModel.validationCheck()) {
                 lifecycleScope.launch {
@@ -73,8 +76,12 @@ class RegistrationActivity : AppCompatActivity() {
                     )
 
                 }
-                val intent = Intent(this, ResultingInformationActivity::class.java).apply {
-                    putExtra("distance", 554655.56f)
+                val intent = Intent(this, UserDataActivity::class.java).apply {
+                    putExtra(IntentKeys.PHONE, registrationActivityViewModel.phone.value)
+                    putExtra(
+                        IntentKeys.USERNAME,
+                        "${registrationActivityViewModel.surname.value} ${registrationActivityViewModel.name.value}"
+                    )
                 }
                 startActivity(intent)
             }
@@ -82,19 +89,20 @@ class RegistrationActivity : AppCompatActivity() {
         }
     }
 
-    private fun setErrorsOnValidationFailure(){
+    private fun setErrorsOnValidationFailure() {
         if (!registrationActivityViewModel.nameValidator.isValid) {
             nameEditText.error = getString(registrationActivityViewModel.nameValidator.message)
         }
         if (!registrationActivityViewModel.surnameValidator.isValid) {
-            surnameEditText.error = getString(registrationActivityViewModel.surnameValidator.message)
+            surnameEditText.error =
+                getString(registrationActivityViewModel.surnameValidator.message)
         }
         if (!registrationActivityViewModel.phoneValidator.isValid) {
             phoneEditText.error = getString(registrationActivityViewModel.phoneValidator.message)
         }
     }
 
-    private fun setUpBinding(){
+    private fun setUpBinding() {
         registrationBinding = ActivityRegistrationBinding.inflate(layoutInflater)
         registrationBinding.viewModel = registrationActivityViewModel
         registrationBinding.lifecycleOwner = this

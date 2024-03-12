@@ -6,6 +6,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.cab.R
+import com.example.cab.activities.map.constants.IntentKeys
 import com.example.cab.activities.registration.RegistrationActivity
 import com.example.cab.activities.resultingInformation.vm.ResultingInformationViewModel
 import com.example.cab.databinding.ActivityResultingInformationBinding
@@ -20,7 +21,7 @@ class ResultingInformationActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val distance = intent.getFloatExtra("distance", 0.0f)
+        val distance = intent.getFloatExtra(IntentKeys.DISTANCE, 0.0f)
         val userData = StoreManager.readUserData(this.baseContext)
         lifecycleScope.launch {
             resultingInformationViewModel = ResultingInformationViewModel(distance, userData.first())

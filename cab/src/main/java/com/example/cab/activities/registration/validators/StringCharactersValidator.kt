@@ -5,7 +5,7 @@ import com.example.cab.activities.registration.validators.components.BaseValidat
 import com.example.cab.activities.registration.validators.components.ValidatorResult
 
 class StringCharactersValidator(private val input: String): BaseValidator() {
-    private val regex = Regex("[A-Za-z ]+")
+    private val regex = Regex("[A-Za-zА-Яа-я ]+")
     override fun validate(): ValidatorResult {
         val isValid = input.matches(regex) && !input.startsWith(" ")
         return ValidatorResult(
