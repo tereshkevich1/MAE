@@ -3,6 +3,7 @@ package com.example.cab
 import android.content.ComponentName
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.intent.rule.IntentsTestRule
@@ -16,6 +17,7 @@ import org.junit.runner.RunWith
 import org.junit.Assert.*
 import org.junit.Rule
 
+
 /**
  * Instrumented test, which will execute on an Android device.
  *
@@ -25,6 +27,7 @@ import org.junit.Rule
 class ResultingInformationActivityTest {
     @get:Rule
     val intentsTestRule = IntentsTestRule(ResultingInformationActivity::class.java)
+
 
     @Test
     fun useAppContext() {
