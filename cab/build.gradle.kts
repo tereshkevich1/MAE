@@ -46,7 +46,10 @@ val mockkVersion = "1.13.9"
 
 dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0")
+<<<<<<< Updated upstream
     implementation("androidx.test.ext:junit-ktx:1.1.5")
+=======
+>>>>>>> Stashed changes
     implementation("androidx.test.espresso:espresso-intents:3.5.1")
     kapt("androidx.databinding:databinding-runtime:8.3.0")
 
