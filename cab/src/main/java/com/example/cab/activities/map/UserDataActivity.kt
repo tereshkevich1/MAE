@@ -5,7 +5,6 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -15,6 +14,7 @@ import com.example.cab.R
 import com.example.cab.activities.map.MapHandler.Companion.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
 import com.example.cab.activities.map.constants.IntentKeys
 import com.example.cab.activities.map.vm.UserDataViewModel
+import com.example.cab.activities.resultingInformation.ResultingInformationActivity
 import com.example.cab.databinding.UserDataLayoutBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -40,25 +40,16 @@ class UserDataActivity : AppCompatActivity(), ActivityCompat.OnRequestPermission
         viewModel = ViewModelProvider(this)[UserDataViewModel::class.java]
         binding.viewModel = viewModel
 
-        viewModel.phone.observe(this) {
-            binding.phoneTextView.text = it
-        }
-
-        viewModel.username.observe(this) {
-            binding.usernameTextView.text = it
-        }
-
-        viewModel.changePhone(intent.getStringExtra(IntentKeys.PHONE))
-        viewModel.changeUsername(intent.getStringExtra(IntentKeys.USERNAME))
+        setObservers()
+        getUserData()
 
         binding.callTaxiButton.setOnClickListener {
-
             if (mapHandler.checkLastLocationAndMarker(object :
                     MapHandler.CheckLastLocationCallBack {
                     override fun enableGpsMessage() = mapHandler.showEnableLocationDialog()
                     override fun setMarkerMessage() = showSnackbar(R.string.select_arrival_point)
                 })) {
-                val intent = Intent(this@UserDataActivity, MainActivity::class.java)
+                val intent = Intent(this@UserDataActivity, ResultingInformationActivity::class.java)
                 intent.putExtra(IntentKeys.DISTANCE, mapHandler.getDistance())
                 startActivity(intent)
             }
@@ -114,9 +105,19 @@ class UserDataActivity : AppCompatActivity(), ActivityCompat.OnRequestPermission
         Snackbar.make(binding.callTaxiButton, message, Snackbar.LENGTH_SHORT).show()
     }
 
-    fun startGpsSettings() {
-        val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-        startActivity(intent)
+    private fun setObservers(){
+        viewModel.phone.observe(this) {
+            binding.phoneTextView.text = it
+        }
+
+        viewModel.username.observe(this) {
+            binding.usernameTextView.text = it
+        }
+    }
+
+    private fun getUserData(){
+        viewModel.changePhone(intent.getStringExtra(IntentKeys.PHONE))
+        viewModel.changeUsername(intent.getStringExtra(IntentKeys.USERNAME))
     }
 
 }

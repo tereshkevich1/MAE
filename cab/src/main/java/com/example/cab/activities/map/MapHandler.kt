@@ -29,7 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class MapHandler(private val activity: AppCompatActivity) :
     GoogleMap.OnMyLocationButtonClickListener,
-    GoogleMap.OnMyLocationClickListener, OnMapReadyCallback, GoogleMap.OnMapClickListener {
+    GoogleMap.OnMyLocationClickListener, OnMapReadyCallback, GoogleMap.OnMapClickListener{
 
     interface CheckLastLocationCallBack {
         fun enableGpsMessage()
@@ -38,7 +38,6 @@ class MapHandler(private val activity: AppCompatActivity) :
 
     private var map: GoogleMap? = null
 
-    //private var cameraPosition: CameraPosition? = null
     private var locationPermissionGranted = false
 
     private var fusedLocationProviderClient: FusedLocationProviderClient
@@ -85,11 +84,17 @@ class MapHandler(private val activity: AppCompatActivity) :
     override fun onMapClick(latLng: LatLng) {
         marker?.remove()
         marker = map?.addMarker(MarkerOptions().position(latLng).title(""))
+        map?.setOnMarkerClickListener{
+            true
+        }
     }
 
     private fun addSavedMarker() {
         savedMarkerPosition?.let {
             marker = map?.addMarker(MarkerOptions().position(it).title(""))
+            map?.setOnMarkerClickListener{
+                true
+            }
         }
     }
 
@@ -232,4 +237,6 @@ class MapHandler(private val activity: AppCompatActivity) :
         //Request code for location permission request.
         const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
     }
+
+
 }
