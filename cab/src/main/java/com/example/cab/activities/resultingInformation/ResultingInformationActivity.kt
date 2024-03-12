@@ -26,11 +26,10 @@ class ResultingInformationActivity: AppCompatActivity() {
         lifecycleScope.launch {
             resultingInformationViewModel = ResultingInformationViewModel(distance, userData.first())
             setUpBinding()
+            setContentView(resultingInformationBinding.root)
+            againButton = findViewById(R.id.call_again)
+            setButtonOnClickListener()
         }
-
-        setContentView(resultingInformationBinding.root)
-        againButton = findViewById(R.id.call_again)
-        setButtonOnClickListener()
     }
 
     private fun setButtonOnClickListener(){
