@@ -2,7 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ResultingInformationActivityTest">
+      <entry key="RegistrationActivityTest">
         <State />
       </entry>
       <entry key="cab">
@@ -36,6 +36,18 @@
           </targetSelectedWithDropDown>
           <timeTargetWasSelectedWithDropDown value="2024-02-18T21:49:49.398828700Z" />
         </State>
+      </entry>
+      <entry key="checkCorrectData()">
+        <State />
+      </entry>
+      <entry key="checkCorrectData() (1)">
+        <State />
+      </entry>
+      <entry key="checkCorrectData() (2)">
+        <State />
+      </entry>
+      <entry key="checkCorrectData() (3)">
+        <State />
       </entry>
       <entry key="minishop">
         <State />

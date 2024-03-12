@@ -4,14 +4,11 @@ import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.intent.Intents.*
-import androidx.test.espresso.intent.matcher.IntentMatchers.*
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.cab.activities.registration.RegistrationActivity
-import com.example.cab.activities.resultingInformation.ResultingInformationActivity
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.Assert.*
@@ -27,6 +24,7 @@ import org.junit.Rule
 class RegistrationActivityTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(RegistrationActivity::class.java)
+
 
     @Before
     fun clear(){
@@ -120,16 +118,7 @@ class RegistrationActivityTest {
         onView(withId(R.id.phoneField)).check(matches(withText("+")))
     }
 
-    fun checkCorrectData() {
-        inputName("qqq")
-        inputSurname("qqq")
-        inputPhone("123456789")
 
-        init()
-        clickOnRegistrationButton()
-        intended(hasComponent(ResultingInformationActivity::class.java.getName()));
-        release()
-    }
 
     private fun clickOnRegistrationButton() {
         onView(withId(R.id.registration)).perform(click())
