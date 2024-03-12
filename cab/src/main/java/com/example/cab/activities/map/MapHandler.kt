@@ -3,15 +3,20 @@ package com.example.cab.activities.map
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ContentValues
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.cab.R
+import com.example.cab.activities.map.constants.IntentKeys
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -34,12 +39,17 @@ class MapHandler(private val activity: AppCompatActivity) :
     private var map: GoogleMap? = null
 
     //private var cameraPosition: CameraPosition? = null
-    private var fusedLocationProviderClient: FusedLocationProviderClient
     private var locationPermissionGranted = false
-    private var marker: Marker? = null
-    private val defaultLocation = LatLng(53.918599, 27.593955)
+
+    private var fusedLocationProviderClient: FusedLocationProviderClient
     private var lastKnownLocation: Location? = null
+    private val defaultLocation = LatLng(53.918599, 27.593955)
+
+    private var marker: Marker? = null
     private var savedMarkerPosition: LatLng? = null
+
+    private val locationManager =
+        activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
     init {
         val mapFragment =
@@ -56,16 +66,14 @@ class MapHandler(private val activity: AppCompatActivity) :
 
         getLocationPermission()
         updateLocationUI()
-        getDeviceLocation()
-        savedMarkerPosition?.let {
-            marker = map?.addMarker(MarkerOptions().position(it).title(""))
-        }
+        getDeviceLocation(true)
+        addSavedMarker()
     }
 
     fun checkLastLocationAndMarker(messageCallBack: CheckLastLocationCallBack): Boolean {
+        getDeviceLocation(false)
         if (lastKnownLocation == null) {
             messageCallBack.enableGpsMessage()
-            getDeviceLocation()
             return false
         } else if (marker == null) {
             messageCallBack.setMarkerMessage()
@@ -74,8 +82,18 @@ class MapHandler(private val activity: AppCompatActivity) :
         return true
     }
 
+    override fun onMapClick(latLng: LatLng) {
+        marker?.remove()
+        marker = map?.addMarker(MarkerOptions().position(latLng).title(""))
+    }
 
-    fun getMarkerCoordinates(): Location? {
+    private fun addSavedMarker() {
+        savedMarkerPosition?.let {
+            marker = map?.addMarker(MarkerOptions().position(it).title(""))
+        }
+    }
+
+    private fun getMarkerCoordinates(): Location? {
         return marker?.let {
             val location = Location("")
             location.latitude = it.position.latitude
@@ -84,13 +102,29 @@ class MapHandler(private val activity: AppCompatActivity) :
         }
     }
 
-    fun getUserCoordinates(): Location? = lastKnownLocation
+    fun getDistance(): Float? {
+        val markerLocation = getMarkerCoordinates()
+        val currentLocation = lastKnownLocation
+        return if (currentLocation != null && markerLocation != null) {
+            currentLocation.distanceTo(markerLocation)
+        } else null
+    }
 
     override fun onMyLocationButtonClick(): Boolean {
-        Toast.makeText(activity, "MyLocation button clicked", Toast.LENGTH_SHORT)
-            .show()
-        getDeviceLocation()
+        showEnableLocationDialog()
+        getDeviceLocation(true)
         return true
+    }
+
+    fun showEnableLocationDialog() {
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            EnableLocationDialog(object : OnPositiveButtonCallBack {
+                override fun onPositiveButton() {
+                    val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                    activity.startActivity(intent)
+                }
+            }).show(activity.supportFragmentManager, "ENABLE_GPS")
+        }
     }
 
     override fun onMyLocationClick(location: Location) {
@@ -98,10 +132,23 @@ class MapHandler(private val activity: AppCompatActivity) :
             .show()
     }
 
-    override fun onMapClick(latLng: LatLng) {
-        marker?.remove()
-        marker = map?.addMarker(MarkerOptions().position(latLng).title(""))
+    // [START maps_check_location_permission_result]
+    private fun getLocationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                activity,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            locationPermissionGranted = true
+        } else {
+            ActivityCompat.requestPermissions(
+                activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+            )
+        }
     }
+
 
     @SuppressLint("MissingPermission")
     private fun updateLocationUI() {
@@ -123,9 +170,8 @@ class MapHandler(private val activity: AppCompatActivity) :
         }
     }
 
-
     @SuppressLint("MissingPermission")
-    private fun getDeviceLocation() {
+    private fun getDeviceLocation(moveCamera: Boolean) {
         /*
          * Get the best and most recent location of the device, which may be null in rare
          * cases when a location is not available.
@@ -137,7 +183,7 @@ class MapHandler(private val activity: AppCompatActivity) :
                     if (task.isSuccessful) {
                         // Set the map's camera position to the current location of the device.
                         lastKnownLocation = task.result
-                        if (lastKnownLocation != null) {
+                        if (lastKnownLocation != null && moveCamera) {
                             map?.animateCamera(
                                 CameraUpdateFactory.newLatLngZoom(
                                     LatLng(
@@ -150,10 +196,12 @@ class MapHandler(private val activity: AppCompatActivity) :
                     } else {
                         Log.d(ContentValues.TAG, "Current location is null. Using defaults.")
                         Log.e(ContentValues.TAG, "Exception: %s", task.exception)
-                        map?.moveCamera(
-                            CameraUpdateFactory
-                                .newLatLngZoom(defaultLocation, 16f)
-                        )
+                        if (moveCamera) {
+                            map?.moveCamera(
+                                CameraUpdateFactory
+                                    .newLatLngZoom(defaultLocation, 16f)
+                            )
+                        }
                         map?.uiSettings?.isMyLocationButtonEnabled = false
                     }
                 }
@@ -163,35 +211,25 @@ class MapHandler(private val activity: AppCompatActivity) :
         }
     }
 
-    // [START maps_check_location_permission_result]
-    private fun getLocationPermission() {
-        if (ContextCompat.checkSelfPermission(
-                activity,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-            == PackageManager.PERMISSION_GRANTED
-        ) {
-            locationPermissionGranted = true
-        } else {
-            ActivityCompat.requestPermissions(
-                activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
-            )
-        }
+    fun onLocationPermissionGranted() {
+        locationPermissionGranted = true
+        getLocationPermission()
+        updateLocationUI()
+        getDeviceLocation(true)
     }
 
     fun onSaveInstanceState(outState: Bundle) {
         //outState.putParcelable("last_known_location", lastKnownLocation)
-        outState.putParcelable("marker_position", marker?.position)
+        outState.putParcelable(IntentKeys.MARKER_POSITION, marker?.position)
     }
 
     fun onRestoreInstanceState(savedInstanceState: Bundle) {
         //lastKnownLocation = savedInstanceState.getParcelable("last_known_location")
-        savedMarkerPosition = savedInstanceState.getParcelable("marker_position")
+        savedMarkerPosition = savedInstanceState.getParcelable(IntentKeys.MARKER_POSITION)
     }
 
     companion object {
         //Request code for location permission request.
-        private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
+        const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
     }
 }

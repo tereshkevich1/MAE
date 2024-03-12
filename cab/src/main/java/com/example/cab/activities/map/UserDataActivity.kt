@@ -2,35 +2,29 @@ package com.example.cab.activities.map
 
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.cab.R
+import com.example.cab.activities.map.MapHandler.Companion.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
 import com.example.cab.activities.map.constants.IntentKeys
 import com.example.cab.activities.map.vm.UserDataViewModel
 import com.example.cab.databinding.UserDataLayoutBinding
 import com.google.android.material.snackbar.Snackbar
 
-
-class UserDataActivity : AppCompatActivity() {
+class UserDataActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsResultCallback {
 
     private lateinit var binding: UserDataLayoutBinding
     private lateinit var viewModel: UserDataViewModel
     private lateinit var mapHandler: MapHandler
 
     private var gpsCheck: GPSCheck? = null
-
-    /*private val activityLaunch = registerForActivityResult(RouteSettingActivityContract()) {
-        when (it) {
-            ActionConstants.KEY_SUCCESSFUL -> {
-                enableCallTaxiButton()
-                Log.d("departure_", intent.getStringExtra(IntentKeys.DEPARTURE).toString())
-                getRoute()
-            }
-        }
-    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,32 +52,27 @@ class UserDataActivity : AppCompatActivity() {
         viewModel.changeUsername(intent.getStringExtra(IntentKeys.USERNAME))
 
         binding.callTaxiButton.setOnClickListener {
+
             if (mapHandler.checkLastLocationAndMarker(object :
                     MapHandler.CheckLastLocationCallBack {
-                    override fun enableGpsMessage() = showSnackbar(R.string.enable_gps)
+                    override fun enableGpsMessage() = mapHandler.showEnableLocationDialog()
                     override fun setMarkerMessage() = showSnackbar(R.string.select_arrival_point)
                 })) {
                 val intent = Intent(this@UserDataActivity, MainActivity::class.java)
-                intent.putExtra("user", mapHandler.getUserCoordinates())
-                intent.putExtra("marker", mapHandler.getMarkerCoordinates())
+                intent.putExtra(IntentKeys.DISTANCE, mapHandler.getDistance())
                 startActivity(intent)
-
             }
         }
-
     }
 
     override fun onStart() {
         super.onStart()
         gpsCheck = GPSCheck(object : GPSCheck.LocationCallBack {
-            override fun turnedOn() {
-                mapHandler.onMyLocationButtonClick()
-            }
-
             override fun turnedOff() {
-                // EnableLocationDialog().show(supportFragmentManager,"ENABLE_GPS")
+                   Log.d("GPS_LOG","GPS turned off")
             }
         })
+
         val intentFilter = IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION)
         registerReceiver(gpsCheck, intentFilter)
     }
@@ -96,12 +85,38 @@ class UserDataActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         mapHandler.onSaveInstanceState(outState)
+    }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION -> {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.isNotEmpty() &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED
+                ) {
+                    mapHandler.onLocationPermissionGranted()
+                }
+            }
+            /*
+            else -> {
+                this.onRequestPermissionsResult(requestCode, permissions, grantResults)
+            }*/
+        }
     }
 
     private fun showSnackbar(messageInt: Int) {
         val message = getString(messageInt)
         Snackbar.make(binding.callTaxiButton, message, Snackbar.LENGTH_SHORT).show()
+    }
+
+    fun startGpsSettings() {
+        val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+        startActivity(intent)
     }
 
 }
