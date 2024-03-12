@@ -14,6 +14,7 @@ class ResultingInformationViewModel(
     val timeToShow: String = analyzeTime()
     val priceToShow: String = "${calculatePrice().roundTo(2)} bunov"
     val client: String = "${userData.userSurname} ${userData.userName}"
+
     private fun calculatePrice(): Double {
         val first = 0.00000000000013 * distance.pow(3)
         val second = 0.00000002018124 * distance.pow(2)
@@ -22,7 +23,10 @@ class ResultingInformationViewModel(
     }
 
     private fun analyzeTime(): String {
-        val totalMinutes = 0.38734767167377 * distance.pow(0.45329306f)
+        val first = (1.020474e-14) * distance.pow(3)
+        val second = (7.985649e-9) * distance.pow(2)
+        val third = 0.002090597 * distance + 10.30916
+        val totalMinutes = first - second + third
         val days = (totalMinutes / (60 * 24)).toInt()
         val hours = ((totalMinutes % (60 * 24)) / 60).toInt()
         val minutes = (totalMinutes % 60).toInt()

@@ -38,7 +38,7 @@ class ResultingInformationActivityTest {
     fun checkCorrectData() {
         init()
         onView(withId(R.id.call_again)).perform(click())
-        // intended(hasComponent(ResultingInformationActivity::class.java.getName()));
+        intended(hasComponent(RegistrationActivity::class.java.getName()));
         release()
     }
 
