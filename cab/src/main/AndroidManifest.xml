@@ -12,6 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MAE">
+        <activity
+            android:name=".activities.registration.RegistrationActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -25,20 +35,13 @@
             android:value="AIzaSyB9I11dwMLfNad1RDxbgo12qfORIxZnpYo" />
 
         <activity
-            android:name=".activities.map.MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".activities.map.UserDataActivity"
             android:parentActivityName=".activities.map.MainActivity" />
-        <activity android:name=".TestDataActivity"/>
 
+        <activity android:name=".activities.resultingInformation.ResultingInformationActivity"
+            android:exported="true">
 
+        </activity>
     </application>
 
 </manifest>

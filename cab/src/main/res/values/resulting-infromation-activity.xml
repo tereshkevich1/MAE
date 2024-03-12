@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="thanks_for_using">
+        Thank you, dear %s, for using our application! Hope you will cum safely and quickly to your destination!
+    </string>
+    <string name="payment">
+       We have just debited your card for the amount of
+    </string>
+    <string name="distance">
+        Your travel will be length of
+    </string>
+    <string name="length">
+        This trip will take
+    </string>
+    <string name="call_again">
+        Order a new cab
+    </string>
+</resources>
