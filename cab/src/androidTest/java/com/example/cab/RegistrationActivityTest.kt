@@ -20,6 +20,7 @@ import org.junit.Rule
 
 /**
  * Instrumented test, which will execute on an Android device.
+ * @property activityRule [ActivityScenarioRule] for test
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
@@ -36,6 +37,9 @@ class RegistrationActivityTest {
     }
     @Test
     fun useAppContext() {
+        /*
+
+         */
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.example.cab", appContext.packageName)

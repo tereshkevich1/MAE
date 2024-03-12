@@ -54,6 +54,7 @@ class UserDataActivity : AppCompatActivity(), ActivityCompat.OnRequestPermission
                 startActivity(intent)
             }
         }
+
     }
 
     override fun onStart() {
@@ -93,10 +94,7 @@ class UserDataActivity : AppCompatActivity(), ActivityCompat.OnRequestPermission
                     mapHandler.onLocationPermissionGranted()
                 }
             }
-            /*
-            else -> {
-                this.onRequestPermissionsResult(requestCode, permissions, grantResults)
-            }*/
+
         }
     }
 

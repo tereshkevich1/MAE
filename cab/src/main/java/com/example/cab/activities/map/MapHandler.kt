@@ -128,7 +128,7 @@ class MapHandler(private val activity: AppCompatActivity) :
                     val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                     activity.startActivity(intent)
                 }
-            }).show(activity.supportFragmentManager, "ENABLE_GPS")
+            }).show(activity.supportFragmentManager, DIALOG_TAG)
         }
     }
 
@@ -236,6 +236,7 @@ class MapHandler(private val activity: AppCompatActivity) :
     companion object {
         //Request code for location permission request.
         const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
+        const val DIALOG_TAG = "MyDialogTag"
     }
 
 
