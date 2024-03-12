@@ -39,6 +39,11 @@ android {
     }
 }
 
+val androidXTestVersion = "1.5.0"
+val mockitoVersion = "5.10.0"
+val mockitoKotlinVersion = "5.2.1"
+val mockkVersion = "1.13.9"
+
 dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("androidx.test.ext:junit-ktx:1.1.5")
@@ -68,5 +73,13 @@ dependencies {
 
     androidTestImplementation("androidx.test:runner:1.5.2")
     androidTestImplementation("androidx.test:rules:1.5.0")
+
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+    testImplementation("androidx.test:core:$androidXTestVersion")
+    testImplementation("org.mockito:mockito-core:$mockitoVersion")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
 
 }
