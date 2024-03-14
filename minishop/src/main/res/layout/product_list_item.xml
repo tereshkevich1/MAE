@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="product smile №1" />
+            android:text="product №1" />
 
         <Space
             android:layout_width="0dp"

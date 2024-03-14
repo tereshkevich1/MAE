@@ -27,6 +27,10 @@ class ProductListActivity : AppCompatActivity() {
                 Product("h"),
                 Product("f"),
                 Product("uh"),
+                Product("uh"),
+                Product("hh"),
+                Product("th"),
+                Product("eh"),
                 Product("sud")
             )
         )
