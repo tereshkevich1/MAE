@@ -2,9 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="RegistrationActivityTest">
-        <State />
-      </entry>
       <entry key="cab">
         <State>
           <targetSelectedWithDropDown>
@@ -18,44 +15,16 @@
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-03-12T06:09:35.208814500Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-03-14T15:53:11.850955400Z" />
         </State>
       </entry>
       <entry key="calculator">
-        <State>
-          <targetSelectedWithDropDown>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Sergey\.android\avd\Pixel_6_Pro_API_29.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-02-18T21:49:49.398828700Z" />
-        </State>
-      </entry>
-      <entry key="checkCorrectData()">
-        <State />
-      </entry>
-      <entry key="checkCorrectData() (1)">
-        <State />
-      </entry>
-      <entry key="checkCorrectData() (2)">
-        <State />
-      </entry>
-      <entry key="checkCorrectData() (3)">
         <State />
       </entry>
       <entry key="minishop">
         <State />
       </entry>
       <entry key="notes">
-        <State />
-      </entry>
-      <entry key="useAppContext()">
         <State />
       </entry>
     </value>
