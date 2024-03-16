@@ -3,14 +3,31 @@ package com.example.minishop
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.minishop.databinding.CustomSnackbarLayoutBinding
+import com.example.minishop.databinding.FooterProductListBinding
+import com.example.minishop.databinding.HeaderProductListBinding
+import com.example.minishop.databinding.ProductListItemBinding
 import com.example.minishop.models.Product
+import com.google.android.material.snackbar.Snackbar
+
 
 class ProductListAdapter(private val productList: MutableList<Product>) :
     RecyclerView.Adapter<ViewHolder>() {
 
+    private lateinit var headerBinding: HeaderProductListBinding
+    private lateinit var footerBinding: FooterProductListBinding
+    private lateinit var productBinding: ProductListItemBinding
+
     class ProductViewHolder(itemView: View) : ViewHolder(itemView) {
+        val nameTextView: TextView = itemView.findViewById(R.id.nameTextView)
+        val idTextView: TextView = itemView.findViewById(R.id.idTextView)
+        val addButton: Button = itemView.findViewById(R.id.addButton)
     }
 
     class FooterProductViewHolder(itemView: View) : ViewHolder(itemView) {
@@ -21,28 +38,63 @@ class ProductListAdapter(private val productList: MutableList<Product>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ViewTypes.Normal -> ProductViewHolder(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.product_list_item, parent, false)
-            )
-
-            ViewTypes.Header -> HeaderProductViewHolder(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.header_product_list, parent, false)
-            )
-
-            else ->
-                FooterProductViewHolder(
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.footer_product_list, parent, false)
+            ViewTypes.Normal -> {
+                productBinding = ProductListItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
                 )
+                ProductViewHolder(productBinding.root)
+            }
+
+            ViewTypes.Header -> {
+                headerBinding = HeaderProductListBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                HeaderProductViewHolder(headerBinding.root)
+            }
+
+            else -> {
+                footerBinding = FooterProductListBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                FooterProductViewHolder(footerBinding.root)
+            }
         }
     }
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (holder) {
             is ProductViewHolder -> {
+                holder.idTextView.text = position.toString()
+                if (position > 0)
+                    holder.nameTextView.text = productList[position.dec()].name
+                holder.addButton.setOnClickListener {
 
+                    val snackView = LayoutInflater.from(it.context).inflate(R.layout.custom_snackbar_layout, null)
+                    val binding = CustomSnackbarLayoutBinding.bind(snackView)
+
+                    val snackbar: Snackbar = Snackbar.make(it, "" , Snackbar.LENGTH_LONG)
+
+                    (snackbar.view as ViewGroup).removeAllViews()
+
+                    val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 200)
+
+                    (snackbar.view as ViewGroup).addView(snackView,layoutParams)
+                    snackbar.view.setPadding(0, 0, 8, 0)
+                    snackbar.setBackgroundTint(ContextCompat.getColor(it.context,R.color.md_theme_light_secondary))
+
+                    binding.minusButton.setOnClickListener {
+                        snackbar.duration = 2000
+                    }
+
+                   snackbar.show()
+                }
             }
 
             is HeaderProductViewHolder -> {
