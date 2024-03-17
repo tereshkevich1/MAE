@@ -55,7 +55,9 @@
                 android:layout_marginBottom="4dp"
                 android:text="Add"
                 android:textSize="12sp"
-                app:cornerRadius="12dp" />
+                app:cornerRadius="12dp">
+
+            </com.google.android.material.button.MaterialButton>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

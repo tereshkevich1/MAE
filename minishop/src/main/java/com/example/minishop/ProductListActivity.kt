@@ -1,11 +1,9 @@
 package com.example.minishop
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.minishop.databinding.ProductListActivityBinding
 import com.example.minishop.models.Product
 
@@ -35,7 +33,7 @@ class ProductListActivity : AppCompatActivity() {
                 Product("th"),
                 Product("eh"),
                 Product("sud")
-            )
+            ), binding.productRC
         )
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
