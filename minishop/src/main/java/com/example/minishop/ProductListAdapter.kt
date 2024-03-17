@@ -12,14 +12,19 @@ import com.example.minishop.databinding.HeaderProductListBinding
 import com.example.minishop.databinding.ProductListItemBinding
 import com.example.minishop.models.Product
 
+interface OnItemClickCallBack {
+    fun onAddButton(position: Int)
+}
 
-class ProductListAdapter(private val productList: MutableList<Product>, view: View) :
+class ProductListAdapter(
+    private val productList: MutableList<Product>,
+    private val listener: OnItemClickCallBack
+) :
     RecyclerView.Adapter<ViewHolder>() {
 
     private lateinit var headerBinding: HeaderProductListBinding
     private lateinit var footerBinding: FooterProductListBinding
     private lateinit var productBinding: ProductListItemBinding
-    private val snackbar = ProductSnackbar(view)
 
 
     class ProductViewHolder(itemView: View) : ViewHolder(itemView) {
@@ -73,7 +78,8 @@ class ProductListAdapter(private val productList: MutableList<Product>, view: Vi
                 if (position > 0)
                     holder.nameTextView.text = productList[position.dec()].name
                 holder.addButton.setOnClickListener {
-                    snackbar.showSnackbar(productList[position.dec()])
+                    listener.onAddButton(position.dec())
+                    //snackbar.showSnackbar(productList[position.dec()])
                 }
             }
 
