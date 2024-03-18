@@ -39,7 +39,7 @@ class ProductListActivity : AppCompatActivity() {
         val onItemClickCallBack = object : OnItemClickCallBack {
             override fun onAddButton(position: Int) {
 
-                vm.addNewCardItem(position)
+                vm.normalizeToOne()
 
                 val onClickSnackbarButtonsCallBack =
                     object : ProductSnackbar.OnClickButtonsCallBack {
@@ -52,9 +52,14 @@ class ProductListActivity : AppCompatActivity() {
                         }
 
                         override fun observer(textView: TextView) {
-                            vm.newCardItem.observe(this@ProductListActivity) {
-                                textView.text = vm.newCardItem.value?.count.toString()
+                            vm.count.observe(this@ProductListActivity) {
+                                textView.text = vm.count.value?.toString()
                             }
+                        }
+
+                        override fun onDismissed() {
+                            vm.addNewCardItem(position)
+                            Log.d("GoodsList", Data.userGoods.toString())
                         }
 
                     }

@@ -1,12 +1,10 @@
 package com.example.minishop
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.example.minishop.data.Data
 import com.example.minishop.databinding.CustomSnackbarLayoutBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -17,6 +15,7 @@ class ProductSnackbar( private val view: View) {
         fun onMinusClick(snackbar: Snackbar)
         fun onPlusClick()
         fun observer(textView: TextView)
+        fun onDismissed()
     }
 
     fun showSnackbar(listener:OnClickButtonsCallBack){
@@ -33,8 +32,14 @@ class ProductSnackbar( private val view: View) {
             )
         )
 
+        snackbar.addCallback(object : Snackbar.Callback(){
+            override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                super.onDismissed(transientBottomBar, event)
+                listener.onDismissed()
+            }
+        })
+
         binding.okButton.setOnClickListener {
-            Log.d("GoodsList", Data.userGoods.toString())
             snackbar.dismiss()
         }
 
