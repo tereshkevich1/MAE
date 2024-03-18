@@ -12,16 +12,21 @@ class ProductListVM : ViewModel() {
     private var _count = MutableLiveData(1)
     val count: LiveData<Int> get() = _count
 
+    private var _totalCount = MutableLiveData(0)
+    val totalCount: LiveData<Int> get() = _totalCount
+
     fun addNewCardItem(position: Int) {
         val product = Data.products[position]
         val existingCardItem = Data.userGoods.find { it.product == product }
 
         if (existingCardItem != null) {
             existingCardItem.let {
+                _totalCount.value = _totalCount.value?.plus(count.value!!)
                 it.count = it.count + count.value!!
             }
         } else if (count.value != 0) {
             Data.userGoods.add(CardItem(product, count.value!!))
+            _totalCount.value = _totalCount.value?.plus(count.value!!)
         }
 
     }

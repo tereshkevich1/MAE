@@ -8,21 +8,22 @@ import androidx.core.content.ContextCompat
 import com.example.minishop.databinding.CustomSnackbarLayoutBinding
 import com.google.android.material.snackbar.Snackbar
 
-class ProductSnackbar( private val view: View) {
+class ProductSnackbar(private val view: View) {
 
 
-    interface OnClickButtonsCallBack{
+    interface OnClickButtonsCallBack {
         fun onMinusClick(snackbar: Snackbar)
         fun onPlusClick()
         fun observer(textView: TextView)
         fun onDismissed()
     }
 
-    fun showSnackbar(listener:OnClickButtonsCallBack){
-        val snackView = LayoutInflater.from(view.context).inflate(R.layout.custom_snackbar_layout,null)
+    fun showSnackbar(listener: OnClickButtonsCallBack) {
+        val snackView =
+            LayoutInflater.from(view.context).inflate(R.layout.custom_snackbar_layout, null)
         val binding = CustomSnackbarLayoutBinding.bind(snackView)
 
-        val snackbar = Snackbar.make(view,"",Snackbar.LENGTH_INDEFINITE)
+        val snackbar = Snackbar.make(view, "", Snackbar.LENGTH_INDEFINITE)
         (snackbar.view as ViewGroup).removeAllViews()
         (snackbar.view as ViewGroup).addView(snackView)
         snackbar.setBackgroundTint(
@@ -32,7 +33,7 @@ class ProductSnackbar( private val view: View) {
             )
         )
 
-        snackbar.addCallback(object : Snackbar.Callback(){
+        snackbar.addCallback(object : Snackbar.Callback() {
             override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                 super.onDismissed(transientBottomBar, event)
                 listener.onDismissed()

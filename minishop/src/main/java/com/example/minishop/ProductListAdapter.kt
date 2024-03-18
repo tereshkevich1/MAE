@@ -33,11 +33,12 @@ class ProductListAdapter(
         val addButton: Button = itemView.findViewById(R.id.addButton)
     }
 
-    class FooterProductViewHolder(itemView: View) : ViewHolder(itemView) {
-    }
+    class FooterProductViewHolder(itemView: View) : ViewHolder(itemView) /*{
+        val countTextView: TextView = itemView.findViewById(R.id.countTextViewF)
+        val showButton: Button = itemView.findViewById(R.id.showButton)
+    }*/
 
-    class HeaderProductViewHolder(itemView: View) : ViewHolder(itemView) {
-    }
+    class HeaderProductViewHolder(itemView: View) : ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
@@ -79,7 +80,7 @@ class ProductListAdapter(
                     holder.nameTextView.text = productList[position.dec()].name
                 holder.addButton.setOnClickListener {
                     listener.onAddButton(position.dec())
-                    //snackbar.showSnackbar(productList[position.dec()])
+
                 }
             }
 
@@ -102,6 +103,12 @@ class ProductListAdapter(
             0 -> ViewTypes.Header
             productList.size + 1 -> ViewTypes.Footer
             else -> ViewTypes.Normal
+        }
+    }
+
+    fun updateFooterCount(message: String) {
+        if (::footerBinding.isInitialized) {
+            footerBinding.countTextViewF.text = message
         }
     }
 

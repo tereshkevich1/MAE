@@ -1,7 +1,6 @@
 package com.example.minishop
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -20,18 +19,24 @@ class ProductListActivity : AppCompatActivity() {
     private lateinit var adapter: ProductListAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var snackbar: ProductSnackbar
+    private lateinit var countMessage: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        countMessage = this@ProductListActivity.getString(R.string.count_items).dropLast(1)
         binding = DataBindingUtil.setContentView(this, R.layout.product_list_activity)
         vm = ViewModelProvider(this)[ProductListVM::class.java]
         snackbar = ProductSnackbar(binding.root)
 
-        Log.d("ssss", "create")
         setUpRecyclerViewAdapter()
         setUpRecyclerView()
 
+        vm.totalCount.observe(this) { productCount ->
+            adapter.updateFooterCount(
+                countMessage + productCount.toString()
+            )
+        }
     }
 
     private fun setUpRecyclerViewAdapter() {
@@ -59,9 +64,7 @@ class ProductListActivity : AppCompatActivity() {
 
                         override fun onDismissed() {
                             vm.addNewCardItem(position)
-                            Log.d("GoodsList", Data.userGoods.toString())
                         }
-
                     }
                 snackbar.showSnackbar(onClickSnackbarButtonsCallBack)
             }
