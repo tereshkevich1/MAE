@@ -37,9 +37,10 @@
                 android:id="@+id/countTextViewF"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:layout_gravity=""
-                android:text="@string/count_items" />
+                android:gravity="center"
+                android:text="@string/count_items"
+                android:textAllCaps="true" />
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

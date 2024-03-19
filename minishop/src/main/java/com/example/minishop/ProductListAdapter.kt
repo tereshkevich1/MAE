@@ -14,6 +14,7 @@ import com.example.minishop.models.Product
 
 interface OnItemClickCallBack {
     fun onAddButton(position: Int)
+    fun onShowButton()
 }
 
 class ProductListAdapter(
@@ -33,10 +34,9 @@ class ProductListAdapter(
         val addButton: Button = itemView.findViewById(R.id.addButton)
     }
 
-    class FooterProductViewHolder(itemView: View) : ViewHolder(itemView) /*{
-        val countTextView: TextView = itemView.findViewById(R.id.countTextViewF)
+    class FooterProductViewHolder(itemView: View) : ViewHolder(itemView) {
         val showButton: Button = itemView.findViewById(R.id.showButton)
-    }*/
+    }
 
     class HeaderProductViewHolder(itemView: View) : ViewHolder(itemView)
 
@@ -89,7 +89,9 @@ class ProductListAdapter(
             }
 
             is FooterProductViewHolder -> {
-
+                holder.showButton.setOnClickListener {
+                    listener.onShowButton()
+                }
             }
         }
     }

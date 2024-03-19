@@ -1,5 +1,6 @@
-package com.example.minishop
+package com.example.minishop.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.minishop.OnItemClickCallBack
+import com.example.minishop.ProductListAdapter
+import com.example.minishop.ProductSnackbar
+import com.example.minishop.R
 import com.example.minishop.data.Data
 import com.example.minishop.databinding.ProductListActivityBinding
 import com.example.minishop.vm.ProductListVM
@@ -67,6 +72,11 @@ class ProductListActivity : AppCompatActivity() {
                         }
                     }
                 snackbar.showSnackbar(onClickSnackbarButtonsCallBack)
+            }
+
+            override fun onShowButton() {
+                val intent = Intent(this@ProductListActivity, CartActivity::class.java)
+                startActivity(intent)
             }
         }
 
