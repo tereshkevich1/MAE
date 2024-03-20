@@ -4,7 +4,7 @@ import com.example.minishop.models.CardItem
 import com.example.minishop.models.Product
 
 object Data {
-    var products = mutableListOf<Product>(
+    var products = mutableListOf(
         Product("a"),
         Product("b"),
         Product("c"),
@@ -13,11 +13,17 @@ object Data {
         Product("h"),
         Product("f"),
         Product("uh"),
-        Product("uh"),
+        Product("ph"),
         Product("hh"),
         Product("th"),
         Product("eh"),
-        Product("sud")
+        Product("we3"),
+        Product("f4"),
+        Product("e5g3"),
+        Product("g5e"),
+        Product("gd4f"),
+        Product("hts3"),
+        Product("s4d")
     )
     var userGoods = mutableListOf<CardItem>()
 }

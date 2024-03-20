@@ -8,10 +8,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.minishop.OnItemClickCallBack
-import com.example.minishop.ProductListAdapter
+import com.example.minishop.Contract
 import com.example.minishop.ProductSnackbar
 import com.example.minishop.R
+import com.example.minishop.adapters.OnItemClickCallBack
+import com.example.minishop.adapters.ProductListAdapter
 import com.example.minishop.data.Data
 import com.example.minishop.databinding.ProductListActivityBinding
 import com.example.minishop.vm.ProductListVM
@@ -25,6 +26,18 @@ class ProductListActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var snackbar: ProductSnackbar
     private lateinit var countMessage: String
+
+
+    private val activityLaunch = registerForActivityResult(Contract()) {
+        when (it) {
+            null -> {
+                vm.setTotalCount(0)
+            }
+            else -> {
+                vm.setTotalCount(it)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +89,8 @@ class ProductListActivity : AppCompatActivity() {
 
             override fun onShowButton() {
                 val intent = Intent(this@ProductListActivity, CartActivity::class.java)
-                startActivity(intent)
+                intent.putExtra("totalCount", vm.totalCount.value)
+                activityLaunch.launch(intent)
             }
         }
 
@@ -89,4 +103,5 @@ class ProductListActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
     }
+
 }

@@ -6,16 +6,21 @@
 
     </data>
 
+
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.ProductListActivity"
-        android:layout_margin="8dp">
+        tools:context=".activities.ProductListActivity">
+
+
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/productRC"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"/>
     </FrameLayout>
+
 </layout>

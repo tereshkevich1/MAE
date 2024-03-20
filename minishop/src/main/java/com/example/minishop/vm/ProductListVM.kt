@@ -47,4 +47,8 @@ class ProductListVM : ViewModel() {
     fun normalizeToOne() {
         _count.value = 1
     }
+
+    fun setTotalCount(totalCount: Int){
+        _totalCount.value = totalCount
+    }
 }

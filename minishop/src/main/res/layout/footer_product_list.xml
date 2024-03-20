@@ -14,7 +14,9 @@
         android:layout_height="64dp"
         android:layout_marginBottom="12dp"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="221dp">
+        tools:layout_editor_absoluteY="221dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.example.minishop
+package com.example.minishop.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.minishop.R
+import com.example.minishop.ViewTypes
 import com.example.minishop.databinding.FooterProductListBinding
 import com.example.minishop.databinding.HeaderProductListBinding
 import com.example.minishop.databinding.ProductListItemBinding
