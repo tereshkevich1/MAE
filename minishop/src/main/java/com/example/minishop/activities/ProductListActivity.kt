@@ -25,7 +25,7 @@ class ProductListActivity : AppCompatActivity() {
     private lateinit var adapter: ProductListAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var snackbar: ProductSnackbar
-    private lateinit var countMessage: String
+
 
 
     private val activityLaunch = registerForActivityResult(Contract()) {
@@ -42,8 +42,9 @@ class ProductListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        countMessage = this@ProductListActivity.getString(R.string.count_items).dropLast(1)
+
         binding = DataBindingUtil.setContentView(this, R.layout.product_list_activity)
+
         vm = ViewModelProvider(this)[ProductListVM::class.java]
         snackbar = ProductSnackbar(binding.root)
 
@@ -51,8 +52,10 @@ class ProductListActivity : AppCompatActivity() {
         setUpRecyclerView()
 
         vm.totalCount.observe(this) { productCount ->
+            val totalCountTemplate = getString(R.string.count_items)
+            val newText = "$totalCountTemplate $productCount"
             adapter.updateFooterCount(
-                countMessage + productCount.toString()
+                newText
             )
         }
     }

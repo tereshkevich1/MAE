@@ -27,17 +27,25 @@ class CartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.cart_activity)
-        recyclerView = binding.cartRC
 
+        setUpViewModel()
+        setUpAdapter()
+        setUpRecyclerView()
+    }
+
+    private fun setUpViewModel(){
         vm = ViewModelProvider(this)[CartVM::class.java]
-
         vm.setTotalCount(intent.getIntExtra("totalCount", 0))
 
-        vm.totalCount.observe(this){
-            binding.totalCount.text = it.toString()
+        vm.totalCount.observe(this) {
+            val totalCountTemplate = getString(R.string.total_count_template)
+            val newText = "$totalCountTemplate $it"
+            binding.totalCount.text = newText
+
         }
+    }
 
-
+    private fun setUpAdapter(){
         adapter = CartListAdapter(Data.userGoods, object : OnCartItemCallBack {
 
             override fun onPlusClick(position: Int) {
@@ -45,14 +53,16 @@ class CartActivity : AppCompatActivity() {
             }
 
             override fun onMinusClick(position: Int) {
-                vm.decCardItem(position)
+                vm.decCardItem(position, adapter)
             }
 
         })
+    }
+
+    private fun setUpRecyclerView() {
+        recyclerView = binding.cartRC
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
-
-
     }
 
 
@@ -60,7 +70,7 @@ class CartActivity : AppCompatActivity() {
     @Suppress("DEPRECATION")
     override fun onBackPressed() {
         super.onBackPressed()
-        Log.d("qwe","2act - ${vm.totalCount}")
+        Log.d("qwe", "2act - ${vm.totalCount}")
         val returnIntent = Intent()
         returnIntent.putExtra("totalCount", vm.totalCount.value)
         setResult(Activity.RESULT_OK, returnIntent)

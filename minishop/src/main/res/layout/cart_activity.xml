@@ -29,20 +29,29 @@
                 android:layout_margin="16dp"
                 android:orientation="horizontal">
 
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"/>
                 <TextView
                     android:id="@+id/totalCount"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Total count - 100" />
+                    android:gravity="center_vertical|start"
+                    android:text="" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Total count - 100" />
+                    android:text="Total count - 100"
+                    android:gravity="center_vertical|end"/>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
