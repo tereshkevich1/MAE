@@ -1,6 +1,5 @@
 package com.example.minishop.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,16 +57,13 @@ class CartListAdapter(
         position: Int,
         payloads: MutableList<Any>
     ) {
-        Log.d("payLoads","w metode")
         if (payloads.isNotEmpty()) {
             for (payload in payloads) {
                 if (payload == UPDATE_COUNTER_PAYLOAD) {
-                    Log.d("payLoads","set")
                     holder.countTextView.text = cartList[position].count.toString()
                 }
             }
         } else {
-            Log.d("payLoads","w metode super")
             super.onBindViewHolder(holder, position, payloads)
         }
     }

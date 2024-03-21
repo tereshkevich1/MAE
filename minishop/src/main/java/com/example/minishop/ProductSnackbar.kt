@@ -3,6 +3,7 @@ package com.example.minishop
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.example.minishop.databinding.CustomSnackbarLayoutBinding
@@ -14,14 +15,16 @@ class ProductSnackbar(private val view: View) {
     interface OnClickButtonsCallBack {
         fun onMinusClick(snackbar: Snackbar)
         fun onPlusClick()
-        fun observer(textView: TextView)
+        fun observer(textView: TextView, button: Button)
         fun onDismissed()
     }
 
-    fun showSnackbar(listener: OnClickButtonsCallBack) {
+    fun showSnackbar(listener: OnClickButtonsCallBack, productName: String) {
         val snackView =
             LayoutInflater.from(view.context).inflate(R.layout.custom_snackbar_layout, null)
         val binding = CustomSnackbarLayoutBinding.bind(snackView)
+        binding.plusButton.setIconResource(R.drawable.button_selector)
+        binding.prodName.text = productName
 
         val snackbar = Snackbar.make(view, "", Snackbar.LENGTH_INDEFINITE)
         (snackbar.view as ViewGroup).removeAllViews()
@@ -46,12 +49,12 @@ class ProductSnackbar(private val view: View) {
 
         binding.minusButton.setOnClickListener {
             listener.onMinusClick(snackbar)
-            listener.observer(binding.count)
+            listener.observer(binding.count, binding.plusButton)
         }
 
         binding.plusButton.setOnClickListener {
             listener.onPlusClick()
-            listener.observer(binding.count)
+            listener.observer(binding.count, binding.plusButton)
         }
 
         snackbar.show()

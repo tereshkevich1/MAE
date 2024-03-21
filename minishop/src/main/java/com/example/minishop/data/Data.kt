@@ -5,25 +5,25 @@ import com.example.minishop.models.Product
 
 object Data {
     var products = mutableListOf(
-        Product("a"),
-        Product("b"),
-        Product("c"),
-        Product("d"),
-        Product("e"),
-        Product("h"),
-        Product("f"),
-        Product("uh"),
-        Product("ph"),
-        Product("hh"),
-        Product("th"),
-        Product("eh"),
-        Product("we3"),
-        Product("f4"),
-        Product("e5g3"),
-        Product("g5e"),
-        Product("gd4f"),
-        Product("hts3"),
-        Product("s4d")
+        Product("сутл"),
+        Product("стол"),
+        Product("книга"),
+        Product("носок"),
+        Product("usb"),
+        Product("ноутбук"),
+        Product("таблетки"),
+        Product("телевизор"),
+        Product("телефон"),
+        Product("дверь"),
+        Product("диван"),
+        Product("плед"),
+        Product("панда"),
+        Product("ремень"),
+        Product("гантели"),
+        Product("пылесос"),
+        Product("молоко"),
+        Product("хлеб"),
+        Product("деньги")
     )
     var userGoods = mutableListOf<CardItem>()
 }

@@ -1,22 +1,22 @@
 package com.example.minishop.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.minishop.DeleteDialog
 import com.example.minishop.R
 import com.example.minishop.adapters.CartListAdapter
 import com.example.minishop.adapters.OnCartItemCallBack
 import com.example.minishop.data.Data
 import com.example.minishop.databinding.CartActivityBinding
+import com.example.minishop.vm.CartInteractionListener
 import com.example.minishop.vm.CartVM
 
-class CartActivity : AppCompatActivity() {
+class CartActivity : AppCompatActivity(), CartInteractionListener {
 
     private lateinit var binding: CartActivityBinding
     private lateinit var vm: CartVM
@@ -33,9 +33,10 @@ class CartActivity : AppCompatActivity() {
         setUpRecyclerView()
     }
 
-    private fun setUpViewModel(){
+    private fun setUpViewModel() {
         vm = ViewModelProvider(this)[CartVM::class.java]
         vm.setTotalCount(intent.getIntExtra("totalCount", 0))
+        vm.cartInteractionListener = this
 
         vm.totalCount.observe(this) {
             val totalCountTemplate = getString(R.string.total_count_template)
@@ -45,7 +46,7 @@ class CartActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUpAdapter(){
+    private fun setUpAdapter() {
         adapter = CartListAdapter(Data.userGoods, object : OnCartItemCallBack {
 
             override fun onPlusClick(position: Int) {
@@ -53,7 +54,7 @@ class CartActivity : AppCompatActivity() {
             }
 
             override fun onMinusClick(position: Int) {
-                vm.decCardItem(position, adapter)
+                vm.decCardItem(position)
             }
 
         })
@@ -69,11 +70,16 @@ class CartActivity : AppCompatActivity() {
     @Deprecated("Deprecated in Java")
     @Suppress("DEPRECATION")
     override fun onBackPressed() {
-        super.onBackPressed()
-        Log.d("qwe", "2act - ${vm.totalCount}")
         val returnIntent = Intent()
         returnIntent.putExtra("totalCount", vm.totalCount.value)
-        setResult(Activity.RESULT_OK, returnIntent)
-        finish()
+        setResult(RESULT_OK, returnIntent)
+        super.onBackPressed()
+    }
+
+    override fun showDeleteConfirmationDialog(position: Int) {
+        DeleteDialog { vm.deleteCartItem(position, adapter) }.show(
+            this.supportFragmentManager,
+            "DELETE_CART"
+        )
     }
 }

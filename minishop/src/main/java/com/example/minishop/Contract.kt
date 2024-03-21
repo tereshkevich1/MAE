@@ -11,8 +11,8 @@ class Contract : ActivityResultContract<Intent, Int?>() {
         return input
     }
 
-    override fun parseResult(resultCode: Int, intent: Intent?): Int? = when {
-        resultCode != Activity.RESULT_OK -> null
-        else -> intent?.getIntExtra("totalCount", 0)
+    override fun parseResult(resultCode: Int, intent: Intent?): Int? {
+        return if(resultCode != Activity.RESULT_OK) null
+        else intent?.getIntExtra("totalCount", 0)
     }
 }

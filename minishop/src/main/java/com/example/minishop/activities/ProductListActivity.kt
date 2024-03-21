@@ -2,6 +2,7 @@ package com.example.minishop.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -13,6 +14,7 @@ import com.example.minishop.ProductSnackbar
 import com.example.minishop.R
 import com.example.minishop.adapters.OnItemClickCallBack
 import com.example.minishop.adapters.ProductListAdapter
+import com.example.minishop.adapters.ProductListAdapter.Companion.UPDATE_COUNTER
 import com.example.minishop.data.Data
 import com.example.minishop.databinding.ProductListActivityBinding
 import com.example.minishop.vm.ProductListVM
@@ -26,13 +28,12 @@ class ProductListActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var snackbar: ProductSnackbar
 
-
-
     private val activityLaunch = registerForActivityResult(Contract()) {
         when (it) {
             null -> {
                 vm.setTotalCount(0)
             }
+
             else -> {
                 vm.setTotalCount(it)
             }
@@ -42,22 +43,13 @@ class ProductListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         binding = DataBindingUtil.setContentView(this, R.layout.product_list_activity)
-
-        vm = ViewModelProvider(this)[ProductListVM::class.java]
         snackbar = ProductSnackbar(binding.root)
 
+        setUpViewModel()
         setUpRecyclerViewAdapter()
         setUpRecyclerView()
 
-        vm.totalCount.observe(this) { productCount ->
-            val totalCountTemplate = getString(R.string.count_items)
-            val newText = "$totalCountTemplate $productCount"
-            adapter.updateFooterCount(
-                newText
-            )
-        }
     }
 
     private fun setUpRecyclerViewAdapter() {
@@ -77,9 +69,10 @@ class ProductListActivity : AppCompatActivity() {
                             vm.incCardItem()
                         }
 
-                        override fun observer(textView: TextView) {
+                        override fun observer(textView: TextView, button: Button) {
                             vm.count.observe(this@ProductListActivity) {
                                 textView.text = vm.count.value?.toString()
+                                button.isEnabled = it != 9
                             }
                         }
 
@@ -87,7 +80,7 @@ class ProductListActivity : AppCompatActivity() {
                             vm.addNewCardItem(position)
                         }
                     }
-                snackbar.showSnackbar(onClickSnackbarButtonsCallBack)
+                snackbar.showSnackbar(onClickSnackbarButtonsCallBack, Data.products[position].name)
             }
 
             override fun onShowButton() {
@@ -107,4 +100,13 @@ class ProductListActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
+    private fun setUpViewModel() {
+        vm = ViewModelProvider(this)[ProductListVM::class.java]
+
+        vm.totalCount.observe(this@ProductListActivity){
+            adapter.totalCount = it
+            adapter.notifyItemChanged(adapter.itemCount-1,UPDATE_COUNTER)
+
+        }
+    }
 }

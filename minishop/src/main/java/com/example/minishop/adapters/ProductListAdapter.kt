@@ -28,6 +28,7 @@ class ProductListAdapter(
     private lateinit var headerBinding: HeaderProductListBinding
     private lateinit var footerBinding: FooterProductListBinding
     private lateinit var productBinding: ProductListItemBinding
+    var totalCount = 0
 
 
     class ProductViewHolder(itemView: View) : ViewHolder(itemView) {
@@ -38,6 +39,7 @@ class ProductListAdapter(
 
     class FooterProductViewHolder(itemView: View) : ViewHolder(itemView) {
         val showButton: Button = itemView.findViewById(R.id.showButton)
+        val count: TextView = itemView.findViewById(R.id.countTextViewF)
     }
 
     class HeaderProductViewHolder(itemView: View) : ViewHolder(itemView)
@@ -94,8 +96,37 @@ class ProductListAdapter(
                 holder.showButton.setOnClickListener {
                     listener.onShowButton()
                 }
+                val countItems = footerBinding.root.context.getText(R.string.count_items)
+                val resultText = "$countItems $totalCount"
+                holder.count.text = resultText
             }
         }
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isNotEmpty()) {
+            when (holder) {
+                is ProductViewHolder -> {
+                    super.onBindViewHolder(holder, position, payloads)
+                }
+
+                is HeaderProductViewHolder -> {
+                    super.onBindViewHolder(holder, position, payloads)
+                }
+
+                is FooterProductViewHolder -> {
+                    for (payload in payloads) {
+                        if (payload == UPDATE_COUNTER) {
+                            val countItems = footerBinding.root.context.getText(R.string.count_items)
+                            val resultText = "$countItems $totalCount"
+                            holder.count.text = resultText
+                        }
+                    }
+                }
+            }
+        } else super.onBindViewHolder(holder, position, payloads)
+
+
     }
 
     override fun getItemCount(): Int {
@@ -110,10 +141,8 @@ class ProductListAdapter(
         }
     }
 
-    fun updateFooterCount(message: String) {
-        if (::footerBinding.isInitialized) {
-            footerBinding.countTextViewF.text = message
-        }
+    companion object {
+        const val UPDATE_COUNTER = "update_counter"
     }
 
 }
