@@ -32,7 +32,7 @@
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.2"/>
+                    android:layout_weight="0.2" />
 
                 <TextView
                     android:id="@+id/totalCount"
@@ -41,19 +41,23 @@
                     android:layout_weight="1"
                     android:allowUndo="true"
                     android:gravity="center_vertical|start"
-                    android:text="" />
+                    android:text=""
+                    android:textAllCaps="true" />
 
                 <TextView
+                    android:id="@+id/number_carts"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="____"
-                    android:gravity="center_vertical|end"/>
+                    android:gravity="center_vertical|end"
+                    android:text="@string/user_cart"
+                    android:textAllCaps="true" />
+
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.2"/>
+                    android:layout_weight="0.2" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

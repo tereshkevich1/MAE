@@ -11,7 +11,7 @@ interface CartInteractionListener {
 
 class CartVM : ViewModel() {
 
-    private var _totalCount = MutableLiveData(0)
+    private var _totalCount = MutableLiveData(-1)
     val totalCount get() = _totalCount
 
     var cartInteractionListener: CartInteractionListener? = null

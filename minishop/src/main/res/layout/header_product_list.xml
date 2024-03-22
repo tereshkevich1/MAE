@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="12dp"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="221dp">
@@ -28,7 +28,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="header" />
+                android:text="@string/store_name"
+                android:textAllCaps="true" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

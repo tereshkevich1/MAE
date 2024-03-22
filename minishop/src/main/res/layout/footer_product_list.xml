@@ -34,15 +34,23 @@
                 android:textAllCaps="true"
                 android:layout_gravity="center"/>
 
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/countTextViewF"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity=""
-                android:gravity="center"
+                android:gravity="center_vertical|end"
                 android:text="@string/count_items"
                 android:textAllCaps="true" />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

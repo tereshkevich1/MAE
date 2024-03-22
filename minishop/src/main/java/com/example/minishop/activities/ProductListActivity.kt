@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.minishop.Contract
+import com.example.minishop.IntentKeys
 import com.example.minishop.ProductSnackbar
 import com.example.minishop.R
 import com.example.minishop.adapters.OnItemClickCallBack
@@ -87,8 +88,8 @@ class ProductListActivity : AppCompatActivity() {
 
             override fun onShowButton() {
                 val intent = Intent(this@ProductListActivity, CartActivity::class.java)
-                intent.putExtra("totalCount", vm.totalCount.value)
-                intent.putParcelableArrayListExtra("cartItemList", ArrayList(vm.userGoods))
+                intent.putExtra(IntentKeys.TOTAL_COUNT, vm.totalCount.value)
+                intent.putParcelableArrayListExtra(IntentKeys.CART_ITEMS, ArrayList(vm.userGoods))
                 activityLaunch.launch(intent)
             }
         }

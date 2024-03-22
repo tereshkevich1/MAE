@@ -18,9 +18,9 @@ class Contract : ActivityResultContract<Intent, ResultData?>() {
         return if (resultCode != Activity.RESULT_OK) null
         else {
             val cartItems =
-                intent?.getParcelableArrayListExtra<CartItem>("cartItemList")?.toMutableList()
+                intent?.getParcelableArrayListExtra<CartItem>(IntentKeys.CART_ITEMS)?.toMutableList()
                     ?: mutableListOf()
-            val totalCount = intent?.getIntExtra("totalCount", 0) ?: 0
+            val totalCount = intent?.getIntExtra(IntentKeys.TOTAL_COUNT, 0) ?: 0
             return ResultData(cartItems, totalCount)
         }
     }
