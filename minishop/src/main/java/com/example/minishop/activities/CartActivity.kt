@@ -14,8 +14,8 @@ import com.example.minishop.DeleteDialog
 import com.example.minishop.R
 import com.example.minishop.adapters.CartListAdapter
 import com.example.minishop.adapters.OnCartItemCallBack
-import com.example.minishop.data.Data
 import com.example.minishop.databinding.CartActivityBinding
+import com.example.minishop.models.CartItem
 import com.example.minishop.vm.CartInteractionListener
 import com.example.minishop.vm.CartVM
 
@@ -34,7 +34,7 @@ class CartActivity : AppCompatActivity(), CartInteractionListener {
         supportFragmentManager.setFragmentResultListener("RESPONSE", this) { _, result ->
             when (result.getInt("RESPONSE")) {
                 BUTTON_POSITIVE -> {
-                    vm.deleteCartItem(result.getInt("POSITION"),adapter)
+                    vm.deleteCartItem(result.getInt("POSITION"), adapter)
                 }
             }
         }
@@ -44,10 +44,15 @@ class CartActivity : AppCompatActivity(), CartInteractionListener {
         setUpRecyclerView()
     }
 
+
     private fun setUpViewModel() {
         vm = ViewModelProvider(this)[CartVM::class.java]
         if (vm.totalCount.value == 0) {
             vm.setTotalCount(intent.getIntExtra("totalCount", 0))
+
+            val cartItems = intent.getParcelableArrayListExtra<CartItem>("cartItemList")?.toMutableList()
+            vm.setList(cartItems!!)
+
         }
         vm.cartInteractionListener = this
 
@@ -60,7 +65,7 @@ class CartActivity : AppCompatActivity(), CartInteractionListener {
     }
 
     private fun setUpAdapter() {
-        adapter = CartListAdapter(Data.userGoods, object : OnCartItemCallBack {
+        adapter = CartListAdapter(vm.userGoods, object : OnCartItemCallBack {
 
             override fun onPlusClick(position: Int) {
                 vm.incCardItem(position)
@@ -85,6 +90,7 @@ class CartActivity : AppCompatActivity(), CartInteractionListener {
     override fun onBackPressed() {
         val returnIntent = Intent()
         returnIntent.putExtra("totalCount", vm.totalCount.value)
+        returnIntent.putParcelableArrayListExtra("cartItemList", ArrayList(vm.userGoods))
         setResult(RESULT_OK, returnIntent)
         super.onBackPressed()
     }
@@ -97,6 +103,6 @@ class CartActivity : AppCompatActivity(), CartInteractionListener {
                 bundleOf("RESPONSE" to BUTTON_POSITIVE, "POSITION" to position)
             )
         }
-        dialog.show(supportFragmentManager,"DELETE")
+        dialog.show(supportFragmentManager, "DELETE")
     }
 }

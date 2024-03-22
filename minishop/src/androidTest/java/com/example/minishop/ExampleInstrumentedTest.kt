@@ -1,12 +1,13 @@
 package com.example.minishop
 
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
-
+import androidx.test.platform.app.InstrumentationRegistry
+import com.example.minishop.models.CartItem
+import com.example.minishop.models.Product
+import com.example.minishop.vm.CartVM
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Assert.*
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -19,6 +20,8 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.minishop", appContext.packageName)
+        val vm = CartVM()
+        val list = mutableListOf(CartItem(Product("x"),2),CartItem(Product("x"),2))
+        assertEquals(vm.decCardItem(position = 1), appContext.packageName)
     }
 }

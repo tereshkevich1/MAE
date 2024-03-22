@@ -15,9 +15,11 @@ class ProductListVM : ViewModel() {
     private var _totalCount = MutableLiveData(0)
     val totalCount: LiveData<Int> get() = _totalCount
 
+    var userGoods = mutableListOf<CartItem>()
+
     fun addNewCardItem(position: Int) {
         val product = Data.products[position]
-        val existingCardItem = Data.userGoods.find { it.product == product }
+        val existingCardItem = userGoods.find { it.product == product }
 
         if (existingCardItem != null) {
             existingCardItem.let {
@@ -25,7 +27,7 @@ class ProductListVM : ViewModel() {
                 it.count = it.count + count.value!!
             }
         } else if (count.value != 0) {
-            Data.userGoods.add(CartItem(product, count.value!!))
+            userGoods.add(CartItem(product, count.value!!))
             _totalCount.value = _totalCount.value?.plus(count.value!!)
         }
 
@@ -50,5 +52,9 @@ class ProductListVM : ViewModel() {
 
     fun setTotalCount(totalCount: Int){
         _totalCount.value = totalCount
+    }
+
+    fun setList(goods: MutableList<CartItem>){
+        userGoods = goods
     }
 }

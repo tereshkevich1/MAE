@@ -1,6 +1,8 @@
 package com.example.minishop.models
 
-data class Product(val name: String) {
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-}
+@Parcelize
+data class Product(val name: String) : Parcelable
 

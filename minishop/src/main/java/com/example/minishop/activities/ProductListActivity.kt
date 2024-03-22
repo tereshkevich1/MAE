@@ -32,10 +32,12 @@ class ProductListActivity : AppCompatActivity() {
         when (it) {
             null -> {
                 vm.setTotalCount(0)
+                vm.setList(mutableListOf())
             }
 
             else -> {
-                vm.setTotalCount(it)
+                vm.setTotalCount(it.totalCount)
+                vm.setList(it.userGoods)
             }
         }
     }
@@ -86,6 +88,7 @@ class ProductListActivity : AppCompatActivity() {
             override fun onShowButton() {
                 val intent = Intent(this@ProductListActivity, CartActivity::class.java)
                 intent.putExtra("totalCount", vm.totalCount.value)
+                intent.putParcelableArrayListExtra("cartItemList", ArrayList(vm.userGoods))
                 activityLaunch.launch(intent)
             }
         }
