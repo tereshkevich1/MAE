@@ -64,7 +64,7 @@ class ProductListActivity : AppCompatActivity() {
                 val onClickSnackbarButtonsCallBack =
                     object : ProductSnackbar.OnClickButtonsCallBack {
                         override fun onMinusClick(snackbar: Snackbar) {
-                            vm.decCardItem(snackbar)
+                            vm.decCardItem { snackbar.dismiss() }
                         }
 
                         override fun onPlusClick() {

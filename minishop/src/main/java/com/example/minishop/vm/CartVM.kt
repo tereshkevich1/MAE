@@ -1,6 +1,5 @@
 package com.example.minishop.vm
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.minishop.adapters.CartListAdapter
@@ -14,26 +13,24 @@ class CartVM : ViewModel() {
 
     private var _totalCount = MutableLiveData(0)
     val totalCount get() = _totalCount
-    var cartInteractionListener: CartInteractionListener? = null
 
+    var cartInteractionListener: CartInteractionListener? = null
     var userGoods = mutableListOf<CartItem>()
 
 
-
     fun incCardItem(position: Int) {
-        Log.d("incCardItem","inc")
         userGoods[position].count++
         _totalCount.value = _totalCount.value?.inc()
     }
 
     fun decCardItem(position: Int) {
-        if (userGoods[position].count == 1) {
+        if (userGoods[position].count > 1) {
 
-            cartInteractionListener?.showDeleteConfirmationDialog(position)
-
-        } else {
             userGoods[position].count--
             _totalCount.value = _totalCount.value?.dec()
+
+        } else {
+            cartInteractionListener?.showDeleteConfirmationDialog(position)
         }
     }
 
@@ -51,7 +48,7 @@ class CartVM : ViewModel() {
         _totalCount.value = totalCount
     }
 
-    fun setList(goods: MutableList<CartItem>){
+    fun setList(goods: MutableList<CartItem>) {
         userGoods = goods
     }
 }

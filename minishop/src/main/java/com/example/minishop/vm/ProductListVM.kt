@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.minishop.data.Data
 import com.example.minishop.models.CartItem
-import com.google.android.material.snackbar.Snackbar
 
 class ProductListVM : ViewModel() {
 
@@ -18,31 +17,34 @@ class ProductListVM : ViewModel() {
     var userGoods = mutableListOf<CartItem>()
 
     fun addNewCardItem(position: Int) {
-        val product = Data.products[position]
-        val existingCardItem = userGoods.find { it.product == product }
+        count.value?.let { countValue ->
+            val product = Data.products[position]
+            val existingCardItem = userGoods.find { it.product == product }
 
-        if (existingCardItem != null) {
-            existingCardItem.let {
-                _totalCount.value = _totalCount.value?.plus(count.value!!)
-                it.count = it.count + count.value!!
+            if (existingCardItem != null) {
+                existingCardItem.let {
+                    _totalCount.value = _totalCount.value?.plus(countValue)
+                    it.count += countValue
+                }
+            } else if (count.value != 0) {
+                userGoods.add(CartItem(product, countValue))
+                _totalCount.value = _totalCount.value?.plus(countValue)
             }
-        } else if (count.value != 0) {
-            userGoods.add(CartItem(product, count.value!!))
-            _totalCount.value = _totalCount.value?.plus(count.value!!)
         }
-
     }
 
     fun incCardItem() {
         _count.value = _count.value?.inc()
     }
 
-    fun decCardItem(snackbar: Snackbar) {
-        if (count.value!! > 1) {
-            _count.value = _count.value?.dec()
-        } else {
-            _count.value = 0
-            snackbar.dismiss()
+    fun decCardItem(changeView: () -> Unit) {
+        count.value?.let { countValue ->
+            if (countValue > 1) {
+                _count.value = _count.value?.dec()
+            } else {
+                _count.value = 0
+                changeView()
+            }
         }
     }
 
@@ -50,11 +52,11 @@ class ProductListVM : ViewModel() {
         _count.value = 1
     }
 
-    fun setTotalCount(totalCount: Int){
+    fun setTotalCount(totalCount: Int) {
         _totalCount.value = totalCount
     }
 
-    fun setList(goods: MutableList<CartItem>){
+    fun setList(goods: MutableList<CartItem>) {
         userGoods = goods
     }
 }
