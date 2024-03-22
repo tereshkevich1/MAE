@@ -103,9 +103,9 @@ class ProductListActivity : AppCompatActivity() {
     private fun setUpViewModel() {
         vm = ViewModelProvider(this)[ProductListVM::class.java]
 
-        vm.totalCount.observe(this@ProductListActivity){
+        vm.totalCount.observe(this@ProductListActivity) {
             adapter.totalCount = it
-            adapter.notifyItemChanged(adapter.itemCount-1,UPDATE_COUNTER)
+            adapter.notifyItemChanged(adapter.itemCount - 1, UPDATE_COUNTER)
 
         }
     }

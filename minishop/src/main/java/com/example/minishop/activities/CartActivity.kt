@@ -1,8 +1,11 @@
 package com.example.minishop.activities
 
+import android.content.DialogInterface
+import android.content.DialogInterface.BUTTON_POSITIVE
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +31,14 @@ class CartActivity : AppCompatActivity(), CartInteractionListener {
 
         binding = DataBindingUtil.setContentView(this, R.layout.cart_activity)
 
+        supportFragmentManager.setFragmentResultListener("RESPONSE", this) { _, result ->
+            when (result.getInt("RESPONSE")) {
+                BUTTON_POSITIVE -> {
+                    vm.deleteCartItem(result.getInt("POSITION"),adapter)
+                }
+            }
+        }
+
         setUpViewModel()
         setUpAdapter()
         setUpRecyclerView()
@@ -35,7 +46,9 @@ class CartActivity : AppCompatActivity(), CartInteractionListener {
 
     private fun setUpViewModel() {
         vm = ViewModelProvider(this)[CartVM::class.java]
-        vm.setTotalCount(intent.getIntExtra("totalCount", 0))
+        if (vm.totalCount.value == 0) {
+            vm.setTotalCount(intent.getIntExtra("totalCount", 0))
+        }
         vm.cartInteractionListener = this
 
         vm.totalCount.observe(this) {
@@ -77,9 +90,13 @@ class CartActivity : AppCompatActivity(), CartInteractionListener {
     }
 
     override fun showDeleteConfirmationDialog(position: Int) {
-        DeleteDialog { vm.deleteCartItem(position, adapter) }.show(
-            this.supportFragmentManager,
-            "DELETE_CART"
-        )
+        val dialog = DeleteDialog()
+        dialog.listener = DialogInterface.OnClickListener { _, _ ->
+            supportFragmentManager.setFragmentResult(
+                "RESPONSE",
+                bundleOf("RESPONSE" to BUTTON_POSITIVE, "POSITION" to position)
+            )
+        }
+        dialog.show(supportFragmentManager,"DELETE")
     }
 }

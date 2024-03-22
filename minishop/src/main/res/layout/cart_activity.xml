@@ -33,11 +33,13 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"/>
+
                 <TextView
                     android:id="@+id/totalCount"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:allowUndo="true"
                     android:gravity="center_vertical|start"
                     android:text="" />
 
@@ -45,7 +47,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Total count - 100"
+                    android:text="____"
                     android:gravity="center_vertical|end"/>
 
                 <Space

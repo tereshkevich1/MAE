@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.minishop.R
 import com.example.minishop.databinding.CartItemBinding
-import com.example.minishop.models.CardItem
+import com.example.minishop.models.CartItem
 
 
 interface OnCartItemCallBack {
@@ -17,7 +17,7 @@ interface OnCartItemCallBack {
 }
 
 class CartListAdapter(
-    private val cartList: MutableList<CardItem>,
+    private val cartList: MutableList<CartItem>,
     private val listener: OnCartItemCallBack
 ) : RecyclerView.Adapter<CartListAdapter.CartViewHolder>() {
 

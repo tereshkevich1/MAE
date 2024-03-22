@@ -1,5 +1,6 @@
 package com.example.minishop.vm
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.minishop.adapters.CartListAdapter
@@ -17,6 +18,7 @@ class CartVM : ViewModel() {
 
 
     fun incCardItem(position: Int) {
+        Log.d("incCardItem","inc")
         Data.userGoods[position].count++
         _totalCount.value = _totalCount.value?.inc()
     }

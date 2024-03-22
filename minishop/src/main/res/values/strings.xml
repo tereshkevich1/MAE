@@ -7,6 +7,6 @@
     <string name="one">1</string>
     <string name="total_count_template">Total count -</string>
     <string name="goods_count_template">Number of goods -</string>
-    <string name="delete_item_message">ss</string>
+    <string name="delete_item_message">Remove an item from the cart?</string>
     <string name="cancel">Cancel</string>
 </resources>

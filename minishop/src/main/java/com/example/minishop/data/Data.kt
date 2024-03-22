@@ -1,6 +1,6 @@
 package com.example.minishop.data
 
-import com.example.minishop.models.CardItem
+import com.example.minishop.models.CartItem
 import com.example.minishop.models.Product
 
 object Data {
@@ -25,5 +25,5 @@ object Data {
         Product("хлеб"),
         Product("деньги")
     )
-    var userGoods = mutableListOf<CardItem>()
+    var userGoods = mutableListOf<CartItem>()
 }

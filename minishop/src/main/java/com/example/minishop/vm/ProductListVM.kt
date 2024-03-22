@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.minishop.data.Data
-import com.example.minishop.models.CardItem
+import com.example.minishop.models.CartItem
 import com.google.android.material.snackbar.Snackbar
 
 class ProductListVM : ViewModel() {
@@ -25,7 +25,7 @@ class ProductListVM : ViewModel() {
                 it.count = it.count + count.value!!
             }
         } else if (count.value != 0) {
-            Data.userGoods.add(CardItem(product, count.value!!))
+            Data.userGoods.add(CartItem(product, count.value!!))
             _totalCount.value = _totalCount.value?.plus(count.value!!)
         }
 
