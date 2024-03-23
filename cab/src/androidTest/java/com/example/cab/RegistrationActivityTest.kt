@@ -25,12 +25,14 @@ class RegistrationActivityTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(RegistrationActivity::class.java)
 
+
     @Before
-    fun clear(){
+    fun clear() {
         onView(withId(R.id.phoneField)).perform(clearText())
         onView(withId(R.id.nameField)).perform(clearText())
         onView(withId(R.id.surnameField)).perform(clearText())
     }
+
     @Test
     fun useAppContext() {
         // Context of the app under test.
@@ -51,12 +53,14 @@ class RegistrationActivityTest {
         clickOnRegistrationButton()
         onView(withId(R.id.nameField)).check(matches(hasErrorText("Name is too long!")))
     }
+
     @Test
     fun checkNameNumbers() {
         inputName("5")
         clickOnRegistrationButton()
         onView(withId(R.id.nameField)).check(matches(hasErrorText("Only letters allowed!")))
     }
+
     @Test
     fun checkNameSymbols() {
         inputName("!")
@@ -77,12 +81,14 @@ class RegistrationActivityTest {
         clickOnRegistrationButton()
         onView(withId(R.id.surnameField)).check(matches(hasErrorText("Surname is too long!")))
     }
+
     @Test
     fun checkSurnameNumbers() {
         inputSurname("5")
         clickOnRegistrationButton()
         onView(withId(R.id.surnameField)).check(matches(hasErrorText("Only letters allowed!")))
     }
+
     @Test
     fun checkSurnameSymbols() {
         inputSurname("!")
@@ -110,6 +116,7 @@ class RegistrationActivityTest {
         clickOnRegistrationButton()
         onView(withId(R.id.phoneField)).check(matches(hasErrorText("Incorrect phone number format!")))
     }
+
     @Test
     fun checkPhoneSymbols() {
         inputPhone(".")
@@ -117,13 +124,12 @@ class RegistrationActivityTest {
         onView(withId(R.id.phoneField)).check(matches(withText("+")))
     }
 
-    @Test
-    fun checkCorrectData() {
-        inputName("qqq")
-        inputSurname("qqq")
-        inputPhone("123456789")
+
+        init()
         clickOnRegistrationButton()
-        // intended(hasComponent(OtherActivity.class.getName()));
+        intended(hasComponent(ResultingInformationActivity::class.java.getName()))
+
+        release()
     }
 
     private fun clickOnRegistrationButton() {
