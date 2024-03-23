@@ -31,6 +31,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/minusButton"
                 style="@style/ChangeCountButtonStyle"
@@ -40,11 +41,9 @@
 
             <TextView
                 android:id="@+id/countProductTextView"
-                android:layout_width="20dp"
+                android:layout_width="36dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
                 android:gravity="center"
                 android:text="1" />
 
