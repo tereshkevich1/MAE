@@ -37,6 +37,11 @@ android {
         jvmTarget = "1.8"
     }
 }
+val activity_version = "1.8.2"
+val androidXTestVersion = "1.5.0"
+val mockitoVersion = "5.10.0"
+val mockitoKotlinVersion = "5.2.1"
+val mockkVersion = "1.13.9"
 
 dependencies {
 
@@ -50,4 +55,15 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+    testImplementation("androidx.test:core:$androidXTestVersion")
+    testImplementation("org.mockito:mockito-core:$mockitoVersion")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 }
